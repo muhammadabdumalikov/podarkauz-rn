@@ -3,9 +3,14 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
 import { Pressable } from 'react-native';
 
-import Colors from '@/constants/Colors';
+import {colors as Colors} from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+
+import HomeSvg from '../../assets/icons/home_menu';
+import WishlistSvg from '../../assets/icons/heart_menu';
+import OrdersSvg from '../../assets/icons/order_menu';
+import ProfileSvg from '../../assets/icons/profile_menu';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -29,8 +34,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Home',
+          tabBarIcon: ({ color }) => <HomeSvg stroke={color} />,
           headerRight: () => (
             <Link href="/modal" asChild>
               <Pressable>
@@ -48,10 +53,24 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="wishlist"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Wishlist',
+          tabBarIcon: ({ color }) => <WishlistSvg stroke={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="order"
+        options={{
+          title: 'Orders',
+          tabBarIcon: ({ color }) => <OrdersSvg stroke={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Profile',
+          tabBarIcon: ({ color }) => <ProfileSvg stroke={color} />,
         }}
       />
     </Tabs>

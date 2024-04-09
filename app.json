@@ -35,5 +35,6 @@
     "experiments": {
       "typedRoutes": true
     }
-  }
+  },
+  "scheme": "your-app-scheme"
 }
