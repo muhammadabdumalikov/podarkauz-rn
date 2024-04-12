@@ -20,7 +20,7 @@ export const colors = {
 
 export const textColors = {
   orangeFresh: '#FFC120',
-  blueOcean: '#5CC936',
+  greenOcean: '#5CC936',
   pureWhite: '#FFFFFF',
   navyBlack: '#0C1A30',
   earthGreen: '#3A9B7A',
@@ -32,4 +32,6 @@ export const textColors = {
   offBlue: '#EFF5FB',
   offGreen: '#EEFAF6',
   offRed: '#FCECEF',
+  blueOcean: '#3669C9',
+  mainBlack: '#0C1A30'
 }

@@ -1,9 +1,9 @@
 import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
-import { Pressable } from 'react-native';
+import { Pressable, View } from 'react-native';
 
-import {colors as Colors} from '@/constants/Colors';
+import { colors as Colors, textColors } from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 
@@ -11,14 +11,10 @@ import HomeSvg from '../../assets/icons/home_menu';
 import WishlistSvg from '../../assets/icons/heart_menu';
 import OrdersSvg from '../../assets/icons/order_menu';
 import ProfileSvg from '../../assets/icons/profile_menu';
-
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
+// import { View } from '@/components/Themed';
+import { styles } from './styles';
+import BellIcon from '@/assets/icons/bell';
+import BoxSvg from '@/assets/icons/box';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -34,22 +30,32 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          headerShown: false,
+          title: 'Mega Mall',
           tabBarIcon: ({ color }) => <HomeSvg stroke={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
+          headerRight: ({ tintColor }) => (
+            <View style={styles.headerTwoBtns}>
+              <Link href="/modal" asChild>
+                <Pressable style={{ height: 24, width: 24 }}>
+                  {({ pressed }) => (
+                    <BellIcon color={tintColor} />
+                  )}
+                </Pressable>
+              </Link>
+
+              <Link href="/modal" asChild>
+                <Pressable style={{ height: 24, width: 24 }}>
+                  {({ pressed }) => (
+                    <BoxSvg color={tintColor} />
+                  )}
+                </Pressable>
+              </Link>
+            </View>
           ),
+          headerStyle: { height: 100 },
+          headerTitleStyle: {
+            color: textColors.blueOcean
+          }
         }}
       />
       <Tabs.Screen

@@ -19,7 +19,7 @@ const HeartMenuIcon = (props: any) => (
       stroke={props.stroke}
       strokeLinecap="round"
       strokeLinejoin="round"
-ç      d="M15.74 7.053a2.782 2.782 0 0 1 1.916 2.422"
+      d="M15.74 7.053a2.782 2.782 0 0 1 1.916 2.422"
     />
   </Svg>
 )
