@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Animated, FlatList, StyleSheet, Text, SafeAreaView, Button } from 'react-native';
+import { Animated, FlatList, StyleSheet, Text, SafeAreaView, Button, SectionList } from 'react-native';
 import { FlashList } from "@shopify/flash-list";
 
 import { View, ScrollView } from '@/components/Themed';
@@ -16,37 +16,21 @@ import CustomFlatList from '@/components/CustomFlatlist/customFlatlist';
 
 const DATA = [
   {
-    id: 1,
-    title: "First Item",
+    title: 'Main dishes',
+    data: ['Pizza', 'Burger', 'Risotto'],
   },
-  {
-    id: 2,
-    title: "Second Item",
-  },
-  {
-    id: 3,
-    title: "third Item",
-  },
-  {
-    id: 4,
-    title: "fourth Item",
-  },
-  {
-    id: 5,
-    title: "fifth Item",
-  },
-  {
-    id: 6,
-    title: "sixth Item",
-  },
-  {
-    id: 7,
-    title: "seventh Item",
-  },
-  {
-    id: 8,
-    title: "eight Item",
-  },
+  // {
+  //   title: 'Sides',
+  //   data: ['French Fries', 'Onion Rings', 'Fried Shrimps'],
+  // },
+  // {
+  //   title: 'Drinks',
+  //   data: ['Water', 'Coke', 'Beer'],
+  // },
+  // {
+  //   title: 'Desserts',
+  //   data: ['Cheese Cake', 'Ice Cream'],
+  // },
 ];
 
 interface MyRefType {
@@ -75,6 +59,29 @@ export default function HomeScreen() {
   useEffect(() => {
     if (productData !== null) refRBSheet.current?.open();
   }, [productData])
+
+  const renderItem = ({ item }) => {
+    return (
+      <View style={{ flex: 1, margin: 5, width: 150, height: 100, backgroundColor: 'yellow' }}>
+        <Text>{item.text}</Text>
+      </View>
+    );
+  };
+
+  const renderSection = ({ section }) => {
+    return (
+      <View>
+        <FlashList
+          data={section.data}
+          style={{ backgroundColor: 'green' }}
+          numColumns={2}
+          renderItem={({ item }) => <ProductCard key={item} onSelectHandle={onProductCardSelectHandler} />}
+          keyExtractor={item => item}
+          estimatedItemSize={10}
+        />
+      </View>
+    );
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }} >
@@ -111,7 +118,7 @@ export default function HomeScreen() {
         />
 
       </ScrollView> */}
-      <CustomFlatList
+      {/* <CustomFlatList
         numColumns={2}
         data={DATA}
         style={styles.list}
@@ -134,7 +141,31 @@ export default function HomeScreen() {
         }
         StickyElementComponent={<SeeAllHeader headerName='Featured products' link='/profile' style={{ marginHorizontal: 25 }} />}
         TopListElementComponent={<View style={styles.topList} />}
+      /> */}
+      <SectionList
+        ListHeaderComponent={
+          <>
+            <InputBox handleSearch={(input: string) => { }} />
+            <AdsBox />
+            <SeeAllHeader headerName='Categories' link='/profile' />
+            <FlatList
+              style={styles.categoryList}
+              contentContainerStyle={styles.categoryListContent}
+              data={DATA}
+              renderItem={({ item }) => <CategoryItem key={item.title} title={item.title} />}
+              showsHorizontalScrollIndicator={false}
+              horizontal />
+          </>
+        }
+        sections={DATA}
+        keyExtractor={(item, index) => item + index}
+        renderItem={renderSection}
+
+        renderSectionHeader={({ section: { title } }) => (
+          <SeeAllHeader headerName='Featured products' link='/profile' />
+        )}
       />
+
       <RBSheet
         ref={refRBSheet}
         // useNativeDriver={true}
