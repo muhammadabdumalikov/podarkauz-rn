@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     borderRadius: 10,
     marginVertical: 15,
-    // marginHorizontal: 25
+    marginHorizontal: 25
   },
   box: {
     flex: 1,

@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     maxHeight: 50,
     borderRadius: 10,
     marginBottom: 15,
-    // marginHorizontal: 25
+    marginHorizontal: 25
   },
   input: {
     width: '80%',

@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     maxHeight: 50,
     height: 50,
     backgroundColor: textColors.pureWhite,
-    // marginHorizontal: 25
+    paddingHorizontal: 25
   },
   headerName: {
     fontSize: 16,
