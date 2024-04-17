@@ -24,6 +24,7 @@ export const textColors = {
   pureWhite: '#FFFFFF',
   navyBlack: '#0C1A30',
   earthGreen: '#3A9B7A',
+  offGreen: '#EEFAF6',
   redVelvet: '#FE3A30',
   darkGrey: '#838589',
   halfGrey: '#C4C5C4',

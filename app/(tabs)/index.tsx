@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
-import { FlatList, StyleSheet, Text, SafeAreaView, SectionList, Dimensions } from 'react-native';
+import { Animated, FlatList, StyleSheet, Text, SafeAreaView, Dimensions } from 'react-native';
 import { FlashList } from "@shopify/flash-list";
 
-import { View, ScrollView } from '@/components/Themed';
+import { View, SectionList } from '@/components/Themed';
 import { InputBox } from '@/components/app-components/input-box';
 import { AdsBox } from '@/components/app-components/ads-box';
 import { SeeAllHeader } from '@/components/app-components/see-all-header';
@@ -18,20 +18,50 @@ import { ProductModalView } from '@/components/app-components/product-modal';
 const DATA = [
   {
     title: 'Main dishes',
-    data: ['Pizza', 'Burger', 'Risotto'],
+    data: [{
+      name: 'x',
+      data: ['French Fries', 'Onion Rings', 'Fried Shrimps', '1', '2', '3', '4']
+    }],
   },
-  // {
-  //   title: 'Sides',
-  //   data: ['French Fries', 'Onion Rings', 'Fried Shrimps'],
-  // },
-  // {
-  //   title: 'Drinks',
-  //   data: ['Water', 'Coke', 'Beer'],
-  // },
-  // {
-  //   title: 'Desserts',
-  //   data: ['Cheese Cake', 'Ice Cream'],
-  // },
+];
+
+const CATEGORY_DATA = [
+  {
+    title: 'Main dishessss',
+  },
+  {
+    title: 'Main dishes',
+  },
+  {
+    title: 'Main dishes',
+  },
+  {
+    title: 'Main dishes',
+  },
+  {
+    title: 'Main dishes',
+  },
+  {
+    title: 'Main dishes',
+  },
+  {
+    title: 'Main dishes',
+  },
+  {
+    title: 'Main dishes',
+  },
+  {
+    title: 'Main dishes',
+  },
+  {
+    title: 'Main dishes',
+  },
+  {
+    title: 'Main dishes',
+  },
+  {
+    title: 'Main dishes',
+  },
 ];
 
 export interface MyRefType {
@@ -41,7 +71,7 @@ export interface MyRefType {
 
 export default function HomeScreen() {
   const { productData, isLoading } = useSelector((state: RootState) => state.openProduct);
-  const refRBSheet = useRef();
+  const refRBSheet = useRef<MyRefType>(null);
 
   const dispatch = useDispatch();
 
@@ -60,23 +90,28 @@ export default function HomeScreen() {
     if (productData !== null) refRBSheet.current?.open();
   }, [productData])
 
-  const renderItem = ({ item }) => {
-    return (
-      <View style={{ flex: 1, margin: 5, width: 150, height: 100, backgroundColor: 'yellow' }}>
-        <Text>{item.text}</Text>
-      </View>
-    );
-  };
+  const handleModalClose = () => {
+    refRBSheet.current?.close();
+  }
 
-  const renderSection = ({ section }) => {
+  const renderSection = ({ section }: {
+    section: {
+      title?: string;
+      data: any | {
+        name: string;
+        data: string[];
+      }[];
+    }
+}) => {  
+    
     return (
-      <View>
+      <View style={{flex: 1}}>
         <FlashList
-          data={section.data}
-          style={{ backgroundColor: 'green' }}
+          data={section.data[0].data}
+          contentContainerStyle={{backgroundColor: textColors.offGrey}}
           numColumns={2}
-          renderItem={({ item }) => <ProductCard key={item} onSelectHandle={onProductCardSelectHandler} />}
-          keyExtractor={item => item}
+          renderItem={({ item }) => <ProductCard key={item as string} onSelectHandle={onProductCardSelectHandler} />}
+          keyExtractor={item => item as string}
           estimatedItemSize={10}
         />
       </View>
@@ -85,63 +120,6 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1 }} >
-      {/* <ScrollView
-        contentContainerStyle={styles.container}
-        stickyHeaderIndices={[4]}
-        nestedScrollEnabled
-        showsVerticalScrollIndicator={false}
-      >
-        <InputBox handleSearch={(input: string) => {
-          console.log(input);
-        }} />
-
-        <AdsBox />
-
-        <SeeAllHeader headerName='Categories' link='/profile' />
-
-        <FlatList
-          style={styles.categoryList}
-          contentContainerStyle={styles.categoryListContent}
-          data={DATA}
-          renderItem={({ item }) => <CategoryItem key={item.id} title={item.title} />}
-          showsHorizontalScrollIndicator={false}
-          horizontal
-        />
-
-        <SeeAllHeader headerName='Featured products' link='/profile' />
-
-        <FlatList
-          data={DATA}
-          numColumns={2}
-          renderItem={({ item }) => <ProductCard key={item.id} onSelectHandle={onProductCardSelectHandler} />}
-          keyExtractor={item => item.title}
-        />
-
-      </ScrollView> */}
-      {/* <CustomFlatList
-        numColumns={2}
-        data={DATA}
-        style={styles.list}
-        renderItem={({ item }) => <ProductCard key={item.id} onSelectHandle={onProductCardSelectHandler} />}
-        contentContainerStyle={{ paddingHorizontal: 25, }}
-        HeaderComponent={
-          <>
-            <InputBox handleSearch={(input: string) => { }} />
-            <AdsBox />
-            <SeeAllHeader headerName='Categories' link='/profile' />
-            <FlatList
-              style={styles.categoryList}
-              contentContainerStyle={styles.categoryListContent}
-              data={DATA}
-              renderItem={({ item }) => <CategoryItem key={item.id} title={item.title} />}
-              showsHorizontalScrollIndicator={false}
-              horizontal
-            />
-          </>
-        }
-        StickyElementComponent={<SeeAllHeader headerName='Featured products' link='/profile' style={{ marginHorizontal: 25 }} />}
-        TopListElementComponent={<View style={styles.topList} />}
-      /> */}
       <SectionList
         ListHeaderComponent={
           <>
@@ -151,18 +129,19 @@ export default function HomeScreen() {
             <FlatList
               style={styles.categoryList}
               contentContainerStyle={styles.categoryListContent}
-              data={DATA}
+              data={CATEGORY_DATA}
               renderItem={({ item }) => <CategoryItem key={item.title} title={item.title} />}
               showsHorizontalScrollIndicator={false}
               horizontal />
           </>
         }
         sections={DATA}
-        keyExtractor={(item, index) => item + index}
+        keyExtractor={(item, index) => item.name + index}
         renderItem={renderSection}
-
+        stickyHeaderIndices={[0]}
+        showsVerticalScrollIndicator={false}
         renderSectionHeader={({ section: { title } }) => (
-          <SeeAllHeader headerName='Featured products' link='/profile' />
+          <SeeAllHeader headerName='Featured products' link='/profile' style={{backgroundColor: textColors.offGrey}} />
         )}
       />
 
@@ -189,7 +168,7 @@ export default function HomeScreen() {
         customAvoidingViewProps={{
           enabled: false,
         }}>
-        <ProductModalView ref={ refRBSheet } />
+        <ProductModalView ref={refRBSheet} onModalClose={handleModalClose} />
       </RBSheet>
     </SafeAreaView>
   );
@@ -219,10 +198,10 @@ const styles = StyleSheet.create({
   },
   categoryItem: {
     flex: 1,
-    backgroundColor: 'red',
     alignItems: 'center',
     height: 80,
     width: 70,
+    marginHorizontal: 2
   },
   categoryItemImg: {
     height: 48,
