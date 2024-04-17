@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Animated, FlatList, StyleSheet, Text, SafeAreaView, Button, SectionList } from 'react-native';
+import { FlatList, StyleSheet, Text, SafeAreaView, SectionList, Dimensions } from 'react-native';
 import { FlashList } from "@shopify/flash-list";
 
 import { View, ScrollView } from '@/components/Themed';
@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { openProduct } from '@/store/reducer';
 import CustomFlatList from '@/components/CustomFlatlist/customFlatlist';
+import { ProductModalView } from '@/components/app-components/product-modal';
 
 const DATA = [
   {
@@ -33,15 +34,14 @@ const DATA = [
   // },
 ];
 
-interface MyRefType {
+export interface MyRefType {
   open: () => void;
   close: () => void;
 }
 
 export default function HomeScreen() {
-  const scrollOffsetY = useRef(new Animated.Value(0)).current;
   const { productData, isLoading } = useSelector((state: RootState) => state.openProduct);
-  const refRBSheet = useRef<MyRefType>(null);
+  const refRBSheet = useRef();
 
   const dispatch = useDispatch();
 
@@ -171,19 +171,25 @@ export default function HomeScreen() {
         // useNativeDriver={true}
         customStyles={{
           wrapper: {
-            backgroundColor: 'transparent',
+            backgroundColor: '#00000080',
           },
           draggableIcon: {
             backgroundColor: '#000',
           },
+          container: {
+            backgroundColor: textColors.pureWhite,
+            borderRadius: 20
+          }
         }}
+        height={Dimensions.get('screen').height * 0.9}
         customModalProps={{
-          animationType: 'slide',
+          animationType: 'fade',
           statusBarTranslucent: true,
         }}
         customAvoidingViewProps={{
           enabled: false,
         }}>
+        <ProductModalView ref={ refRBSheet } />
       </RBSheet>
     </SafeAreaView>
   );
