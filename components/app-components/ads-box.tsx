@@ -2,9 +2,9 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import PagerView from 'react-native-pager-view';
 
-export const AdsBox = () => {
+export const AdsBox = ({ customStyles }: {customStyles?: object}) => {
   return (
-    <PagerView style={styles.pagerView} initialPage={0}>
+    <PagerView style={[styles.pagerView, customStyles]} initialPage={0}>
       <View style={styles.box} key="1">
         <Text>First page</Text>
       </View>

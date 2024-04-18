@@ -94,6 +94,9 @@ export default function HomeScreen() {
     refRBSheet.current?.close();
   }
 
+  const handleOnPress = () => {
+  }
+
   const renderSection = ({ section }: {
     section: {
       title?: string;
@@ -102,13 +105,13 @@ export default function HomeScreen() {
         data: string[];
       }[];
     }
-}) => {  
-    
+  }) => {
+
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <FlashList
           data={section.data[0].data}
-          contentContainerStyle={{backgroundColor: textColors.offGrey}}
+          contentContainerStyle={{ backgroundColor: textColors.offGrey }}
           numColumns={2}
           renderItem={({ item }) => <ProductCard key={item as string} onSelectHandle={onProductCardSelectHandler} />}
           keyExtractor={item => item as string}
@@ -119,25 +122,25 @@ export default function HomeScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }} >
+    <SafeAreaView style={{ flex: 1, backgroundColor: textColors.pureWhite }} >
+      <View style={styles.searchHeader}>
+        <Link href="/screens/searchScreen" asChild >
+          <Pressable style={styles.searchBoxElement}>
+            <AntDesign name="search1" size={28} color={textColors.navyBlack} />
+          </Pressable>
+        </Link>
+        <Link href="/screens/notificationScreen" asChild>
+          <Pressable style={styles.searchBoxElement}>
+            <Ionicons name="notifications-outline" size={28} color={textColors.navyBlack} />
+          </Pressable>
+        </Link>
+      </View>
       <SectionList
-        contentContainerStyle={styles.container}
+        // contentContainerStyle={styles.container}
         ListHeaderComponent={
           <>
-            <View style={styles.searchBox}>
-              <Link href="/screens/searchScreen" asChild>
-                <Pressable style={styles.searchBoxElement}>
-                  <AntDesign name="search1" size={28} color={textColors.navyBlack} />
-                </Pressable>
-              </Link>
-              <Link href="/screens/notificationScreen" asChild>
-                <Pressable style={styles.searchBoxElement}>
-                  <Ionicons name="notifications-outline" size={28} color={textColors.navyBlack} />
-                </Pressable>
-              </Link>
-            </View>
             <AdsBox />
-            <SeeAllHeader headerName='Categories' link='/profile' />
+            <SeeAllHeader headerName='Categories' btnName='See all' link='/profile' onPress={handleOnPress} />
             <FlatList
               style={styles.categoryList}
               contentContainerStyle={styles.categoryListContent}
@@ -150,10 +153,13 @@ export default function HomeScreen() {
         sections={DATA}
         keyExtractor={(item, index) => item.name + index}
         renderItem={renderSection}
-        stickyHeaderIndices={[0]}
         showsVerticalScrollIndicator={false}
         renderSectionHeader={({ section: { title } }) => (
-          <SeeAllHeader headerName='Featured products' link='/profile' style={{backgroundColor: textColors.offGrey}} />
+          <SeeAllHeader
+            headerName='Featured products'
+            btnName='See all' link='/profile'
+            style={{ backgroundColor: textColors.offGrey }}
+            onPress={handleOnPress} />
         )}
       />
 
@@ -187,29 +193,23 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
+  // container: {
+  //   // flex: 1,
+  //   alignItems: 'center',
+  //   paddingTop: 15,
+  // },
+  searchHeader: {
     alignItems: 'center',
-    paddingTop: 15,
-  },
-  searchBox: {
-    height: 50,
-    width: 80,
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     flexDirection: 'row',
     alignSelf: 'flex-end',
-    marginRight: 25
+    height: 50,
+    width: '100%',
+    paddingHorizontal: 5
   },
   searchBoxElement: {
+    marginHorizontal: 3,
     padding: 5
-  },
-  adsBox: {
-    height: 150,
-    backgroundColor: 'red',
-    width: '100%',
-    borderRadius: 10,
-    marginTop: 30
   },
   categoryList: {
     maxHeight: 80,

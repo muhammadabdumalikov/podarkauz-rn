@@ -3,14 +3,24 @@ import { Link } from 'expo-router';
 import React from 'react';
 import { StyleSheet, View, Text, Pressable } from 'react-native';
 
-export const SeeAllHeader = ({ headerName, link, style }: { headerName: string, link: string, style?: object }) => {
+export const SeeAllHeader = (
+  { headerName, link, style, onPress, btnName }
+    :
+  { headerName: string, link?: string, style?: object, onPress: () => void, btnName: string }) => {
   return <View style={[styles.box, style]}>
     <Text style={styles.headerName}>{headerName}</Text>
-    <Link href={link as `${string}:${string}`} asChild>
-      <Pressable>
-        <Text style={styles.seeAll}>See all</Text>
-      </Pressable>
-    </Link>
+    {link
+      ?
+      (<Link href={link as `${string}:${string}`} asChild>
+        <Pressable onPress={onPress}>
+          <Text style={styles.seeAll}>{btnName}</Text>
+        </Pressable>
+      </Link>)
+      :
+      (<Pressable onPress={onPress}>
+        <Text style={styles.seeAll}>{btnName}</Text>
+      </Pressable>)
+    }
   </View>
 };
 
