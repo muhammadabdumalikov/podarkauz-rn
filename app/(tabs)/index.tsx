@@ -1,9 +1,8 @@
 import { useEffect, useRef } from 'react';
-import { Animated, FlatList, StyleSheet, Text, SafeAreaView, Dimensions } from 'react-native';
+import { FlatList, StyleSheet, Text, SafeAreaView, Dimensions, Pressable } from 'react-native';
 import { FlashList } from "@shopify/flash-list";
 
 import { View, SectionList } from '@/components/Themed';
-import { InputBox } from '@/components/app-components/input-box';
 import { AdsBox } from '@/components/app-components/ads-box';
 import { SeeAllHeader } from '@/components/app-components/see-all-header';
 import { textColors } from '@/constants/Colors';
@@ -12,8 +11,9 @@ import { RootState } from '@/store/store';
 import { useSelector, useDispatch } from 'react-redux';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { openProduct } from '@/store/reducer';
-import CustomFlatList from '@/components/CustomFlatlist/customFlatlist';
 import { ProductModalView } from '@/components/app-components/product-modal';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
+import { Link } from 'expo-router';
 
 const DATA = [
   {
@@ -121,9 +121,21 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={{ flex: 1 }} >
       <SectionList
+        contentContainerStyle={styles.container}
         ListHeaderComponent={
           <>
-            <InputBox handleSearch={(input: string) => { }} />
+            <View style={styles.searchBox}>
+              <Link href="/screens/searchScreen" asChild>
+                <Pressable style={styles.searchBoxElement}>
+                  <AntDesign name="search1" size={28} color={textColors.navyBlack} />
+                </Pressable>
+              </Link>
+              <Link href="/screens/notificationScreen" asChild>
+                <Pressable style={styles.searchBoxElement}>
+                  <Ionicons name="notifications-outline" size={28} color={textColors.navyBlack} />
+                </Pressable>
+              </Link>
+            </View>
             <AdsBox />
             <SeeAllHeader headerName='Categories' link='/profile' />
             <FlatList
@@ -178,8 +190,19 @@ const styles = StyleSheet.create({
   container: {
     // flex: 1,
     alignItems: 'center',
-    paddingTop: 30,
-    paddingHorizontal: 25,
+    paddingTop: 15,
+  },
+  searchBox: {
+    height: 50,
+    width: 80,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignSelf: 'flex-end',
+    marginRight: 25
+  },
+  searchBoxElement: {
+    padding: 5
   },
   adsBox: {
     height: 150,
