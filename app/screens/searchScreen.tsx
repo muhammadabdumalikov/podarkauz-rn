@@ -1,4 +1,4 @@
-import { Pressable, SafeAreaView, StyleSheet, View } from 'react-native';
+import { Dimensions, Pressable, SafeAreaView, StyleSheet, View } from 'react-native';
 
 import { Text } from '@/components/Themed';
 import { InputBox } from '@/components/app-components/input-box';
@@ -6,10 +6,38 @@ import { textColors } from '@/constants/Colors';
 import { AntDesign } from '@expo/vector-icons';
 import { SeeAllHeader } from '@/components/app-components/see-all-header';
 import { router } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { DATA } from '@/constants/data';
+import { FlashList } from '@shopify/flash-list';
+import { ProductCard } from '@/components/app-components/product-card';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
+import { openProduct } from '@/store/reducer';
+import { MyRefType } from '../(tabs)';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import { ProductModalView } from '@/components/app-components/product-modal';
 
 export default function SearchScreen() {
   const [lastSearches, setLastSearches] = useState(['sports', 'phones', 'apple',]);
+
+  const { productData, isLoading } = useSelector((state: RootState) => state.openProduct);
+  const refRBSheet = useRef<MyRefType>(null);
+
+  const dispatch = useDispatch();
+
+  const onProductCardSelectHandler = (productId: string) => {
+    console.log(productId);
+    
+    dispatch(openProduct({ productId }));
+  }
+
+  useEffect(() => {
+    if (productData !== null) refRBSheet.current?.open();
+  }, [productData])
+
+  const handleModalClose = () => {
+    refRBSheet.current?.close();
+  }
 
   const handleSearch = (input: string) => {
     console.log(input);
@@ -58,6 +86,42 @@ export default function SearchScreen() {
       
       <SeeAllHeader headerName='Featured Products' btnName='See all' onPress={handleClearAll} />
 
+      {/* <View style={{ flex: 1 }}> */}
+        <FlashList
+          data={DATA[0].data[0].data}
+          contentContainerStyle={{ backgroundColor: textColors.offGrey }}
+          numColumns={2}
+          renderItem={({ item }) => <ProductCard key={item} onSelectHandle={onProductCardSelectHandler} />}
+          keyExtractor={item => item}
+          estimatedItemSize={10}
+        />
+      {/* </View> */}
+
+       <RBSheet
+        ref={refRBSheet}
+        // useNativeDriver={true}
+        customStyles={{
+          wrapper: {
+            backgroundColor: '#00000080',
+          },
+          draggableIcon: {
+            backgroundColor: '#000',
+          },
+          container: {
+            backgroundColor: textColors.pureWhite,
+            borderRadius: 20
+          }
+        }}
+        height={Dimensions.get('screen').height * 0.9}
+        customModalProps={{
+          animationType: 'fade',
+          statusBarTranslucent: true,
+        }}
+        customAvoidingViewProps={{
+          enabled: false,
+        }}>
+        <ProductModalView ref={refRBSheet} onModalClose={handleModalClose} />
+      </RBSheet>
     </SafeAreaView>
   );
 }
@@ -109,3 +173,7 @@ const styles = StyleSheet.create({
     padding: 5,
   }
 });
+function dispatch(arg0: any) {
+  throw new Error('Function not implemented.');
+}
+

@@ -14,16 +14,7 @@ import { openProduct } from '@/store/reducer';
 import { ProductModalView } from '@/components/app-components/product-modal';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
-
-const DATA = [
-  {
-    title: 'Main dishes',
-    data: [{
-      name: 'x',
-      data: ['French Fries', 'Onion Rings', 'Fried Shrimps', '1', '2', '3', '4']
-    }],
-  },
-];
+import { DATA } from '@/constants/data';
 
 const CATEGORY_DATA = [
   {
