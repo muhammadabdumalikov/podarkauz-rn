@@ -10,15 +10,24 @@ export const DATA = [
 
 export const CATEGORY_DATA = [
   {
-    title: 'Main dishes',
+    title: 'Colors',
   },
   {
-    title: 'Main dishes',
+    title: 'Dishes',
   },
   {
-    title: 'Main dishes',
+    title: 'Home attributes',
   },
   {
-    title: 'Main dishes',
+    title: 'After building',
+  },
+  {
+    title: 'Classic building',
+  },
+  {
+    title: 'New Moons',
+  },
+  {
+    title: 'Trash',
   },
 ];

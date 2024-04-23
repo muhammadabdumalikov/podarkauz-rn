@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FlatList, StyleSheet, Text, SafeAreaView, Dimensions, Pressable } from 'react-native';
 import { FlashList } from "@shopify/flash-list";
 
@@ -14,46 +14,7 @@ import { openProduct } from '@/store/reducer';
 import { ProductModalView } from '@/components/app-components/product-modal';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
-import { DATA } from '@/constants/data';
-
-const CATEGORY_DATA = [
-  {
-    title: 'Main dishessss',
-  },
-  {
-    title: 'Main dishes',
-  },
-  {
-    title: 'Main dishes',
-  },
-  {
-    title: 'Main dishes',
-  },
-  {
-    title: 'Main dishes',
-  },
-  {
-    title: 'Main dishes',
-  },
-  {
-    title: 'Main dishes',
-  },
-  {
-    title: 'Main dishes',
-  },
-  {
-    title: 'Main dishes',
-  },
-  {
-    title: 'Main dishes',
-  },
-  {
-    title: 'Main dishes',
-  },
-  {
-    title: 'Main dishes',
-  },
-];
+import { CATEGORY_DATA, DATA } from '@/constants/data';
 
 export interface MyRefType {
   open: () => void;
@@ -62,6 +23,7 @@ export interface MyRefType {
 
 export default function HomeScreen() {
   const { productData, isLoading } = useSelector((state: RootState) => state.openProduct);
+  const [selectedProduct, setSelectedProduct] = useState<{productId: string}>();
   const refRBSheet = useRef<MyRefType>(null);
 
   const dispatch = useDispatch();
@@ -74,12 +36,14 @@ export default function HomeScreen() {
   }
 
   const onProductCardSelectHandler = (productId: string) => {
-    dispatch(openProduct({ productId }));
+    setSelectedProduct({ productId });
+    refRBSheet.current?.open();
+    // dispatch(openProduct({ productId }));
   }
 
-  useEffect(() => {
-    if (productData !== null) refRBSheet.current?.open();
-  }, [productData])
+  // useEffect(() => {
+  //   if (productData !== null) refRBSheet.current?.open();
+  // }, [productData])
 
   const handleModalClose = () => {
     refRBSheet.current?.close();
