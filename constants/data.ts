@@ -7,3 +7,18 @@ export const DATA = [
     }],
   },
 ];
+
+export const CATEGORY_DATA = [
+  {
+    title: 'Main dishes',
+  },
+  {
+    title: 'Main dishes',
+  },
+  {
+    title: 'Main dishes',
+  },
+  {
+    title: 'Main dishes',
+  },
+];

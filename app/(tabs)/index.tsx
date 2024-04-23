@@ -85,7 +85,7 @@ export default function HomeScreen() {
     refRBSheet.current?.close();
   }
 
-  const handleOnPress = () => {
+  const handleCategoryOnPress = () => {
   }
 
   const renderSection = ({ section }: {
@@ -131,7 +131,7 @@ export default function HomeScreen() {
         ListHeaderComponent={
           <>
             <AdsBox />
-            <SeeAllHeader headerName='Categories' btnName='See all' link='/profile' onPress={handleOnPress} />
+            <SeeAllHeader headerName='Categories' btnName='See all' link='/screens/categoryListScreen' onPress={handleCategoryOnPress} />
             <FlatList
               style={styles.categoryList}
               contentContainerStyle={styles.categoryListContent}
@@ -150,7 +150,7 @@ export default function HomeScreen() {
             headerName='Featured products'
             btnName='See all' link='/profile'
             style={{ backgroundColor: textColors.offGrey }}
-            onPress={handleOnPress} />
+            onPress={handleCategoryOnPress} />
         )}
       />
 

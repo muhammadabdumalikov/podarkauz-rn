@@ -16,6 +16,7 @@ import { openProduct } from '@/store/reducer';
 import { MyRefType } from '../(tabs)';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { ProductModalView } from '@/components/app-components/product-modal';
+import { goBack } from '@/shared/functions';
 
 export default function SearchScreen() {
   const [lastSearches, setLastSearches] = useState(['sports', 'phones', 'apple',]);
@@ -51,10 +52,6 @@ export default function SearchScreen() {
     setLastSearches(prev => {
       return lastSearches.slice(0, index).concat(lastSearches.slice(index + 1));
     })
-  }
-
-  const goBack = () => {
-    router.back();
   }
 
   return (
