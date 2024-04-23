@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createSelector, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 export interface ProductModal {
   productData: any,
@@ -19,7 +19,7 @@ interface OpenProductPayload {
 }
 
 export const openProduct = createAsyncThunk('openCard', async (params: OpenProductPayload, thunkApi) => {
-  try {    
+  try {        
     return { productId: '1' };
   } catch (error) {
     return thunkApi.rejectWithValue(error);
@@ -29,7 +29,11 @@ export const openProduct = createAsyncThunk('openCard', async (params: OpenProdu
 export const openProductSlice = createSlice({
   name: 'openProduct',
   initialState,
-  reducers: {},
+  reducers: {
+    closeProductModal: state => {
+      state.productData = null;
+    },
+  },
   extraReducers: builder => {
     builder.addCase(openProduct.pending, state => {
       state.isLoading = true;
@@ -49,6 +53,6 @@ export const openProductSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-// export const { selectProduct } = openProductSlice.actions
+export const { closeProductModal } = openProductSlice.actions
 
 export default openProductSlice.reducer

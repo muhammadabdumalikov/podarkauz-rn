@@ -10,7 +10,7 @@ import { ProductCard } from '@/components/app-components/product-card';
 import { RootState } from '@/store/store';
 import { useSelector, useDispatch } from 'react-redux';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import { openProduct } from '@/store/reducer';
+import { closeProductModal, openProduct } from '@/store/reducer';
 import { ProductModalView } from '@/components/app-components/product-modal';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
@@ -66,11 +66,14 @@ export default function HomeScreen() {
 
   const dispatch = useDispatch();
 
-  const CategoryItem = ({ title }) => {
-    return <View style={styles.categoryItem}>
-      <View style={styles.categoryItemImg}></View>
-      <Text style={styles.categoryItemTxt}>{title}</Text>
-    </View>
+  const CategoryItem = ({ title }: { title: string }) => {
+    return (
+      <Link href={{ pathname: "/screens/inCategoryScreen", params: {categoryName: title} }}  asChild >
+        <Pressable style={styles.categoryItem}>
+          <View style={styles.categoryItemImg}></View>
+          <Text style={styles.categoryItemTxt}>{title}</Text>
+        </Pressable>
+      </Link>);
   }
 
   const onProductCardSelectHandler = (productId: string) => {
@@ -82,6 +85,7 @@ export default function HomeScreen() {
   }, [productData])
 
   const handleModalClose = () => {
+    closeProductModal();
     refRBSheet.current?.close();
   }
 

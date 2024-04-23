@@ -1,12 +1,10 @@
 import { Dimensions, Pressable, SafeAreaView, StyleSheet, View } from 'react-native';
 
-import { Text } from '@/components/Themed';
 import { InputBox } from '@/components/app-components/input-box';
 import { textColors } from '@/constants/Colors';
 import { AntDesign } from '@expo/vector-icons';
-import { SeeAllHeader } from '@/components/app-components/see-all-header';
-import { router } from 'expo-router';
-import { useEffect, useRef, useState } from 'react';
+import { router, useLocalSearchParams } from 'expo-router';
+import { useEffect, useRef } from 'react';
 import { DATA } from '@/constants/data';
 import { FlashList } from '@shopify/flash-list';
 import { ProductCard } from '@/components/app-components/product-card';
@@ -16,10 +14,11 @@ import { closeProductModal, openProduct } from '@/store/reducer';
 import { MyRefType } from '../(tabs)';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { ProductModalView } from '@/components/app-components/product-modal';
+import { Text } from '@/components/Themed';
 
-export default function SearchScreen() {
-  const [lastSearches, setLastSearches] = useState(['sports', 'phones', 'apple',]);
-
+export default function InCategoryScreen() {
+  const params = useLocalSearchParams();
+  
   const { productData, isLoading } = useSelector((state: RootState) => state.openProduct);
   const refRBSheet = useRef<MyRefType>(null);
 
@@ -42,16 +41,6 @@ export default function SearchScreen() {
     console.log(input);
   }
 
-  const handleClearAll = () => {
-    setLastSearches([]);
-  }
-
-  const handleDeleteLastSearch = (index: number) => {
-    setLastSearches(prev => {
-      return lastSearches.slice(0, index).concat(lastSearches.slice(index + 1));
-    })
-  }
-
   const goBack = () => {
     router.back();
   }
@@ -64,28 +53,9 @@ export default function SearchScreen() {
         </Pressable>
         <InputBox customStyles={styles.inputBox} handleSearch={handleSearch} />
       </View>
-      {lastSearches.length > 0 &&
-        <>
-          <SeeAllHeader headerName='Last Search' btnName='Clear all' onPress={handleClearAll} />
-          <View style={styles.lastSearchBox}>
-            {lastSearches.map((item, index) => (
-              <View style={styles.lastSearchElement} key={index}>
-                <View style={styles.circleTxt}>
-                  <AntDesign name="clockcircleo" size={20} color={textColors.halfGrey} />
-                  <Text style={styles.lastSearchTxt} numberOfLines={1}>{item}</Text>
-                </View>
-                <Pressable onPress={() => handleDeleteLastSearch(index)}>
-                  <AntDesign name="close" size={20} color={textColors.navyBlack} style={styles.lastSearchDeleteBtn} />
-                </Pressable>
-              </View>
-            ))}
-          </View>
-        </>
-      }
 
-      <SeeAllHeader headerName='Featured Products' btnName='See all' onPress={handleClearAll} />
-
-      {/* <View style={{ flex: 1 }}> */}
+      <Text style={styles.categoryName} numberOfLines={2}>{params.categoryName}</Text>
+      
       <FlashList
         data={DATA[0].data[0].data}
         contentContainerStyle={{ backgroundColor: textColors.offGrey }}
@@ -95,7 +65,6 @@ export default function SearchScreen() {
         estimatedItemSize={10}
         showsVerticalScrollIndicator={false}
       />
-      {/* </View> */}
 
       <RBSheet
         ref={refRBSheet}
@@ -142,26 +111,12 @@ const styles = StyleSheet.create({
   inputBox: {
     marginLeft: 25
   },
-  lastSearchBox: {
+  categoryName: {
+    fontSize: 24,
+    fontWeight: 'bold',
     paddingHorizontal: 25,
-  },
-  lastSearchElement: {
-    flexDirection: 'row',
-    height: 40,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  circleTxt: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  lastSearchTxt: {
-    fontSize: 14,
-    marginLeft: 10,
-    color: textColors.navyBlack
-  },
-  lastSearchDeleteBtn: {
-    padding: 5,
+    marginTop: 20,
+    marginBottom: 20
   },
   goBackBtn: {
     padding: 5

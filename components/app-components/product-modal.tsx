@@ -22,7 +22,7 @@ export const ProductModalView = React.forwardRef(({ onModalClose }: any, ref) =>
 
 			// Adjust the timeout value 
 			// according to your needs 
-		}, 2000); 
+		}, 500); 
   }, []); 
 
   return  <View style={styles.box} ref={ref}>
