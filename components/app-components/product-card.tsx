@@ -1,7 +1,7 @@
 import { textColors } from '@/constants/Colors';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { useRef, useState } from 'react';
-import { StyleSheet, View, Text, Pressable, Animated } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Animated, ImageBackground } from 'react-native';
 
 export const ProductCard = ({ onSelectHandle }) => {
   const [favourite, setFavorite] = useState(false);
@@ -25,14 +25,8 @@ export const ProductCard = ({ onSelectHandle }) => {
   }
 
   return <Pressable style={styles.box} onPress={onSelectHandle}>
-    <Animated.View style={[styles.image, {opacity: fadeAnimation}]}>
-      <Pressable onPress={onHeartPressHandler}>
-        <AntDesign
-          name={favourite ? 'heart' : 'hearto'}
-          size={20}
-          color={favourite ? textColors.redVelvet : textColors.pureWhite}
-          style={styles.heartIconStyle} />
-      </Pressable>
+    <Animated.View style={[styles.image, { opacity: fadeAnimation }]}>
+      <ImageBackground style={styles.imageBox} source={{ uri: 'https://picsum.photos/180/290' }}/>
     </Animated.View>
     <View style={styles.cardFooter}>
       <Text numberOfLines={1} style={styles.productTitle}>TMA-2 HD Wireleswwwws</Text>
@@ -46,8 +40,12 @@ export const ProductCard = ({ onSelectHandle }) => {
 
         <Text style={styles.commentTxt}>86 Reviews</Text>
 
-        <Pressable>
-          <Feather name="more-vertical" size={16} color={textColors.darkGrey} />
+         <Pressable onPress={onHeartPressHandler}>
+          <AntDesign
+            name={favourite ? 'heart' : 'hearto'}
+            size={20}
+            color={textColors.navyBlack}
+          />
         </Pressable>
       </View>
     </View>
@@ -67,9 +65,11 @@ const styles = StyleSheet.create({
     overflow: 'hidden'
   },
   image: {
-    width: '100%',
     height: 190,
-    backgroundColor: 'grey',
+  },
+  imageBox: {
+    flex: 1,
+    justifyContent: 'center',
   },
   cardFooter: {
     padding: 15
@@ -103,10 +103,4 @@ const styles = StyleSheet.create({
     marginRight: 10,
     fontSize: 10
   },
-  heartIconStyle: {
-    position: 'absolute',
-    right: 5,
-    top: 5,
-    padding: 10,
-  }
 });

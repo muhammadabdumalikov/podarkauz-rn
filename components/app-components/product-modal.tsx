@@ -1,39 +1,98 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { textColors } from '@/constants/Colors';
 import { Link } from 'expo-router';
-import { StyleSheet, View, Text, Pressable } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Animated } from 'react-native';
 import { ScrollView } from '../Themed';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { MyRefType } from '@/app/(tabs)';
 import { ProductModalShopHeader } from './product-modal-shop-header';
 import { CardSkeleton } from './modal-skeleton';
+import Carousel from 'react-native-reanimated-carousel';
+
+const animationTime = 500;
 
 export const ProductModalView = React.forwardRef(({ onModalClose }: any, ref) => {
-	const [isLoading, setIsLoading] = useState(true); 
+  const counterAnimatedValue = useRef(new Animated.Value(0)).current;
+  const [isLoading, setIsLoading] = useState(true);
+  const [productCountCounter, setProductCountCounter] = useState(0);
 
-	useEffect(() => { 
+  useEffect(() => {
 
-		// Simulating an asynchronous data fetch 
-		setTimeout(() => { 
+    // Simulating an asynchronous data fetch 
+    setTimeout(() => {
 
-			// Set isLoading to false after 
-			// the data is fetched 
-			setIsLoading(false); 
+      // Set isLoading to false after 
+      // the data is fetched 
+      setIsLoading(false);
 
 			// Adjust the timeout value 
 			// according to your needs 
 		}, 500); 
   }, []); 
 
-  return  <View style={styles.box} ref={ref}>
+  const startCounterAnimation = (value: number) => {
+    return Animated.spring(counterAnimatedValue, {
+      toValue: value,
+      useNativeDriver: true,
+      // damping: 3
+    })
+  }
+
+  const counterScale = counterAnimatedValue.interpolate({
+    inputRange: [-1, 0, 1],
+    outputRange: [1.5, 1, 1.5],
+    extrapolate: 'clamp'
+  })
+
+  const counterDecrement = () => {
+    setProductCountCounter(productCountCounter - 1);
+    startCounterAnimation(-1).start();
+    setTimeout(() => {
+      startCounterAnimation(0).start()
+    }, animationTime);
+  }
+
+  const counterIncrement = () => {
+    setProductCountCounter(productCountCounter + 1);
+    startCounterAnimation(1).start();
+    setTimeout(() => {
+      startCounterAnimation(0).start()
+    }, animationTime);
+  }
+
+  return <View style={styles.box} ref={ref}>
     {!isLoading ? (
-      <><View style={styles.headerBox}>
-        <Text style={styles.headerTxt}>Detail Product</Text>
-        <Pressable style={styles.closeBtn} onPress={onModalClose}>
-          <AntDesign name="close" size={24} color={textColors.navyBlack} />
-        </Pressable>
-      </View><ScrollView style={styles.box} contentContainerStyle={styles.boxContainer} showsVerticalScrollIndicator={false}>
-          <View style={styles.imageBox}></View>
+      <>
+        <View style={styles.headerBox}>
+          <Text style={styles.headerTxt}>Detail Product</Text>
+          <Pressable style={styles.closeBtn} onPress={onModalClose}>
+            <AntDesign name="close" size={24} color={textColors.navyBlack} />
+          </Pressable>
+        </View>
+        <ScrollView style={styles.box} contentContainerStyle={styles.boxContainer} showsVerticalScrollIndicator={false}>
+          <View style={styles.imageBox}>
+            <Carousel
+              loop
+              width={325}
+              height={325}
+              // autoPlay={true}
+              data={[...new Array(6).keys()]}
+              scrollAnimationDuration={1000}
+              onSnapToItem={(index) => console.log('current index:', index)}
+              renderItem={({ index }) => (
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Text style={styles.imageCounter}>
+                    {index}/6
+                  </Text>
+                </View>
+              )}
+            />
+          </View>
 
           <View style={styles.cardFooter}>
             <Text numberOfLines={1} style={styles.productTitle}>TMA-2 HD Wireleswwwws</Text>
@@ -72,8 +131,22 @@ export const ProductModalView = React.forwardRef(({ onModalClose }: any, ref) =>
 
           <View style={styles.divider} />
 
-        </ScrollView></>
-    ) : <CardSkeleton/>}
+          <View style={styles.counterBox}>
+            <Pressable onPress={counterDecrement}>
+              <AntDesign name="minuscircleo" size={24} color="black" />
+            </Pressable>
+            <Animated.Text
+              style={[{ transform: [{ scale: counterScale }], fontWeight: '500', fontSize: 16 }]}>
+              {productCountCounter}
+            </Animated.Text>
+            <Pressable onPress={counterIncrement}>
+              <AntDesign name="pluscircleo" size={24} color="black" />
+            </Pressable>
+          </View>
+
+        </ScrollView>
+      </>
+    ) : <CardSkeleton />}
   </View>
 });
 
@@ -113,11 +186,18 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   imageBox: {
-    width: '100%',
+    flex: 1,
     height: 325,
     backgroundColor: textColors.softGrey,
     borderRadius: 10,
     marginBottom: 30
+  },
+  imageCounter:
+  {
+    fontSize: 20,
+    position: 'absolute',
+    bottom: 10,
+    left: 10
   },
   cardFooter: {
     width: '100%',
@@ -180,5 +260,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 15
+  },
+  counterBox: {
+    backgroundColor: textColors.halfGrey,
+    padding: 3,
+    borderRadius: '50%',
+    width: 100,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
   }
 });

@@ -5,33 +5,25 @@ import { InputBox } from '@/components/app-components/input-box';
 import { textColors } from '@/constants/Colors';
 import { AntDesign } from '@expo/vector-icons';
 import { SeeAllHeader } from '@/components/app-components/see-all-header';
-import { router } from 'expo-router';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { DATA } from '@/constants/data';
 import { FlashList } from '@shopify/flash-list';
 import { ProductCard } from '@/components/app-components/product-card';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store/store';
-import { closeProductModal, openProduct } from '@/store/reducer';
 import { MyRefType } from '../(tabs)';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { ProductModalView } from '@/components/app-components/product-modal';
+import { goBack } from '@/shared/functions';
 
 export default function SearchScreen() {
+  const [selectedProduct, setSelectedProduct] = useState<{productId: string}>();
   const [lastSearches, setLastSearches] = useState(['sports', 'phones', 'apple',]);
 
-  const { productData, isLoading } = useSelector((state: RootState) => state.openProduct);
   const refRBSheet = useRef<MyRefType>(null);
 
-  const dispatch = useDispatch();
-
-  const onProductCardSelectHandler = (productId: string) => {
-    dispatch(openProduct({ productId }));
+   const onProductCardSelectHandler = (productId: string) => {
+    setSelectedProduct({ productId });
+    refRBSheet.current?.open();
   }
-
-  useEffect(() => {
-    if (productData !== null) refRBSheet.current?.open();
-  }, [productData])
 
   const handleModalClose = () => {
     closeProductModal();
@@ -50,10 +42,6 @@ export default function SearchScreen() {
     setLastSearches(prev => {
       return lastSearches.slice(0, index).concat(lastSearches.slice(index + 1));
     })
-  }
-
-  const goBack = () => {
-    router.back();
   }
 
   return (
