@@ -25,10 +25,10 @@ export const ProductModalView = React.forwardRef(({ onModalClose }: any, ref) =>
       // the data is fetched 
       setIsLoading(false);
 
-			// Adjust the timeout value 
-			// according to your needs 
-		}, 500); 
-  }, []); 
+      // Adjust the timeout value 
+      // according to your needs 
+    }, 500);
+  }, []);
 
   const startCounterAnimation = (value: number) => {
     return Animated.spring(counterAnimatedValue, {
@@ -131,20 +131,30 @@ export const ProductModalView = React.forwardRef(({ onModalClose }: any, ref) =>
 
           <View style={styles.divider} />
 
-          <View style={styles.counterBox}>
-            <Pressable onPress={counterDecrement}>
-              <AntDesign name="minuscircleo" size={24} color="black" />
-            </Pressable>
-            <Animated.Text
-              style={[{ transform: [{ scale: counterScale }], fontWeight: '500', fontSize: 16 }]}>
-              {productCountCounter}
-            </Animated.Text>
-            <Pressable onPress={counterIncrement}>
-              <AntDesign name="pluscircleo" size={24} color="black" />
-            </Pressable>
-          </View>
+          <View style={styles.amountBox}>
+            <Text style={styles.counterBoxTxt}>
+              Amount:
+            </Text>
 
+            <View style={styles.counterBox}>
+              <Pressable style={styles.counterIconsStyle} onPress={counterDecrement}>
+                <AntDesign name="minus" size={24} color="black" />
+              </Pressable>
+              <Animated.Text
+                style={[{ transform: [{ scale: counterScale }], fontWeight: '500', fontSize: 16 }]}>
+                {productCountCounter}
+              </Animated.Text>
+              <Pressable style={styles.counterIconsStyle} onPress={counterIncrement}>
+                <AntDesign name="plus" size={24} color="black" />
+              </Pressable>
+            </View>
+          </View>
         </ScrollView>
+       
+        <View style={styles.modalFooterPrice}>
+          <Text style={styles.modalFooterPriceTxt}>3000 UZS</Text>
+          <Pressable style={styles.buyBtn}></Pressable>
+        </View>
       </>
     ) : <CardSkeleton />}
   </View>
@@ -261,13 +271,47 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 15
   },
-  counterBox: {
-    backgroundColor: textColors.halfGrey,
-    padding: 3,
-    borderRadius: '50%',
-    width: 100,
+  amountBox: {
+    flex: 1,
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between'
+  },
+  counterBox: {
+    backgroundColor: textColors.softGrey,
+    padding: 3,
+    borderRadius: '50%',
+    width: 90,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  counterBoxTxt: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  counterIconsStyle: {
+    backgroundColor: textColors.pureWhite,
+    borderRadius: '50%'
+  },
+  modalFooterPrice: {
+    height: 100,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingBottom: 10,
+    paddingHorizontal: 25,
+    position: 'absolute',
+    backgroundColor: textColors.softGrey,
+    zIndex: 1
+  },
+  modalFooterPriceTxt: {
+    fontSize: 30,
+    fontWeight: '500',
+    color: textColors.navyBlack,
   }
 });
