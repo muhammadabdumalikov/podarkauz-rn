@@ -1,0 +1,9 @@
+{
+  "build": {
+    "production": {
+      "env": {
+        "API_URL": "https://localhost:7044"
+      }
+    }
+  }
+}

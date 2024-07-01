@@ -5,8 +5,12 @@ import { CATEGORY_DATA } from '@/constants/data';
 import { InputBox } from '@/components/app-components/input-box';
 import { AntDesign } from '@expo/vector-icons';
 import { goBack } from '@/shared/functions';
+import useCategories from '@/hooks/queries/categories';
 
 export default function CategoryListScreen() {
+  const notifications = useCategories();
+  console.log(11111, notifications);
+  
   const handleSearch = (input: string) => {
     console.log(input);
   }
