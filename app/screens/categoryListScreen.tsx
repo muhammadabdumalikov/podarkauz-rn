@@ -18,7 +18,6 @@ export default function CategoryListScreen() {
   if (isLoading) {
     return <ActivityIndicator />;
   }
-  console.log(44444, data);
   
   const handleSearch = (input: string) => {
     console.log(input);
@@ -33,16 +32,16 @@ export default function CategoryListScreen() {
         <InputBox customStyles={styles.inputBox} handleSearch={handleSearch} />
       </View>
       <FlatList
-        data={CATEGORY_DATA}
+        data={data.data}
         contentContainerStyle={{ backgroundColor: textColors.pureWhite }}
-        renderItem={({ item }) => <Pressable style={styles.categoryBox} key={item.title}>
-          <ImageBackground style={styles.categoryImage} source={{ uri: 'https://picsum.photos/200/300?grayscale' }} />
+        renderItem={({ item }) => <Pressable style={styles.categoryBox} key={item.name}>
+          <ImageBackground style={styles.categoryImage} source={{ uri: item.avatarCroppedUrl }} />
 
           <View style={styles.categoryTxtBox}>
-            <Text style={styles.categoryTxt}>{item.title}</Text>
+            <Text style={styles.categoryTxt}>{item.name}</Text>
           </View>
         </Pressable>}
-        keyExtractor={item => item.title}
+        keyExtractor={item => item.name}
       />
     </SafeAreaView>
   );

@@ -1,16 +1,18 @@
 export const fetchWatchlistMovies = async () => {
   
   const url =
-    'http://192.168.50.225:3000/v1/customers/artists/public/find';
+    'http://192.168.100.27:3000/v1/customers/artists/public/find';
   const options = {
     method: 'POST',
+    headers: {
+      'content-type': 'application/json'
+    },
     body: JSON.stringify({
       limit: 1000
     }),
   };
 
   const res = await fetch(url, options);
-  console.log(2222, res);
 
   if (!res.ok) {
     throw new Error('Failed to fetch movies');

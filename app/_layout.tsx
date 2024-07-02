@@ -23,6 +23,8 @@ export const unstable_settings = {
   initialRouteName: '(tabs)',
 };
 
+const queryClient = new QueryClient()
+
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -53,9 +55,6 @@ export default function RootLayout() {
 
   return <RootLayoutNav />;
 }
-
-
-const queryClient = new QueryClient()
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
