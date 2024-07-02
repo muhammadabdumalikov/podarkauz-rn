@@ -6,7 +6,8 @@ const useCategories = () => {
   return useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
-
+      console.log(55555, api.getUri());
+      
       const data = await api.get("/api/Auth/find?phone=string");
       return data as unknown as ICategory[];
     },

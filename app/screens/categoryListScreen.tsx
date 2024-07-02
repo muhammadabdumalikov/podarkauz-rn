@@ -1,4 +1,4 @@
-import { FlatList, ImageBackground, Pressable, SafeAreaView, StyleSheet, View, Text } from 'react-native';
+import { FlatList, ImageBackground, Pressable, SafeAreaView, StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 
 import { textColors } from '@/constants/Colors';
 import { CATEGORY_DATA } from '@/constants/data';
@@ -6,10 +6,19 @@ import { InputBox } from '@/components/app-components/input-box';
 import { AntDesign } from '@expo/vector-icons';
 import { goBack } from '@/shared/functions';
 import useCategories from '@/hooks/queries/categories';
+import { useQuery } from '@tanstack/react-query';
+import { fetchWatchlistMovies } from '@/service/api/categort-list';
 
 export default function CategoryListScreen() {
-  const notifications = useCategories();
-  console.log(11111, notifications);
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['categories'],
+    queryFn: fetchWatchlistMovies,
+  });
+
+  if (isLoading) {
+    return <ActivityIndicator />;
+  }
+  console.log(44444, data);
   
   const handleSearch = (input: string) => {
     console.log(input);

@@ -8,8 +8,8 @@ import { store } from '../store/store';
 import { Provider } from 'react-redux'
 
 import { useColorScheme } from '@/components/useColorScheme';
-import { QueryClientProvider } from '@tanstack/react-query';
-import queryClient from '@/service/api/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+// import queryClient from '@/service/api/react-query';
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 
@@ -54,22 +54,14 @@ export default function RootLayout() {
   return <RootLayoutNav />;
 }
 
+
+const queryClient = new QueryClient()
+
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <PersistQueryClientProvider
-      client={queryClient}
-      persistOptions={{
-        persister,
-        maxAge: 1000 * 60 * 60 * 24, // 24 hours
-        buster: 'your-cache-buster-string', // Change this whenever you want to invalidate the cache
-      }}
-      onError={(error) => {
-        console.error('Error restoring cache:', error);
-        // Optionally, you can clear the entire cache here
-        queryClient.clear();
-      }}>
+    <QueryClientProvider client={queryClient}>
       <Provider store={store}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack>
@@ -81,6 +73,6 @@ function RootLayoutNav() {
         </Stack>
       </ThemeProvider>
       </Provider>
-    </PersistQueryClientProvider>
+    </QueryClientProvider>
   );
 }
