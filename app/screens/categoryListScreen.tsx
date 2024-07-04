@@ -7,14 +7,15 @@ import { AntDesign } from '@expo/vector-icons';
 import { goBack } from '@/shared/functions';
 import useCategories from '@/hooks/queries/categories';
 import { useQuery } from '@tanstack/react-query';
-import { fetchWatchlistMovies } from '@/service/api/categort-list';
+import { fetchCategories } from '@/service/api/categort-list';
 
 export default function CategoryListScreen() {
   const { data, isLoading, error } = useQuery({
     queryKey: ['categories'],
-    queryFn: fetchWatchlistMovies,
+    queryFn: fetchCategories,
   });
-
+  console.log(22222, data);
+  
   if (isLoading) {
     return <ActivityIndicator />;
   }
@@ -32,16 +33,16 @@ export default function CategoryListScreen() {
         <InputBox customStyles={styles.inputBox} handleSearch={handleSearch} />
       </View>
       <FlatList
-        data={data.data}
+        data={data}
         contentContainerStyle={{ backgroundColor: textColors.pureWhite }}
-        renderItem={({ item }) => <Pressable style={styles.categoryBox} key={item.name}>
-          <ImageBackground style={styles.categoryImage} source={{ uri: item.avatarCroppedUrl }} />
+        renderItem={({ item }) => <Pressable style={styles.categoryBox} key={item.id}>
+          <ImageBackground style={styles.categoryImage} source={{ uri: 'https://picsum.photos/200/300?grayscale' }} />
 
           <View style={styles.categoryTxtBox}>
-            <Text style={styles.categoryTxt}>{item.name}</Text>
+            <Text style={styles.categoryTxt}>{item.name_uz}</Text>
           </View>
         </Pressable>}
-        keyExtractor={item => item.name}
+        keyExtractor={item => item.id}
       />
     </SafeAreaView>
   );

@@ -1,15 +1,15 @@
-export const fetchWatchlistMovies = async () => {
+export const fetchCategories = async () => {
   
   const url =
-    'http://192.168.100.27:3000/v1/customers/artists/public/find';
+    'http://192.168.100.27:3001/api/category/parents';
   const options = {
-    method: 'POST',
+    method: 'GET',
     headers: {
       'content-type': 'application/json'
     },
-    body: JSON.stringify({
-      limit: 1000
-    }),
+    // body: JSON.stringify({
+    //   limit: 1000
+    // }),
   };
 
   const res = await fetch(url, options);
@@ -17,7 +17,7 @@ export const fetchWatchlistMovies = async () => {
   if (!res.ok) {
     throw new Error('Failed to fetch movies');
   }
-  
+
   const json = await res.json();
 
   return json;
