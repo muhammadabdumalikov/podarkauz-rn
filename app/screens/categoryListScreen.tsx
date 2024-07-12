@@ -14,10 +14,9 @@ export default function CategoryListScreen() {
     queryKey: ['categories'],
     queryFn: fetchCategories,
   });
-  console.log(22222, data);
   
   if (isLoading) {
-    return <ActivityIndicator />;
+    return <ActivityIndicator color='red' style={{ flex: 1}} />;
   }
   
   const handleSearch = (input: string) => {
@@ -34,7 +33,9 @@ export default function CategoryListScreen() {
       </View>
       <FlatList
         data={data}
-        contentContainerStyle={{ backgroundColor: textColors.pureWhite }}
+        numColumns={2}
+        contentContainerStyle={{ backgroundColor: textColors.pureWhite, paddingHorizontal: 20 }}
+        columnWrapperStyle={styles.row}
         renderItem={({ item }) => <Pressable style={styles.categoryBox} key={item.id}>
           <ImageBackground style={styles.categoryImage} source={{ uri: 'https://picsum.photos/200/300?grayscale' }} />
 
@@ -66,11 +67,16 @@ const styles = StyleSheet.create({
     marginLeft: 25
   },
   categoryBox: {
-    height: 120,
-    marginHorizontal: 15,
+    height: 150,
+    width: 165,
+    // marginHorizontal: 10,
     marginVertical: 10,
-    borderRadius: 10,
+    borderRadius: 20,
     overflow: 'hidden'
+  },
+   row: {
+    flex: 1,
+    justifyContent: 'space-between',
   },
   categoryImage: {
     flex: 1,
