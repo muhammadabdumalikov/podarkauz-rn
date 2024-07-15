@@ -2,23 +2,23 @@ import { FlatList, Pressable, SafeAreaView, StyleSheet, View } from 'react-nativ
 
 import { textColors } from '@/constants/Colors';
 import { DATA_WITH_ID_10 } from '@/constants/data';
-import { InputBox } from '@/components/app-components/input-box';
-import { AntDesign } from '@expo/vector-icons';
-import { goBack } from '@/shared/functions';
 import { useQuery } from '@tanstack/react-query';
 import { fetchCategories } from '@/service/api/categort-list';
-import CategoriesListItem from '@/components/app-components/parent-category-list-item';
+import SubcategoriesListItem from '@/components/app-components/subcategories-list-item';
+import { AntDesign } from '@expo/vector-icons';
+import { InputBox } from '@/components/app-components/input-box';
+import { goBack } from '@/shared/functions';
 
-export default function CategoryListScreen() {
+export default function ListScreen() {
   const { data, isLoading, error } = useQuery({
     queryKey: ['categories'],
     queryFn: fetchCategories,
   });
-  
+
   const handleSearch = (input: string) => {
     console.log(input);
   }
-
+  
   return (
     <SafeAreaView style={styles.container} >
       <View style={styles.headerBox}>
@@ -27,14 +27,12 @@ export default function CategoryListScreen() {
         </Pressable>
         <InputBox customStyles={styles.inputBox} handleSearch={handleSearch} />
       </View>
-  
+
       <FlatList
         data={isLoading ? DATA_WITH_ID_10 : data}
-        numColumns={2}
         contentContainerStyle={{ backgroundColor: textColors.pureWhite, paddingHorizontal: 20 }}
-        columnWrapperStyle={styles.row}
         renderItem={({ item, index }) => (
-          <CategoriesListItem 
+          <SubcategoriesListItem 
             item={item} 
             isLoading={isLoading} 
             key={isLoading ? `loading-${index}` : item.id}
