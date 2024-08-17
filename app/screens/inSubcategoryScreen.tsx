@@ -15,8 +15,9 @@ import { MyRefType } from '../(tabs)';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { ProductModalView } from '@/components/app-components/product-modal';
 import { Text } from '@/components/Themed';
+import { ProductCardFullScreen } from '@/components/app-components/product-card-full-screen';
 
-export default function InCategoryScreen() {
+export default function InSubcategoryScreen() {
   const params = useLocalSearchParams();
   
   const { productData, isLoading } = useSelector((state: RootState) => state.openProduct);
@@ -59,8 +60,7 @@ export default function InCategoryScreen() {
       <FlashList
         data={DATA[0].data[0].data}
         contentContainerStyle={{ backgroundColor: textColors.offGrey }}
-        numColumns={2}
-        renderItem={({ item }) => <ProductCard key={item} onSelectHandle={onProductCardSelectHandler} />}
+        renderItem={({ item }) => <ProductCardFullScreen key={item} onSelectHandle={onProductCardSelectHandler} />}
         keyExtractor={item => item}
         estimatedItemSize={10}
         showsVerticalScrollIndicator={false}
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    // marginRight: 25,
+    marginRight: 25,
     marginLeft: 15
   },
   inputBox: {

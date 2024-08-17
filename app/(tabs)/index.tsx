@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { FlatList, StyleSheet, Text, SafeAreaView, Dimensions, Pressable } from 'react-native';
+import { FlatList, StyleSheet, Text, SafeAreaView, Dimensions, Pressable, ActivityIndicator, ImageBackground } from 'react-native';
 import { FlashList } from "@shopify/flash-list";
 
 import { View, SectionList } from '@/components/Themed';
@@ -15,6 +15,8 @@ import { ProductModalView } from '@/components/app-components/product-modal';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import { CATEGORY_DATA, DATA } from '@/constants/data';
+import { fetchCategories } from '@/service/api/categort-list';
+import { useQuery } from '@tanstack/react-query';
 
 export interface MyRefType {
   open: () => void;
@@ -22,20 +24,48 @@ export interface MyRefType {
 }
 
 export default function HomeScreen() {
-  const { productData, isLoading } = useSelector((state: RootState) => state.openProduct);
+  // const { productData, isLoading } = useSelector((state: RootState) => state.openProduct);
   const [selectedProduct, setSelectedProduct] = useState<{productId: string}>();
   const refRBSheet = useRef<MyRefType>(null);
-
+  const { data: categoryData, isLoading: isCategoryLoading, error } = useQuery({
+    queryKey: ['categories'],
+    queryFn: fetchCategories,
+  });
+  
   const dispatch = useDispatch();
 
-  const CategoryItem = ({ title }: { title: string }) => {
+  const CategoryItem = ({
+    params: {
+      name_uz,
+      name_ru,
+      image_small,
+      image_original
+    }
+  }: {
+    params: {
+      name_uz: string,
+      name_ru: string,
+      image_small: string
+      image_original: string;
+    }
+  }) => {
+    
     return (
-      <Link href={{ pathname: "/screens/inCategoryScreen", params: {categoryName: title} }}  asChild >
+      <Link href={{ pathname: "/screens/inCategoryScreen", params: { categoryName: name_uz} }}  asChild >
         <Pressable style={styles.categoryItem}>
-          <View style={styles.categoryItemImg}></View>
-          <Text style={styles.categoryItemTxt}>{title}</Text>
+          <View
+            style={styles.categoryItemImgBox}
+          >
+            <ImageBackground 
+              style={styles.categoryItemImg}
+              source={{ uri: image_original }}
+              resizeMode='center'
+            />
+          </View>
+          <Text style={styles.categoryItemTxt}>{name_uz}</Text>
         </Pressable>
-      </Link>);
+      </Link>
+    );
   }
 
   const onProductCardSelectHandler = (productId: string) => {
@@ -80,6 +110,10 @@ export default function HomeScreen() {
     );
   };
 
+  if (isCategoryLoading) {
+    return <ActivityIndicator size="large" />
+  }
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: textColors.pureWhite }} >
       <View style={styles.searchHeader}>
@@ -103,8 +137,8 @@ export default function HomeScreen() {
             <FlatList
               style={styles.categoryList}
               contentContainerStyle={styles.categoryListContent}
-              data={CATEGORY_DATA}
-              renderItem={({ item }) => <CategoryItem key={item.title} title={item.title} />}
+              data={categoryData?.data}
+              renderItem={({ item }) => <CategoryItem key={item.name_uz} params={item} />}
               showsHorizontalScrollIndicator={false}
               horizontal />
           </>
@@ -171,26 +205,32 @@ const styles = StyleSheet.create({
     padding: 5
   },
   categoryList: {
-    maxHeight: 80,
+    maxHeight: 85,
     marginVertical: 15,
     marginHorizontal: -25,
-    paddingLeft: 25
+    paddingLeft: 25,
   },
   categoryListContent: {
+    paddingRight: 50
   },
   categoryItem: {
     flex: 1,
     alignItems: 'center',
-    height: 80,
+    height: 85,
     width: 70,
     marginHorizontal: 2
   },
-  categoryItemImg: {
-    height: 48,
-    width: 48,
+  categoryItemImgBox: {
+    height: 52,
+    width: 52,
     borderRadius: 10,
-    backgroundColor: 'yellow',
-    marginBottom: 5
+    padding: 5,
+    marginBottom: 5,
+    overflow: 'hidden',
+    backgroundColor: '#3498db', // Custom background color
+  },
+  categoryItemImg: {
+    flex: 1,
   },
   categoryItemTxt: {
     fontSize: 12,

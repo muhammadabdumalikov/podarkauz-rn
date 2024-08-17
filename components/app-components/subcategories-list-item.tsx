@@ -3,8 +3,9 @@ import { Pressable, ImageBackground, View, Text, StyleSheet } from 'react-native
 import SkeletonLoader from './skeleton-loadder';
 import { textColors } from '@/constants/Colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Link } from 'expo-router';
 
-const SubcategoriesListItem = ({ item, isLoading, itemIndex }: { item: any, isLoading: boolean, itemIndex: number }) => {
+const SubcategoriesListItem = ({ item, isLoading, itemIndex }: { item: any, isLoading: boolean, itemIndex: number }) => {  
   if (isLoading) {
     return (
       <View style={styles.categoryBox}>
@@ -17,18 +18,23 @@ const SubcategoriesListItem = ({ item, isLoading, itemIndex }: { item: any, isLo
   }
 
   return (
-    <Pressable style={styles.box} key={item.id}>
-      <View style={styles.shopImgTxtBox}>
-        <ImageBackground
-          style={styles.shopImage}
-          source={{ uri: `https://picsum.photos/id/${itemIndex}/64/64` }}
-        />
+    <Link href={{ pathname: "/screens/inSubcategoryScreen" }}  asChild >
+      <Pressable style={styles.box} key={item.id}>
+        <View style={styles.shopImgTxtBox}>
+          <View style={styles.shopImageBox}>
+            <ImageBackground
+              resizeMode='center'
+              style={styles.shopImage}
+              source={{ uri: item.image_original }}
+            />
+          </View>
 
-        <View style={styles.shopInfoBox}>
-          <Text style={styles.shopNameTxt} numberOfLines={1}>{ item.name_uz }</Text>
+          <View style={styles.shopInfoBox}>
+            <Text style={styles.shopNameTxt} numberOfLines={1}>{ item.name_uz }</Text>
+          </View>
         </View>
-      </View>
-    </Pressable>
+      </Pressable>
+    </Link>
   );
 };
 
@@ -62,13 +68,17 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
   },
-  shopImage: {
+  shopImageBox: {
     height: 64,
     width: 64,
     backgroundColor: textColors.softGrey,
     borderRadius: 12,
     marginRight: 16,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    padding: 5
+  },
+  shopImage: {
+    flex: 1
   },
   shopInfoBox: {
     display: 'flex',

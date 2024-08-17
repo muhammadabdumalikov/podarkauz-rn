@@ -19,13 +19,16 @@ const CategoriesListItem = ({ item, isLoading, itemIndex }: { item: any, isLoadi
   return (
     <Link href={`/screens/subcategoriesListScreen`} asChild>
       <Pressable style={styles.categoryBox} key={item.id}>
-        <ImageBackground 
-          style={styles.categoryImage} 
-          source={{ uri: `https://picsum.photos/id/${itemIndex}/200/300` }} 
-        />
-        <View style={styles.categoryTxtBox}>
-          <Text style={styles.categoryTxt}>{item.name_uz}</Text>
+        <View style={styles.categoryImageBox}>
+          <ImageBackground 
+            style={styles.categoryImage} 
+            source={{ uri: item.image_original }} 
+            // resizeMode='center'
+          />
         </View>
+        {/* <View style={styles.categoryTxtBox}> */}
+          <Text style={styles.categoryTxt}>{item.name_uz}</Text>
+        {/* </View> */}
       </Pressable>
     </Link>
   );
@@ -38,11 +41,18 @@ const styles = StyleSheet.create({
     // marginHorizontal: 10,
     marginVertical: 10,
     borderRadius: 20,
+    overflow: 'hidden',
+    backgroundColor: '#f3f3f3'
+  },
+  categoryImageBox: {
+    width: 90,
+    height: 90,
+    marginVertical: 10,
+    alignSelf: 'center',
     overflow: 'hidden'
   },
   categoryImage: {
     flex: 1,
-    justifyContent: 'center',
   },
   categoryTxtBox: {
     width: '75%',
@@ -51,12 +61,13 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 10,
     justifyContent: 'center',
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
   },
   categoryTxt: {
     fontSize: 14,
+    alignSelf: 'center',
     fontWeight: 'bold',
-    color: textColors.pureWhite
+    color: textColors.navyBlack,
   }
 });
 

@@ -29,7 +29,7 @@ export default function ListScreen() {
       </View>
 
       <FlatList
-        data={isLoading ? DATA_WITH_ID_10 : data}
+        data={isLoading ? DATA_WITH_ID_10 : data.data}
         contentContainerStyle={{ backgroundColor: textColors.pureWhite, paddingHorizontal: 20 }}
         renderItem={({ item, index }) => (
           <SubcategoriesListItem 

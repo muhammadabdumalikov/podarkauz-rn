@@ -17,8 +17,7 @@ export default function CategoryListScreen() {
   
   const handleSearch = (input: string) => {
     console.log(input);
-  }
-
+  }  
   return (
     <SafeAreaView style={styles.container} >
       <View style={styles.headerBox}>
@@ -29,7 +28,7 @@ export default function CategoryListScreen() {
       </View>
   
       <FlatList
-        data={isLoading ? DATA_WITH_ID_10 : data}
+        data={isLoading ? DATA_WITH_ID_10 : data?.data}
         numColumns={2}
         contentContainerStyle={{ backgroundColor: textColors.pureWhite, paddingHorizontal: 20 }}
         columnWrapperStyle={styles.row}
@@ -50,7 +49,7 @@ export default function CategoryListScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: textColors.pureWhite
+    backgroundColor: textColors.pureWhite,
   },
   headerBox: {
     height: 60,
@@ -59,7 +58,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginRight: 25,
     marginLeft: 15,
-    marginBottom: 10
+    marginBottom: 10,
   },
   inputBox: {
     marginLeft: 25

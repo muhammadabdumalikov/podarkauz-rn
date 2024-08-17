@@ -1,15 +1,16 @@
 export const fetchCategories = async () => {
   
   const url =
-    'http://192.168.100.27:3001/api/category/parents';
+    'http://45.10.154.95:4444/api/category/parents';
   const options = {
-    method: 'GET',
+    method: 'POST',
     headers: {
       'content-type': 'application/json'
     },
-    // body: JSON.stringify({
-    //   limit: 1000
-    // }),
+    body: JSON.stringify({
+      page: 1,
+      per_page: 10
+    }),
   };
 
   const res = await fetch(url, options);
