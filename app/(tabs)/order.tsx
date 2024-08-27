@@ -2,11 +2,13 @@ import { ImageBackground, StyleSheet } from 'react-native';
 
 import { Text, View } from '@/components/Themed';
 import { textColors } from '@/constants/Colors';
+import Carousel from '@/components/app-components/open-peeps-carousel';
 
 export default function TabTwoScreen() {
   return (
     <View style={styles.container}>
-      <ImageBackground style={styles.productImage} source={require('../../assets/images/Rectangle 5.png')} />
+      {/* <ImageBackground style={styles.productImage} source={require('../../assets/images/Rectangle 5.png')} /> */}
+      <Carousel/>
       
       <View style={styles.detailsBox}>
         <View style={styles.commentsBox}>

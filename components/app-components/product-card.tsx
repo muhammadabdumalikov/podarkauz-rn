@@ -5,8 +5,12 @@ import { useRef, useState } from 'react';
 import { StyleSheet, View, Text, Pressable, Animated, ImageBackground, Dimensions } from 'react-native';
 import { UrbanistBoldText, UrbanistMediumText, UrbanistSemiboldText } from '../StyledText';
 import { SemiFilledStar } from './star-percentage';
+import FavoriteHeartSvg from '@/assets/icons/favorite-heart';
+import {getRandomElement} from '@/utils/random';
 
 const { width, height } = Dimensions.get('screen');
+
+const images = [require('../../assets/images/lego.png'), require('../../assets/images/toy.png'), require('../../assets/images/sumka.png')]
 
 export const ProductCard = ({ onSelectHandle }) => {
   const [favourite, setFavorite] = useState(false);
@@ -31,16 +35,18 @@ export const ProductCard = ({ onSelectHandle }) => {
 
   return <Pressable style={styles.box} onPress={onSelectHandle}>
     <View style={[styles.image]}>
-      <ImageBackground style={styles.imageBox} source={require('../../assets/images/lego.png')}/>
+      <ImageBackground style={styles.imageBox} source={getRandomElement(images)}/>
     </View>
     <View style={styles.cardFooter}>
-      <UrbanistBoldText numberOfLines={1} style={styles.productTitle}>TMA-2 HD Wireleswwwws</UrbanistBoldText>
+      <UrbanistBoldText numberOfLines={2} style={styles.productTitle}>TMA-2 HD Wireleswwwws ssasdasdsa</UrbanistBoldText>
 
       <View style={styles.details}>
         <View style={styles.starAndRate}>
           <SemiFilledStar rating={3}/>
           <UrbanistMediumText style={styles.rateTxt}>4.6</UrbanistMediumText>
         </View>
+
+        <View style={styles.divider} />
 
         <UrbanistSemiboldText style={styles.ordersTxt}>8633 заказов</UrbanistSemiboldText>
       </View>
@@ -55,9 +61,9 @@ export const ProductCard = ({ onSelectHandle }) => {
         style={{flex: 1, justifyContent: 'center', alignItems:'center', borderRadius: 30}}
       >
         <Animated.View style={{ opacity: fadeAnimation }}>
-          <AntDesign
-            name={favourite ? 'heart' : 'hearto'}
-            size={16}
+          <FavoriteHeartSvg
+            width={18}
+            height={18}
             color={favourite ? textColors.redVelvet : textColors.pureWhite}
           />
         </Animated.View>
@@ -70,8 +76,10 @@ const styles = StyleSheet.create({
   box: {
     flex: 1,
     justifyContent: 'space-between',
-    width: width*0.44,
-    height: width*0.64,
+    // width: width*0.44,
+    width: 190,
+    // height: width*0.64,
+    height: 300,
     backgroundColor: textColors.pureWhite,
     borderTopRightRadius: 24,
     borderTopLeftRadius: 24,
@@ -81,7 +89,8 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: width*0.44-10,
+    // height: width*0.44-10,
+    height: 182,
     borderRadius: 24,
     overflow: 'hidden',
     backgroundColor: textColors.softPurple
@@ -91,19 +100,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   cardFooter: {
-    height: width * 0.195,
-    justifyContent: 'space-between'
+    // height: width * 0.195,
+    height: 106,
+    gap: 8
   },
   productTitle: {
     fontWeight: '700',
     fontSize: 18,
     color: textColors.navyBlack,
-    marginBottom: 6,
+    height: 44,
   },
   productPrice: {
     fontSize: 18,
     fontWeight: '700',
-    // marginBottom: 10,
   },
   details: {
     flexDirection: 'row',
@@ -114,7 +123,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginRight: 15
   },
   rateTxt: {
     fontSize: 14,
@@ -137,5 +145,11 @@ const styles = StyleSheet.create({
     right: 12,
     height: 28,
     width: 28,
-  }
+  },
+   divider: {
+    width: 1,
+    height: '60%',
+    backgroundColor: '#333',
+    marginHorizontal: 10,
+  },
 });
