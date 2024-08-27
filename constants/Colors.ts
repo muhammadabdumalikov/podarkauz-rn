@@ -34,5 +34,7 @@ export const textColors = {
   offRed: '#FCECEF',
   blueOcean: '#3669C9',
   mainBlack: '#0C1A30',
-  secondBlack: '#8E8E8F'
+  secondBlack: '#8E8E8F',
+  transparentSilver: '#ececec',
+  softPurple: '#f5ecff'
 }

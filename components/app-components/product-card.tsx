@@ -1,7 +1,12 @@
 import { textColors } from '@/constants/Colors';
 import { AntDesign, Feather } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useRef, useState } from 'react';
-import { StyleSheet, View, Text, Pressable, Animated, ImageBackground } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Animated, ImageBackground, Dimensions } from 'react-native';
+import { UrbanistBoldText, UrbanistMediumText, UrbanistSemiboldText } from '../StyledText';
+import { SemiFilledStar } from './star-percentage';
+
+const { width, height } = Dimensions.get('screen');
 
 export const ProductCard = ({ onSelectHandle }) => {
   const [favourite, setFavorite] = useState(false);
@@ -25,30 +30,39 @@ export const ProductCard = ({ onSelectHandle }) => {
   }
 
   return <Pressable style={styles.box} onPress={onSelectHandle}>
-    <Animated.View style={[styles.image, { opacity: fadeAnimation }]}>
-      <ImageBackground style={styles.imageBox} source={{ uri: 'https://picsum.photos/180/290' }}/>
-    </Animated.View>
+    <View style={[styles.image]}>
+      <ImageBackground style={styles.imageBox} source={require('../../assets/images/lego.png')}/>
+    </View>
     <View style={styles.cardFooter}>
-      <Text numberOfLines={1} style={styles.productTitle}>TMA-2 HD Wireleswwwws</Text>
-      <Text style={styles.productPrice}>Rp. 1.500.000</Text>
+      <UrbanistBoldText numberOfLines={1} style={styles.productTitle}>TMA-2 HD Wireleswwwws</UrbanistBoldText>
 
       <View style={styles.details}>
         <View style={styles.starAndRate}>
-          <AntDesign name="star" size={12} color={textColors.orangeFresh} />
-          <Text style={styles.rateTxt}>4.6</Text>
+          <SemiFilledStar rating={3}/>
+          <UrbanistMediumText style={styles.rateTxt}>4.6</UrbanistMediumText>
         </View>
 
-        <Text style={styles.commentTxt}>86 Reviews</Text>
+        <UrbanistSemiboldText style={styles.ordersTxt}>8633 заказов</UrbanistSemiboldText>
+      </View>
+      
+      <UrbanistBoldText style={styles.productPrice}>445 000 сум</UrbanistBoldText>
+    </View>
 
-         <Pressable onPress={onHeartPressHandler}>
+
+    <Pressable onPress={onHeartPressHandler} style={styles.favoriteHeartBox}>
+      <LinearGradient
+        colors={['#7210FF', '#9D59FF']}
+        style={{flex: 1, justifyContent: 'center', alignItems:'center', borderRadius: 30}}
+      >
+        <Animated.View style={{ opacity: fadeAnimation }}>
           <AntDesign
             name={favourite ? 'heart' : 'hearto'}
-            size={20}
-            color={textColors.navyBlack}
+            size={16}
+            color={favourite ? textColors.redVelvet : textColors.pureWhite}
           />
-        </Pressable>
-      </View>
-    </View>
+        </Animated.View>
+      </LinearGradient>
+    </Pressable>
   </Pressable>
 };
 
@@ -56,51 +70,72 @@ const styles = StyleSheet.create({
   box: {
     flex: 1,
     justifyContent: 'space-between',
-    width: 180,
-    height: 290,
+    width: width*0.44,
+    height: width*0.64,
     backgroundColor: textColors.pureWhite,
-    borderRadius: 20,
+    borderTopRightRadius: 24,
+    borderTopLeftRadius: 24,
     marginHorizontal: 8,
     marginVertical: 10,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   image: {
-    height: 190,
+    width: '100%',
+    height: width*0.44-10,
+    borderRadius: 24,
+    overflow: 'hidden',
+    backgroundColor: textColors.softPurple
   },
   imageBox: {
     flex: 1,
     justifyContent: 'center',
   },
   cardFooter: {
-    padding: 15
+    height: width * 0.195,
+    justifyContent: 'space-between'
   },
   productTitle: {
-    // fontWeight: '600',
-    fontSize: 14,
+    fontWeight: '700',
+    fontSize: 18,
     color: textColors.navyBlack,
-    marginBottom: 4,
+    marginBottom: 6,
   },
   productPrice: {
-    color: textColors.redVelvet,
-    fontSize: 12,
-    fontWeight: '600',
-    marginBottom: 10,
+    fontSize: 18,
+    fontWeight: '700',
+    // marginBottom: 10,
   },
   details: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
   },
   starAndRate: {
-    width: 30,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginRight: 15
   },
   rateTxt: {
-    fontSize: 10
+    fontSize: 14,
+    fontWeight: '500',
+    marginLeft: 8
   },
-  commentTxt: {
+  ordersTxt: {
     marginRight: 10,
-    fontSize: 10
+    fontWeight: '600',
+    fontSize: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 8,
+    borderRadius: 6,
+    backgroundColor: textColors.transparentSilver,
+    overflow: 'hidden'
   },
+  favoriteHeartBox: {
+    position: 'absolute',
+    top: 14,
+    right: 12,
+    height: 28,
+    width: 28,
+  }
 });

@@ -1,5 +1,5 @@
 {
-  "name": "stroy-market",
+  "name": "podarkauz-rn",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
@@ -41,7 +41,6 @@
     "react-native": "0.74.2",
     "react-native-dotenv": "^3.4.11",
     "react-native-gesture-handler": "~2.16.1",
-    "react-native-linear-gradient": "^2.8.3",
     "react-native-mmkv-storage": "^0.9.1",
     "react-native-pager-view": "6.3.0",
     "react-native-raw-bottom-sheet": "^3.0.0",

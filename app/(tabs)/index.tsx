@@ -100,7 +100,7 @@ export default function HomeScreen() {
       <View style={{ flex: 1 }}>
         <FlashList
           data={section.data[0].data}
-          contentContainerStyle={{ backgroundColor: textColors.offGrey }}
+          // contentContainerStyle={{ backgroundColor: textColors.offGrey }}
           numColumns={2}
           renderItem={({ item }) => <ProductCard key={item as string} onSelectHandle={onProductCardSelectHandler} />}
           keyExtractor={item => item as string}

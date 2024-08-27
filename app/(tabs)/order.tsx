@@ -1,12 +1,18 @@
-import { StyleSheet } from 'react-native';
+import { ImageBackground, StyleSheet } from 'react-native';
 
 import { Text, View } from '@/components/Themed';
+import { textColors } from '@/constants/Colors';
 
 export default function TabTwoScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+      <ImageBackground style={styles.productImage} source={require('../../assets/images/Rectangle 5.png')} />
+      
+      <View style={styles.detailsBox}>
+        <View style={styles.commentsBox}>
+
+        </View>
+      </View>
     </View>
   );
 }
@@ -15,15 +21,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  productImage: {
+    width: '100%',
+    height: 350,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  detailsBox: {
+    width: '100%',
+    // height: 100,
+    flex: 1,
+    marginTop: -20,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    paddingHorizontal: 20,
   },
+  commentsBox: {
+    marginTop: 112,
+    width: '100%',
+    height: 70,
+    backgroundColor: textColors.offGrey,
+    borderRadius: 8,
+    alignSelf: 'center'
+  }
 });

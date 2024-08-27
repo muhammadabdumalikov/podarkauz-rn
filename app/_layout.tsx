@@ -35,6 +35,9 @@ const persister = createSyncStoragePersister({
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    UrbanistBold: require('../assets/fonts/Urbanist-Bold.ttf'),
+    UrbanistSemibold: require('../assets/fonts/Urbanist-SemiBold.ttf'),
+    UrbanistMedium: require('../assets/fonts/Urbanist-Medium.ttf'),
     ...FontAwesome.font,
   });
 
