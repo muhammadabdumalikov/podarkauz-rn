@@ -7,13 +7,8 @@ import Carousel from '@/components/app-components/open-peeps-carousel';
 export default function TabTwoScreen() {
   return (
     <View style={styles.container}>
-      {/* <ImageBackground style={styles.productImage} source={require('../../assets/images/Rectangle 5.png')} /> */}
-      <Carousel/>
-      
-      <View style={styles.detailsBox}>
-        <View style={styles.commentsBox}>
-
-        </View>
+      <View style={styles.carouselStyle}>
+        <Carousel/>
       </View>
     </View>
   );
@@ -24,25 +19,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
-  productImage: {
-    width: '100%',
-    height: 350,
-  },
-  detailsBox: {
-    width: '100%',
-    // height: 100,
-    flex: 1,
-    marginTop: -20,
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-    paddingHorizontal: 20,
-  },
-  commentsBox: {
-    marginTop: 112,
-    width: '100%',
-    height: 70,
-    backgroundColor: textColors.offGrey,
-    borderRadius: 8,
-    alignSelf: 'center'
+  carouselStyle: {
+    height: 350
   }
 });

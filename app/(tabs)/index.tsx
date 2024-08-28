@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { FlatList, StyleSheet, Text, SafeAreaView, Dimensions, Pressable, ActivityIndicator, ImageBackground } from 'react-native';
-import { FlashList } from "@shopify/flash-list";
+// import { FlashList } from "@shopify/flash-list";
 
 import { View, SectionList } from '@/components/Themed';
 import { AdsBox } from '@/components/app-components/ads-box';
@@ -98,13 +98,13 @@ export default function HomeScreen() {
 
     return (
       <View style={{ flex: 1 }}>
-        <FlashList
+        <FlatList
           data={section.data[0].data}
-          // contentContainerStyle={{ backgroundColor: textColors.offGrey }}
           numColumns={2}
-          renderItem={({ item }) => <ProductCard key={item as string} onSelectHandle={onProductCardSelectHandler} />}
+          renderItem={({ item, index }) => {
+            return <ProductCard key={index} />
+          }}
           keyExtractor={item => item as string}
-          estimatedItemSize={10}
         />
       </View>
     );

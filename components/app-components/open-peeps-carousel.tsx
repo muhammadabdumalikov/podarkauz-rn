@@ -1,50 +1,28 @@
-// Inspiration: https://dribbble.com/shots/16489827-Sports-tracker-mobile-app
-
 import * as React from 'react';
 import {
-  Image,
-  FlatList,
-  Text,
   View,
   StyleSheet,
   Dimensions,
   StatusBar,
 } from 'react-native';
-import Constants from 'expo-constants';
-import data from './data';
+import { images as data } from './product-card';
 import Animated, {
-  Extrapolate,
+  Extrapolation,
   interpolate,
   useSharedValue,
   useAnimatedStyle,
   useAnimatedScrollHandler,
 } from 'react-native-reanimated';
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-import { useDynamicAnimation, MotiView } from 'moti';
+import { textColors } from '@/constants/Colors';
+import GoBackButton from './go-back';
+const AnimatedFlatList = Animated.FlatList;
 
 const { width, height } = Dimensions.get('window');
 
-const headings = [
-  'Open Peeps',
-  'A hand-drawn \nillustration library.',
-  'Mix & Match.',
-  'Designed by \nPablo Stanley.',
-  'Inspired by \nTaras Migulko.',
-  'Developed by \nCatalin Miron.',
-];
-
 const _dotSize = 8;
-// const _data = data.slice(0, headings.length)
-const random = () => {
-  return ((Math.random() > 0.5 ? -1 : 1) * Math.random() * width) / 2;
-};
-
-const randomBorder = () => {
-  return Math.floor(Math.random() * 14) + 4;
-};
 
 const Item = ({ item, index, scrollX }) => {
-  const style = useAnimatedStyle(() => {
+  const style = useAnimatedStyle(() => {    
     return {
       opacity: interpolate(
         scrollX.value / width,
@@ -54,64 +32,34 @@ const Item = ({ item, index, scrollX }) => {
     };
   });
   return (
-    <View style={{ width, height: height / 2 }}>
+    <View style={
+      {
+        width, height: height / 2,
+        backgroundColor: textColors.softPurple
+      }
+    }>
       <Animated.Image
-        source={{ uri: item }}
-        style={[{ flex: 1, resizeMode: 'contain' }, style]}
+        source={item}
+        style={[{ flex: 1, width: '100%', resizeMode: 'cover' }, style]}
       />
     </View>
   );
 };
 
-const TextItem = ({ index, heading, scrollX }) => {
-  const style = useAnimatedStyle(() => {
-    return {
-      opacity: interpolate(
-        scrollX.value / width,
-        [index - 0.8, index, index + 0.8],
-        [0, 1, 0]
-      ),
-      transform: [
-        {
-          translateX: interpolate(
-            scrollX.value / width,
-            [index - 0.8, index, index + 0.8],
-            [10, 0, -10]
-          ),
-        },
-      ],
-    };
-  });
-  return (
-    <Animated.Text
-      key={index}
-      style={[
-        {
-          fontFamily: 'PTSerif_700Bold',
-          position: 'absolute',
-          fontSize: index === 0 ? 42 : 28,
-        },
-        style,
-      ]}>
-      {heading}
-    </Animated.Text>
-  );
-};
-
 const PaginationDot = ({ index, scrollX }) => {
-  const style = useAnimatedStyle(() => {
+  const style = useAnimatedStyle(() => {    
     return {
       width: interpolate(
         scrollX.value / width,
         [index - 1, index, index + 1],
-        [_dotSize * 1.5, _dotSize * 3, _dotSize * 1.5],
-        Extrapolate.CLAMP
+        [_dotSize * 1, _dotSize * 3, _dotSize * 1],
+        Extrapolation.CLAMP
       ),
       opacity: interpolate(
         scrollX.value / width,
         [index - 1, index, index + 1],
         [0.2, 1, 0.2],
-        Extrapolate.CLAMP
+        Extrapolation.CLAMP
       ),
     };
   });
@@ -122,7 +70,7 @@ const PaginationDot = ({ index, scrollX }) => {
           width: _dotSize,
           height: _dotSize,
           borderRadius: _dotSize,
-          backgroundColor: '#000',
+          backgroundColor: '#873afd',
           marginHorizontal: _dotSize / 2,
         },
         style,
@@ -136,44 +84,13 @@ const Pagination = ({ data, scrollX }) => {
     <View
       style={{
         position: 'absolute',
-        bottom: height * 0.1,
-        left: 20,
+        bottom: 16,
+        alignSelf: 'center',
         flexDirection: 'row',
       }}>
       {data.map((_, index) => (
         <PaginationDot index={index} scrollX={scrollX} />
       ))}
-    </View>
-  );
-};
-
-const Circle = ({ animation }) => {
-  return (
-    <MotiView
-      state={animation}
-      transition={{
-        stiffness: 50,
-      }}
-      style={[
-        {
-          width: width * 0.8,
-          height: width * 0.8,
-          borderRadius: width,
-          borderWidth: 4,
-          borderColor: 'rgba(0,0,0,1)',
-          position: 'absolute',
-        },
-      ]}
-    />
-  );
-};
-
-const Circles = ({ scrollX, first, second, third }) => {
-  return (
-    <View style={{ position: 'absolute', top: height * 0.1 }}>
-      <Circle animation={first} />
-      <Circle animation={second} />
-      <Circle animation={third} />
     </View>
   );
 };
@@ -184,37 +101,10 @@ export default function Carousel() {
     scrollX.value = ev.contentOffset.x;
   });
 
-
-  const first = useDynamicAnimation(() => ({
-    translateX: random(),
-    translateY: random(),
-    width: width * 0.8,
-    height: width * 0.8,
-    borderRadius: width * 0.8,
-    borderWidth: randomBorder(),
-  }));
-
-  const second = useDynamicAnimation(() => ({
-    translateX: random(),
-    translateY: random(),
-    width: width * 0.8,
-    height: width * 0.8,
-    borderRadius: width * 0.8,
-    borderWidth: randomBorder(),
-  }));
-  const third = useDynamicAnimation(() => ({
-    translateX: random(),
-    translateY: random(),
-    width: width * 0.8,
-    height: width * 0.8,
-    borderRadius: width * 0.8,
-    borderWidth: randomBorder(),
-  }));
-
   return (
     <View style={styles.container}>
       <StatusBar hidden />
-      <Circles first={first} second={second} third={third} scrollX={scrollX} />
+      <GoBackButton/>
       <AnimatedFlatList
         data={data}
         keyExtractor={(item) => item}
@@ -224,36 +114,7 @@ export default function Carousel() {
         onScroll={onScroll}
         scrollEventThrottle={16}
         bounces={false}
-        onMomentumScrollEnd={(ev) => {
-          const newSize = width * 0.5 + Math.random() * width * 0.5;
-          const newSize2 = width * 0.5 + Math.random() * width * 0.5;
-          const newSize3 = width * 0.5 + Math.random() * width * 0.5;
-          first.animateTo({
-            translateX: random(),
-            translateY: random(),
-            width: newSize,
-            height: newSize,
-            borderRadius: newSize,
-            borderWidth: randomBorder(),
-          });
-          second.animateTo({
-            translateX: random(),
-            translateY: random(),
-            width: newSize2,
-            height: newSize2,
-            borderRadius: newSize2,
-            borderWidth: randomBorder(),
-          });
-          third.animateTo({
-            translateX: random(),
-            translateY: random(),
-            width: newSize3,
-            height: newSize3,
-            borderRadius: newSize3,
-            borderWidth: randomBorder(),
-          });
-        }}
-        renderItem={({ item, index }) => {
+        renderItem={({ item, index }) => {                    
           return <Item item={item} index={index} scrollX={scrollX} />;
         }}
       />
@@ -264,9 +125,6 @@ export default function Carousel() {
           left: 20,
           width: width * 0.7,
         }}>
-        {headings.map((heading, index) => (
-          <TextItem index={index} scrollX={scrollX} heading={heading} />
-        ))}
       </View>
       <Pagination data={data} scrollX={scrollX} />
     </View>
@@ -276,14 +134,8 @@ export default function Carousel() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: 'relative',
     justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight,
     backgroundColor: '#fff',
-  },
-  paragraph: {
-    margin: 24,
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
   },
 });

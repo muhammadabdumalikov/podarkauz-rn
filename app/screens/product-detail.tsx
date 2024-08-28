@@ -1,7 +1,25 @@
-import { View } from "react-native";
+import { StyleSheet, StatusBar } from 'react-native';
+
+import { Text, View } from '@/components/Themed';
+import { textColors } from '@/constants/Colors';
+import Carousel from '@/components/app-components/open-peeps-carousel';
 
 export default function ProductDetailScreen() {
-  return <View>
+  return (
+    <View style={styles.container}>
+      <View style={styles.carouselStyle}>
+        <Carousel/>
+      </View>
+    </View>
+  );
+}
 
-  </View>
- }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  carouselStyle: {
+    height: 350
+  }
+});

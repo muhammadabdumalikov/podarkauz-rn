@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
   counterBox: {
     backgroundColor: textColors.softGrey,
     padding: 3,
-    borderRadius: '50%',
+    borderRadius: 30,
     width: 90,
     flexDirection: 'row',
     alignItems: 'center',
