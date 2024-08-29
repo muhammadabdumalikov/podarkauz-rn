@@ -6,17 +6,17 @@ import { View, SectionList } from '@/components/Themed';
 import { SeeAllHeader } from '@/components/app-components/see-all-header';
 import { textColors } from '@/constants/Colors';
 import { ProductCard } from '@/components/app-components/product-card';
-import { RootState } from '@/store/store';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { closeProductModal, openProduct } from '@/store/reducer';
 import { ProductModalView } from '@/components/app-components/product-modal';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
-import { CATEGORY_DATA, DATA } from '@/constants/data';
+import { DATA } from '@/constants/data';
 import { fetchCategories } from '@/service/api/categort-list';
 import { useQuery } from '@tanstack/react-query';
 import AdsBoxCarousel from '@/components/app-components/ads-box-carousel';
+import { FlashList } from '@shopify/flash-list';
 
 export interface MyRefType {
   open: () => void;
@@ -25,7 +25,6 @@ export interface MyRefType {
 
 export default function HomeScreen() {
   // const { productData, isLoading } = useSelector((state: RootState) => state.openProduct);
-  const [selectedProduct, setSelectedProduct] = useState<{productId: string}>();
   const refRBSheet = useRef<MyRefType>(null);
   const { data: categoryData, isLoading: isCategoryLoading, error } = useQuery({
     queryKey: ['categories'],
@@ -70,16 +69,6 @@ export default function HomeScreen() {
     );
   }
 
-  const onProductCardSelectHandler = (productId: string) => {
-    setSelectedProduct({ productId });
-    refRBSheet.current?.open();
-    // dispatch(openProduct({ productId }));
-  }
-
-  // useEffect(() => {
-  //   if (productData !== null) refRBSheet.current?.open();
-  // }, [productData])
-
   const handleModalClose = () => {
     closeProductModal();
     refRBSheet.current?.close();
@@ -100,14 +89,14 @@ export default function HomeScreen() {
 
     return (
       <View style={{ flex: 1 }}>
-        <FlatList
-          data={section.data[0].data}
-          numColumns={2}
-          renderItem={({ item, index }) => {
-            return <ProductCard key={index} />
-          }}
-          keyExtractor={item => item as string}
-        />
+       <FlashList
+        data={DATA[0].data[0].data}
+        numColumns={2}
+        renderItem={({ item }) => <ProductCard key={item} />}
+        keyExtractor={item => item}
+        estimatedItemSize={10}
+        showsVerticalScrollIndicator={false}
+      />
       </View>
     );
   };
@@ -124,7 +113,7 @@ export default function HomeScreen() {
             <AntDesign name="search1" size={28} color={textColors.navyBlack} />
           </Pressable>
         </Link>
-        <Link href="/screens/notificationScreen" asChild>
+        <Link href="/screens/notification-screen" asChild>
           <Pressable style={styles.searchBoxElement}>
             <Ionicons name="notifications-outline" size={28} color={textColors.navyBlack} />
           </Pressable>

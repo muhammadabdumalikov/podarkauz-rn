@@ -96,7 +96,7 @@ const Pagination = ({ data, scrollX }) => {
         flexDirection: 'row',
       }}>
       {data.map((_, index) => (
-        <PaginationDot index={index} scrollX={scrollX} />
+        <PaginationDot index={index} scrollX={scrollX} key={index}/>
       ))}
     </View>
   );

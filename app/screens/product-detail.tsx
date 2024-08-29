@@ -11,7 +11,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { useRef, useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import BagSvg from '@/assets/icons/bag';
-import GoBackButton from '@/components/app-components/go-back';
+import { GoBackButton } from '@/components/app-components/go-back';
 
 const { width, height } = Dimensions.get('screen');
 
@@ -59,7 +59,7 @@ export default function ProductDetailScreen() {
   }
 
   return (<>
-      <GoBackButton/>
+      <GoBackButton absolute/>
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}

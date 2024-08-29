@@ -8,12 +8,9 @@ import { useEffect, useRef } from 'react';
 import { DATA } from '@/constants/data';
 import { FlashList } from '@shopify/flash-list';
 import { ProductCard } from '@/components/app-components/product-card';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
-import { closeProductModal, openProduct } from '@/store/reducer';
 import { MyRefType } from '../(tabs)';
-import RBSheet from 'react-native-raw-bottom-sheet';
-import { ProductModalView } from '@/components/app-components/product-modal';
 import { Text } from '@/components/Themed';
 
 export default function InCategoryScreen() {
@@ -22,20 +19,9 @@ export default function InCategoryScreen() {
   const { productData, isLoading } = useSelector((state: RootState) => state.openProduct);
   const refRBSheet = useRef<MyRefType>(null);
 
-  const dispatch = useDispatch();
-
-  const onProductCardSelectHandler = (productId: string) => {
-    dispatch(openProduct({ productId }));
-  }
-
   useEffect(() => {
     if (productData !== null) refRBSheet.current?.open();
   }, [productData])
-
-  const handleModalClose = () => {
-    closeProductModal();
-    refRBSheet.current?.close();
-  }
 
   const handleSearch = (input: string) => {
     console.log(input);
@@ -58,39 +44,12 @@ export default function InCategoryScreen() {
       
       <FlashList
         data={DATA[0].data[0].data}
-        contentContainerStyle={{ backgroundColor: textColors.offGrey }}
         numColumns={2}
-        renderItem={({ item }) => <ProductCard key={item} onSelectHandle={onProductCardSelectHandler} />}
+        renderItem={({ item }) => <ProductCard key={item} />}
         keyExtractor={item => item}
         estimatedItemSize={10}
         showsVerticalScrollIndicator={false}
       />
-
-      <RBSheet
-        ref={refRBSheet}
-        // useNativeDriver={true}
-        customStyles={{
-          wrapper: {
-            backgroundColor: '#00000080',
-          },
-          draggableIcon: {
-            backgroundColor: '#000',
-          },
-          container: {
-            backgroundColor: textColors.pureWhite,
-            borderRadius: 20
-          }
-        }}
-        height={Dimensions.get('screen').height * 0.9}
-        customModalProps={{
-          animationType: 'fade',
-          statusBarTranslucent: true,
-        }}
-        customAvoidingViewProps={{
-          enabled: false,
-        }}>
-        <ProductModalView ref={refRBSheet} onModalClose={handleModalClose} />
-      </RBSheet>
     </SafeAreaView>
   );
 }

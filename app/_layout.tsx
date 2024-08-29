@@ -75,6 +75,7 @@ function RootLayoutNav() {
           <Stack.Screen name="screens/subcategoriesListScreen" options={{ headerShown: false }} />
           <Stack.Screen name="screens/inSubcategoryScreen" options={{ headerShown: false }} />
           <Stack.Screen name="screens/product-detail" options={{ headerShown: false }} />
+          <Stack.Screen name="screens/notification-screen" options={{ headerShown: false }} />
         </Stack>
       </ThemeProvider>
       </Provider>
