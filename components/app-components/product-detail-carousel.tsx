@@ -104,8 +104,6 @@ export default function ProductDetailCarousel() {
 
   return (
     <View style={styles.container}>
-      <StatusBar hidden />
-      <GoBackButton/>
       <AnimatedFlatList
         data={data}
         keyExtractor={(item) => item}

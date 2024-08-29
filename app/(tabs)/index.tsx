@@ -39,7 +39,8 @@ export default function HomeScreen() {
       name_uz,
       name_ru,
       image_small,
-      image_original
+      image_original,
+      key,
     }
   }: {
     params: {
@@ -47,11 +48,12 @@ export default function HomeScreen() {
       name_ru: string,
       image_small: string
       image_original: string;
+      key: any;
     }
   }) => {
     
     return (
-      <Link href={{ pathname: "/screens/inCategoryScreen", params: { categoryName: name_uz} }}  asChild >
+      <Link href={{ pathname: "/screens/inCategoryScreen", params: { categoryName: name_uz} }}  asChild key={key}>
         <Pressable style={styles.categoryItem}>
           <View
             style={styles.categoryItemImgBox}
@@ -138,7 +140,7 @@ export default function HomeScreen() {
               style={styles.categoryList}
               contentContainerStyle={styles.categoryListContent}
               data={categoryData?.data}
-              renderItem={({ item }) => <CategoryItem key={item.name_uz} params={item} />}
+              renderItem={({ item, index }) => <CategoryItem key={item.name_uz} params={{...item, key: index}} />}
               showsHorizontalScrollIndicator={false}
               horizontal />
           </>

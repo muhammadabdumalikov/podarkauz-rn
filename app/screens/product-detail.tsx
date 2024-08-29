@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar, Pressable, Animated } from 'react-native';
+import { StyleSheet, Pressable, Animated, Dimensions } from 'react-native';
 
 import { ScrollView, Text, View } from '@/components/Themed';
 import { textColors } from '@/constants/Colors';
@@ -11,13 +11,20 @@ import { AntDesign } from '@expo/vector-icons';
 import { useRef, useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import BagSvg from '@/assets/icons/bag';
+import GoBackButton from '@/components/app-components/go-back';
+
+const { width, height } = Dimensions.get('screen');
 
 export default function ProductDetailScreen() {
   const animationTime = 500;
 
   const counterAnimatedValue = useRef(new Animated.Value(0)).current;
   const [productCountCounter, setProductCountCounter] = useState(0);
+  const [selectedSize, setSelectedSize] = useState('M');
+  const [selectedColor, setSelectedColor] = useState(textColors.offRed);
 
+  const sizes = ['S', 'M', 'L'];
+  const colors = [textColors.blueOcean, textColors.redVelvet, textColors.orangeFresh, textColors.earthGreen];
 
   const startCounterAnimation = (value: number) => {
     return Animated.spring(counterAnimatedValue, {
@@ -34,11 +41,13 @@ export default function ProductDetailScreen() {
   })
   
   const counterDecrement = () => {
-    setProductCountCounter(productCountCounter - 1);
-    startCounterAnimation(-1).start();
-    setTimeout(() => {
-      startCounterAnimation(0).start()
-    }, animationTime);
+    if (productCountCounter > 0) {
+      setProductCountCounter(productCountCounter - 1);
+      startCounterAnimation(-1).start();
+      setTimeout(() => {
+        startCounterAnimation(0).start()
+      }, animationTime);
+    }
   }
 
   const counterIncrement = () => {
@@ -50,7 +59,12 @@ export default function ProductDetailScreen() {
   }
 
   return (<>
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+      <GoBackButton/>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+      showsVerticalScrollIndicator={false}
+    >
       <View style={styles.carouselStyle}>
         <ProductDetailCarousel/>
       </View>
@@ -88,6 +102,57 @@ export default function ProductDetailScreen() {
         1. Гель для душа THE MOON 250мл.
         2. Шампунь для всех типов THE MOON 250мл
         </UrbanistMediumText>
+      </View>
+
+      <View style={styles.colorAndSizeBox}>
+        <View style={styles.colorBox}>
+          <UrbanistBoldText style={styles.countTxt}>Размер</UrbanistBoldText>
+          <View style={styles.colorOptionBox}>
+            {sizes.map((size) => (
+              <Pressable
+                key={size}
+                style={[
+                  styles.sizeOption,
+                  selectedSize === size && styles.selectedSizeOption,    
+                ]}
+                onPress={() => setSelectedSize(size)}
+              >
+                <UrbanistBoldText
+                  style={[
+                    styles.sizeTxt,
+                    selectedSize === size && styles.selectedSizeOptionTxt
+                  ]}>
+                  {size}
+                </UrbanistBoldText>
+              </Pressable>
+            ))}
+          </View>
+        </View>
+        
+        <View style={styles.sizeBox}>
+          <UrbanistBoldText style={styles.countTxt}>Цвет</UrbanistBoldText>
+          <View style={styles.colorOptionBox}>
+             {colors.map((color) => (
+              <Pressable
+                key={color}
+                style={[
+                  styles.colorOption,
+                  {backgroundColor: color},    
+                ]}
+                onPress={() => setSelectedColor(color)}
+              >
+                <UrbanistBoldText
+                  style={{backgroundColor: color}}>
+                   {
+                     selectedColor === color
+                     &&
+                     <AntDesign name="check" size={24} color="white" />
+                   }
+                </UrbanistBoldText>
+              </Pressable>
+            ))}
+          </View>
+        </View>
       </View>
 
       <View style={styles.countBox}>
@@ -131,6 +196,7 @@ const styles = StyleSheet.create({
     backgroundColor: textColors.pureWhite
   },
   contentContainer: {
+    paddingBottom: verticalScale(120),
     alignItems: 'center',
   },
   carouselStyle: {
@@ -273,5 +339,51 @@ const styles = StyleSheet.create({
     marginLeft: horizontalScale(16),
     fontSize: moderateScale(16),
     color: textColors.pureWhite
-  }
+  },
+  colorAndSizeBox: {
+    width: '100%',
+    marginTop: verticalScale(16),
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: horizontalScale(16),
+  },
+  colorBox: {
+    width: '45%'
+  },
+  sizeBox: {
+    width: '55%'
+  },
+  colorOptionBox: {
+    marginTop: verticalScale(12),
+    height: verticalScale(40),
+    flexDirection: 'row',
+    gap: horizontalScale(12)
+  },
+  sizeOption: {
+    height: verticalScale(40),
+    width: horizontalScale(40),
+    borderWidth: 1,
+    borderRadius: 100,
+    borderColor: textColors.navyBlack,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  selectedSizeOption: {
+    backgroundColor: 'black',
+    borderColor: 'black',
+  },
+  sizeTxt: {
+    fontWeight: '700',
+    fontSize: moderateScale(16)
+  },
+  selectedSizeOptionTxt: {
+    color: textColors.pureWhite
+  },
+  colorOption: {
+    height: verticalScale(40),
+    width: horizontalScale(40),
+    borderRadius: 100,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
 });
