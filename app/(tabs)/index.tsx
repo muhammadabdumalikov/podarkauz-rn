@@ -3,7 +3,6 @@ import { FlatList, StyleSheet, Text, SafeAreaView, Dimensions, Pressable, Activi
 // import { FlashList } from "@shopify/flash-list";
 
 import { View, SectionList } from '@/components/Themed';
-import { AdsBox } from '@/components/app-components/ads-box';
 import { SeeAllHeader } from '@/components/app-components/see-all-header';
 import { textColors } from '@/constants/Colors';
 import { ProductCard } from '@/components/app-components/product-card';
@@ -17,6 +16,7 @@ import { Link } from 'expo-router';
 import { CATEGORY_DATA, DATA } from '@/constants/data';
 import { fetchCategories } from '@/service/api/categort-list';
 import { useQuery } from '@tanstack/react-query';
+import AdsBoxCarousel from '@/components/app-components/ads-box-carousel';
 
 export interface MyRefType {
   open: () => void;
@@ -132,7 +132,7 @@ export default function HomeScreen() {
         // contentContainerStyle={styles.container}
         ListHeaderComponent={
           <>
-            <AdsBox />
+            <AdsBoxCarousel />
             <SeeAllHeader headerName='Categories' btnName='See all' link='/screens/categoryListScreen' onPress={handleCategoryOnPress} />
             <FlatList
               style={styles.categoryList}

@@ -293,7 +293,7 @@ const styles = StyleSheet.create({
   },
   counterIconsStyle: {
     backgroundColor: textColors.pureWhite,
-    borderRadius: '50%'
+    borderRadius: 100
   },
   modalFooterPrice: {
     height: 100,

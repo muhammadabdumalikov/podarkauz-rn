@@ -2,7 +2,7 @@ import { ImageBackground, StyleSheet } from 'react-native';
 
 import { Text, View } from '@/components/Themed';
 import { textColors } from '@/constants/Colors';
-import Carousel from '@/components/app-components/open-peeps-carousel';
+import Carousel from '@/components/app-components/product-detail-carousel';
 
 export default function TabTwoScreen() {
   return (

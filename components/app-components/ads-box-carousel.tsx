@@ -5,7 +5,6 @@ import {
   Dimensions,
   StatusBar,
 } from 'react-native';
-import { images as data } from './product-card';
 import Animated, {
   Extrapolation,
   interpolate,
@@ -14,10 +13,17 @@ import Animated, {
   useAnimatedScrollHandler,
 } from 'react-native-reanimated';
 import { textColors } from '@/constants/Colors';
-import GoBackButton from './go-back';
+import { verticalScale } from '@/utils/metrics';
 const AnimatedFlatList = Animated.FlatList;
 
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get('screen');
+
+export const images = [
+  require('../../assets/images/Theme=Light, Component=Special Offers (1) copy.png'),
+  require('../../assets/images/Theme=Light, Component=Special Offers (2) copy.png'),
+  require('../../assets/images/Theme=Light, Component=Special Offers (3) copy.png'),
+  require('../../assets/images/Theme=Light, Component=Special Offers copy.png')
+]
 
 const _dotSize = 8;
 
@@ -34,13 +40,14 @@ const Item = ({ item, index, scrollX }) => {
   return (
     <View style={
       {
-        width, height: height / 2,
-        backgroundColor: textColors.softPurple
+        width, height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center'
       }
     }>
       <Animated.Image
         source={item}
-        style={[{ flex: 1, width: '100%', resizeMode: 'cover' }, style]}
+        style={[{ flex: 1, width: '100%', height: '100%' }, style]}
       />
     </View>
   );
@@ -95,7 +102,7 @@ const Pagination = ({ data, scrollX }) => {
   );
 };
 
-export default function Carousel() {
+export default function AdsBoxCarousel() {
   const scrollX = useSharedValue(0);
   const onScroll = useAnimatedScrollHandler((ev) => {
     scrollX.value = ev.contentOffset.x;
@@ -103,10 +110,8 @@ export default function Carousel() {
 
   return (
     <View style={styles.container}>
-      <StatusBar hidden />
-      <GoBackButton/>
       <AnimatedFlatList
-        data={data}
+        data={images}
         keyExtractor={(item) => item}
         horizontal
         pagingEnabled
@@ -118,15 +123,7 @@ export default function Carousel() {
           return <Item item={item} index={index} scrollX={scrollX} />;
         }}
       />
-      <View
-        style={{
-          position: 'absolute',
-          bottom: height * 0.3,
-          left: 20,
-          width: width * 0.7,
-        }}>
-      </View>
-      <Pagination data={data} scrollX={scrollX} />
+      <Pagination data={images} scrollX={scrollX} />
     </View>
   );
 }
@@ -134,6 +131,8 @@ export default function Carousel() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    height: verticalScale(180),
+    alignItems: 'center',
     position: 'relative',
     justifyContent: 'center',
     backgroundColor: '#fff',
