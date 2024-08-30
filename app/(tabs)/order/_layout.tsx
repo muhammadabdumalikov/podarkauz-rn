@@ -32,7 +32,7 @@ export default function Layout() {
           tabBarIndicatorStyle: styles.tabBarIndicatorStyle,
           tabBarStyle: styles.tabBarStyle,
           tabBarLabelStyle: styles.tabBarLabelStyle,
-          tabBarLabel: 'Текущие'
+          tabBarLabel: 'Текущие',
         }
       }
     />    
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     marginLeft: (Dimensions.get('screen').width / 2) / 2 - horizontalScale(92),
   },
   tabBarStyle: {
-    backgroundColor: 'white',
+    backgroundColor: textColors.pureWhite,
   },
   tabBarLabelStyle: {
     fontSize: moderateScale(18),

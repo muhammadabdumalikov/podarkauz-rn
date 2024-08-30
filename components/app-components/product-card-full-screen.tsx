@@ -5,7 +5,7 @@ import { textColors } from '@/constants/Colors';
 
 const { width, height } = Dimensions.get('window');
 
-export const ProductCardFullScreen = ({ onSelectHandle }) => {
+export const ProductCardFullScreen = () => {
   const [favourite, setFavorite] = useState(false);
   const fadeAnimation = useRef(new Animated.Value(1)).current;
 
@@ -27,7 +27,7 @@ export const ProductCardFullScreen = ({ onSelectHandle }) => {
   };
 
   return (
-    <Pressable style={styles.box} onPress={onSelectHandle}>
+    <Pressable style={styles.box}>
       <Animated.View style={[styles.image, { opacity: fadeAnimation }]}>
         <ImageBackground
           style={styles.imageBox}
