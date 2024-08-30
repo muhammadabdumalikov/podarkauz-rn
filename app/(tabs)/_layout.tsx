@@ -68,7 +68,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="order"
         options={{
-          headerShown: false,
+          // headerShown: false,
           title: 'Orders',
           tabBarIcon: ({ color }) => <OrdersSvg stroke={color} />,
         }}

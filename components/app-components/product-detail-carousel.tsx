@@ -14,7 +14,6 @@ import Animated, {
   useAnimatedScrollHandler,
 } from 'react-native-reanimated';
 import { textColors } from '@/constants/Colors';
-import GoBackButton from './go-back';
 import { horizontalScale } from '@/utils/metrics';
 const AnimatedFlatList = Animated.FlatList;
 
