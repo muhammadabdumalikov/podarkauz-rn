@@ -1,4 +1,4 @@
-import { StyleSheet, Pressable, Animated, Dimensions } from 'react-native';
+import { StyleSheet, Pressable, Dimensions, Animated } from 'react-native';
 
 import { ScrollView, Text, View } from '@/components/Themed';
 import { textColors } from '@/constants/Colors';
@@ -12,11 +12,19 @@ import { useRef, useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import BagSvg from '@/assets/icons/bag';
 import { GoBackButton } from '@/components/app-components/go-back';
+import { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated';
+import Animated2 from 'react-native-reanimated';
 
 const { width, height } = Dimensions.get('screen');
 
 export default function ProductDetailScreen() {
   const animationTime = 500;
+
+  const scrollY = useSharedValue(0);
+
+  const onScroll = useAnimatedScrollHandler((event) => {    
+    scrollY.value = event.contentOffset.y;
+  });
 
   const counterAnimatedValue = useRef(new Animated.Value(0)).current;
   const [productCountCounter, setProductCountCounter] = useState(0);
@@ -24,7 +32,7 @@ export default function ProductDetailScreen() {
   const [selectedColor, setSelectedColor] = useState(textColors.offRed);
 
   const sizes = ['S', 'M', 'L'];
-  const colors = [textColors.blueOcean, textColors.redVelvet, textColors.orangeFresh, textColors.earthGreen];
+  const colors = [textColors.blueOcean, textColors.redVelvet, textColors.orangeFresh, textColors.green2];
 
   const startCounterAnimation = (value: number) => {
     return Animated.spring(counterAnimatedValue, {
@@ -57,16 +65,18 @@ export default function ProductDetailScreen() {
       startCounterAnimation(0).start()
     }, animationTime);
   }
-
+  
   return (<>
-      <GoBackButton absolute/>
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.contentContainer}
-      showsVerticalScrollIndicator={false}
-    >
+    <GoBackButton absolute/>
+    <Animated2.ScrollView
+        onScroll={onScroll}
+        scrollEventThrottle={16}
+        style={styles.container}
+        contentContainerStyle={styles.contentContainer}
+        showsVerticalScrollIndicator={false}
+      >
       <View style={styles.carouselStyle}>
-        <ProductDetailCarousel/>
+        <ProductDetailCarousel scrollY={scrollY} />
       </View>
 
       <View style={styles.productTitleRow}>
@@ -170,8 +180,8 @@ export default function ProductDetailScreen() {
           </Pressable>
         </View>
       </View>
-    </ScrollView>
-     <View style={styles.modalFooterPrice}>
+    </Animated2.ScrollView>
+    <View style={styles.modalFooterPrice}>
         <View style={styles.modalFooterPriceBox}>
           <UrbanistMediumText style={styles.modalFooterPriceTitle}>Итоговая цена</UrbanistMediumText>
           <UrbanistBoldText style={styles.modalFooterPriceTxt}>3000 UZS</UrbanistBoldText>
@@ -256,7 +266,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 1,
-    backgroundColor: textColors.softGrey
+    backgroundColor: textColors.grey1
   },
   descriptionBox: {
     width: '100%',
@@ -286,7 +296,7 @@ const styles = StyleSheet.create({
     marginRight: horizontalScale(20)
   },
   counterBox: {
-    backgroundColor: textColors.offGrey,
+    backgroundColor: textColors.grey2,
     paddingHorizontal: horizontalScale(12),
     paddingVertical: verticalScale(12),
     borderRadius: 100,
@@ -306,7 +316,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     width: '100%',
-    borderColor: textColors.softGrey,
+    borderColor: textColors.grey3,
     borderWidth: 1,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
@@ -323,7 +333,7 @@ const styles = StyleSheet.create({
   modalFooterPriceTitle: {
     fontSize: moderateScale(14),
     fontWeight: '500',
-    color: textColors.darkGrey,
+    color: textColors.grey4,
     marginBottom: verticalScale(6)
   },
   modalFooterPriceTxt: {

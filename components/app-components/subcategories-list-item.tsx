@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   shopImageBox: {
     height: 64,
     width: 64,
-    backgroundColor: textColors.softGrey,
+    backgroundColor: textColors.grey1y,
     borderRadius: 12,
     marginRight: 16,
     overflow: 'hidden',

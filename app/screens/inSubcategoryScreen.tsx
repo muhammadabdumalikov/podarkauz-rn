@@ -59,7 +59,7 @@ export default function InSubcategoryScreen() {
       
       <FlashList
         data={DATA[0].data[0].data}
-        contentContainerStyle={{ backgroundColor: textColors.offGrey }}
+        contentContainerStyle={{ backgroundColor: textColors.grey2 }}
         renderItem={({ item }) => <ProductCardFullScreen key={item} onSelectHandle={onProductCardSelectHandler} />}
         keyExtractor={item => item}
         estimatedItemSize={10}

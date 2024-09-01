@@ -26,6 +26,7 @@
     "@tanstack/react-query-persist-client": "^5.49.2",
     "axios": "^1.6.8",
     "axios-rate-limit": "^1.4.0",
+    "chroma-js": "^3.0.0",
     "expo": "^51.0.14",
     "expo-constants": "~16.0.2",
     "expo-font": "~12.0.7",

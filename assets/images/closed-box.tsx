@@ -1,0 +1,42 @@
+import React from "react";
+import { SvgXml } from "react-native-svg";
+
+export default function ClosedBox({ width, height, color }: { width?: any, height?: any, color?: string }) {
+  // Replace the 'stroke' color with the dynamic color passed as a prop
+  const Svg = `<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_3395_28880)">
+<path d="M29.9249 26.5514V8.18408L0.444946 9.4483V27.8156C0.444876 28.2365 0.653142 28.6573 1.06967 28.8979L12.7479 35.6403C13.5785 36.1199 14.6018 36.1199 15.4324 35.6403L29.3003 27.6337C29.7167 27.3932 29.925 26.9723 29.9249 26.5514Z" fill="url(#paint0_linear_3395_28880)"/>
+<path d="M1.06969 8.36627L14.9376 0.359648C15.7682 -0.119883 16.7914 -0.119883 17.622 0.359648L29.3002 7.10213C30.1332 7.58306 30.1332 8.78541 29.3002 9.26634L15.4324 17.2729C14.6018 17.7524 13.5785 17.7524 12.748 17.2729L1.06969 10.5305C0.236698 10.0496 0.236698 8.84721 1.06969 8.36627Z" fill="url(#paint1_linear_3395_28880)"/>
+<path d="M5.56628 5.77034L20.461 14.3698L24.412 12.0887L9.51728 3.48926L5.56628 5.77034Z" fill="#DEA861"/>
+<path d="M7.92774 4.40576L22.8225 13.0053L22.0485 13.4521L7.15381 4.8526L7.92774 4.40576Z" fill="#CC8241"/>
+<path d="M20.4611 14.37V17.6329L24.4121 15.3518V12.0889L20.4611 14.37Z" fill="#CC8241"/>
+<path d="M35.1853 13.9376C35.1202 13.8884 35.0508 13.8502 34.9792 13.8206L32.138 12.2066C31.679 11.8596 31.0182 12.0078 30.7514 12.5177L25.4535 22.7193L25.3971 22.6767C25.2285 22.5492 25.0436 22.4629 24.8533 22.4109L24.8518 22.4081L22.3498 20.9457C22.2134 20.8425 22.0661 20.7665 21.9142 20.713L21.9088 20.7099L21.9094 20.7112C21.1834 20.4583 20.3433 20.7568 19.9644 21.4807C19.6012 22.1745 19.7929 23.0292 20.4176 23.5015L25.2384 27.1458L28.2857 28.8769L35.4487 15.1123C35.66 14.709 35.5485 14.2121 35.1853 13.9376Z" fill="url(#paint2_linear_3395_28880)"/>
+<path d="M25.3971 22.6767C25.2285 22.5492 25.0436 22.4628 24.8534 22.4108L24.8519 22.4081L22.3498 20.9456C22.2134 20.8425 22.0662 20.7665 21.9142 20.713L21.9088 20.7099L21.9095 20.7111C21.1835 20.4582 20.3434 20.7568 19.9645 21.4806C19.6014 22.1745 19.793 23.0291 20.4178 23.5014L25.2385 27.1458L28.2857 28.8768L25.3971 22.6767Z" fill="url(#paint3_linear_3395_28880)"/>
+<path d="M28.2859 28.8767L23.4651 25.2324C22.8405 24.7601 22.6487 23.9054 23.0119 23.2116C23.471 22.3346 24.6076 22.0797 25.3972 22.6766L28.2859 24.8605L33.7988 14.2486C34.0656 13.7388 34.7263 13.5906 35.1854 13.9376C35.5485 14.2121 35.66 14.7089 35.4489 15.1122L28.2859 28.8767Z" fill="#06DAAE"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_3395_28880" x1="11.7339" y1="22.092" x2="15.7835" y2="22.092" gradientUnits="userSpaceOnUse">
+<stop stop-color="#CC8241"/>
+<stop offset="1" stop-color="#DEA861"/>
+</linearGradient>
+<linearGradient id="paint1_linear_3395_28880" x1="6.9777" y1="4.07784" x2="22.1434" y2="12.8337" gradientUnits="userSpaceOnUse">
+<stop stop-color="#DEA861"/>
+<stop offset="1" stop-color="#EBCBA0"/>
+</linearGradient>
+<linearGradient id="paint2_linear_3395_28880" x1="30.7679" y1="13.672" x2="31.6894" y2="12.0758" gradientUnits="userSpaceOnUse">
+<stop stop-color="#236568"/>
+<stop offset="1" stop-color="#2F878A"/>
+</linearGradient>
+<linearGradient id="paint3_linear_3395_28880" x1="24.401" y1="24.6996" x2="25.1419" y2="23.4162" gradientUnits="userSpaceOnUse">
+<stop stop-color="#236568"/>
+<stop offset="1" stop-color="#2F878A"/>
+</linearGradient>
+<clipPath id="clip0_3395_28880">
+<rect width="36" height="36" fill="white"/>
+</clipPath>
+</defs>
+</svg>
+`;
+
+  return <SvgXml xml={Svg} width={width} height={height} />;
+}

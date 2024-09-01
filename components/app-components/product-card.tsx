@@ -35,7 +35,7 @@ export const ProductCard = () => {
     ]).start();
   }
 
-  return <Link href={{ pathname: "/screens/product-detail" }} asChild >
+  return <Link href={{ pathname: "/screens/product-detail" }} asChild>
     <Pressable style={styles.box}>
       <View style={[styles.image]}>
         <ImageBackground style={styles.imageBox} source={getRandomElement(images)}/>

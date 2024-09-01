@@ -1,23 +1,24 @@
-import { StyleSheet } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 
 import { Text, View } from '@/components/Themed';
 import EmptySvg from '@/assets/images/empty';
 import { horizontalScale, moderateScale, verticalScale } from '@/utils/metrics';
 import { UrbanistBoldText, UrbanistMediumText } from '@/components/StyledText';
 import { textColors } from '@/constants/Colors';
-import { FlashList } from '@shopify/flash-list';
-import { ProductCardFullScreen } from '@/components/app-components/product-card-full-screen';
+import { ProductCardFullScreenForCurrent } from '@/components/app-components/product-card-full-screen';
 
-const data = ['1'];
+const data = ['1', '2', '3', '4', '5', '6'];
 
 export default function TabTwoScreen() {
   return data.length > 0 ?
     <View style={{ flex: 1 }}>
-       <FlashList
+       <FlatList
         data={data}
-        renderItem={({ item }) => <ProductCardFullScreen key={item} />}
+        style={{backgroundColor: textColors.grey1}}
+        contentContainerStyle={styles.contentContainer}
+        renderItem={({ item }) => <ProductCardFullScreenForCurrent key={item} />}
         keyExtractor={item => item}
-        estimatedItemSize={10}
+        // estimatedItemSize={10}
         showsVerticalScrollIndicator={false}
       />
     </View>
@@ -35,6 +36,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  contentContainer: {
+    paddingHorizontal: horizontalScale(16),
+    paddingVertical: verticalScale(16),
+    backgroundColor: textColors.grey1,
+  },
   emptyTxt: {
     marginTop: verticalScale(40),
     marginBottom: verticalScale(12),
@@ -44,6 +50,6 @@ const styles = StyleSheet.create({
   emptySmallTxt: {
     fontSize: moderateScale(18),
     fontWeight: '400',
-    color: textColors.darkGrey
+    color: textColors.grey3
   }
 });

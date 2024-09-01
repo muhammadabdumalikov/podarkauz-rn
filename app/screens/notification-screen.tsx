@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: Constants.statusBarHeight,
-    backgroundColor: textColors.offGrey2,
+    backgroundColor: textColors.grey2,
   },
   containerStyle: {
     alignItems: 'center',
@@ -86,13 +86,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: horizontalScale(16),
-    backgroundColor: textColors.offGrey2
+    backgroundColor: textColors.grey2
 
   },
   goBackBox: {
    flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: textColors.offGrey2
+    backgroundColor: textColors.grey2
   },
   screenNameTxt: {
     marginLeft: horizontalScale(16),
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   },
   moreIcon: {
     padding: verticalScale(8),
-    backgroundColor: textColors.softGrey,
+    backgroundColor: textColors.grey1,
     borderRadius: moderateScale(12),
     overflow: 'hidden',
   }

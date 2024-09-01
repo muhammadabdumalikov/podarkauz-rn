@@ -95,10 +95,24 @@ export const Pagination = ({ data, scrollX }) => {
   );
 };
 
-export default function ProductDetailCarousel() {
-  const scrollX = useSharedValue(0);
-  const onScroll = useAnimatedScrollHandler((ev) => {
-    scrollX.value = ev.contentOffset.x;
+export default function ProductDetailCarousel({ scrollY }) {  
+  const scrollX = useSharedValue(0);  
+
+  const onHorizontalScroll = useAnimatedScrollHandler((event) => {    
+    scrollX.value = event.contentOffset.x;
+  });
+  
+  const animatedStyle = useAnimatedStyle(() => {
+    const scale = interpolate(
+      scrollY.value,
+      [0, 100],  // Adjust these values based on how quickly you want the image to shrink
+      [1, 0.8],  // Scale from 1 to 0.8
+      Extrapolation.CLAMP
+    );
+
+    return {
+      transform: [{ scale }],
+    };
   });
 
   return (
@@ -109,25 +123,26 @@ export default function ProductDetailCarousel() {
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        onScroll={onScroll}
+        onScroll={onHorizontalScroll}
         scrollEventThrottle={16}
         bounces={false}
-        renderItem={({ item, index }) => {                    
-          return <Item item={item} index={index} scrollX={scrollX} />;
+        renderItem={({ item, index }) => {
+          return (
+            <Animated.View style={[{ width, height: height / 2 }, animatedStyle]} key={index}>
+              <Animated.Image
+                source={item}
+                style={[{ flex: 1, width: '100%', resizeMode: 'contain' }, animatedStyle]}
+              />
+            </Animated.View>
+          );
         }}
       />
-      <View
-        style={{
-          position: 'absolute',
-          bottom: height * 0.3,
-          left: 20,
-          width: width * 0.7,
-        }}>
-      </View>
       <Pagination data={data} scrollX={scrollX} />
     </View>
   );
 }
+
+
 
 const styles = StyleSheet.create({
   container: {

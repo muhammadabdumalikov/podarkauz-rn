@@ -24,42 +24,36 @@ export const MaterialTopTabs =
     (Navigator);
 
 export default function Layout() {
-  return <MaterialTopTabs>
+  return <MaterialTopTabs screenOptions={
+    {
+      tabBarActiveTintColor: textColors.purple,
+      tabBarInactiveTintColor: textColors.grey4,
+      tabBarIndicatorStyle: styles.tabBarIndicatorStyle,
+      tabBarStyle: styles.tabBarStyle,
+      tabBarLabelStyle: styles.tabBarLabelStyle,
+  }}>
     <MaterialTopTabs.Screen
       name='current'
-      options={
-        {
-          tabBarIndicatorStyle: styles.tabBarIndicatorStyle,
-          tabBarStyle: styles.tabBarStyle,
-          tabBarLabelStyle: styles.tabBarLabelStyle,
-          tabBarLabel: 'Текущие',
-        }
-      }
+      options={{ tabBarLabel: 'Текущие' }}
     />    
     <MaterialTopTabs.Screen
       name='completed'
-      options={
-        {
-          tabBarIndicatorStyle: styles.tabBarIndicatorStyle,
-          tabBarStyle: styles.tabBarStyle,
-          tabBarLabelStyle: styles.tabBarLabelStyle,
-          tabBarLabel: 'Завершенные'
-        }
-      }
+      options={{ tabBarLabel: 'Завершенные' }}
     /> 
   </MaterialTopTabs>;
 }
 
 const styles = StyleSheet.create({
   tabBarIndicatorStyle: {
-    backgroundColor: 'blue',
+    backgroundColor: textColors.purple,
     width: horizontalScale(184),
     height: verticalScale(4),
     borderRadius: 4,
     marginLeft: (Dimensions.get('screen').width / 2) / 2 - horizontalScale(92),
   },
   tabBarStyle: {
-    backgroundColor: textColors.pureWhite,
+    backgroundColor: textColors.grey1,
+    shadowOpacity: 0
   },
   tabBarLabelStyle: {
     fontSize: moderateScale(18),

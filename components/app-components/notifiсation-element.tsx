@@ -76,7 +76,7 @@ const NotificationItem = ({ notification }: { notification: { title: string; bod
 const styles = StyleSheet.create({
   notificationContainer: {
     width: '100%',
-    backgroundColor: textColors.offGrey2
+    backgroundColor: textColors.grey2
   },
   dateTxt: {
     width: '100%',

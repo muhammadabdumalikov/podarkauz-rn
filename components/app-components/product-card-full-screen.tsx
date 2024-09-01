@@ -1,58 +1,74 @@
 import React, { useRef, useState } from 'react';
-import { StyleSheet, View, Text, Pressable, Animated, ImageBackground, Dimensions } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
+import { StyleSheet, Pressable, ImageBackground } from 'react-native';
 import { textColors } from '@/constants/Colors';
+import { horizontalScale, moderateScale, verticalScale } from '@/utils/metrics';
+import { View } from '../Themed';
+import { UrbanistBoldText, UrbanistMediumText, UrbanistSemiboldText } from '../StyledText';
+import { LinearGradient } from 'expo-linear-gradient';
+import { AntDesign } from '@expo/vector-icons';
+import ReviewSvg from '@/assets/icons/review';
 
-const { width, height } = Dimensions.get('window');
-
-export const ProductCardFullScreen = () => {
-  const [favourite, setFavorite] = useState(false);
-  const fadeAnimation = useRef(new Animated.Value(1)).current;
-
-  const onHeartPressHandler = () => {
-    setFavorite(!favourite);
-    // Trigger fade animation
-    Animated.sequence([
-      Animated.timing(fadeAnimation, {
-        toValue: 0.5,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-      Animated.timing(fadeAnimation, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  };
-
+export const ProductCardFullScreenForCurrent = () => {
   return (
     <Pressable style={styles.box}>
-      <Animated.View style={[styles.image, { opacity: fadeAnimation }]}>
-        <ImageBackground
-          style={styles.imageBox}
-          source={{ uri: 'https://picsum.photos/800/1200' }} // Adjusted for full screen
-        />
-      </Animated.View>
-      <View style={styles.cardFooter}>
-        <Text numberOfLines={1} style={styles.productTitle}>TMA-2 HD Wireless</Text>
-        <Text style={styles.productPrice}>Rp. 1.500.000</Text>
+      <ImageBackground source={require('../../assets/images/lego.png')} style={styles.image} />
+      <View style={styles.detail}>
+        <UrbanistBoldText style={styles.productTitle}>Сумка из кожи</UrbanistBoldText>
 
-        <View style={styles.details}>
-          <View style={styles.starAndRate}>
-            <AntDesign name="star" size={12} color={textColors.orangeFresh} />
-            <Text style={styles.rateTxt}>4.6</Text>
-          </View>
+        <View style={styles.info}>
+          <View style={styles.colorCircle} />
+          <UrbanistMediumText style={styles.infoTxt}>Цвет | Размер = M | Qty = 1</UrbanistMediumText>
+        </View>
 
-          <Text style={styles.commentTxt}>86 Reviews</Text>
+        <UrbanistSemiboldText style={styles.processTxt}>В доставке</UrbanistSemiboldText>
 
-          <Pressable onPress={onHeartPressHandler}>
-            <AntDesign
-              name={favourite ? 'heart' : 'hearto'}
-              size={20}
-              color={textColors.navyBlack}
-            />
+        <View style={styles.priceRow}>
+          <UrbanistBoldText style={styles.priceTxt}>445 000 сум</UrbanistBoldText>
+          
+          <Pressable >
+            <LinearGradient
+              colors={['#7210FF', '#9D59FF']}
+              style={styles.priceBtn}
+            >
+              <AntDesign name="arrowright" size={20} color={textColors.pureWhite} />
+            </LinearGradient>
           </Pressable>
+          
+        </View>
+      </View>
+    </Pressable>
+  );
+};
+
+export const ProductCardFullScreenForCompleted = () => {
+  return (
+    <Pressable style={styles.box}>
+      <ImageBackground source={require('../../assets/images/lego.png')} style={styles.image} />
+      <View style={styles.detail}>
+        <UrbanistBoldText style={styles.productTitle}>Сумка из кожи</UrbanistBoldText>
+
+        <View style={styles.info}>
+          <View style={styles.colorCircle} />
+          <UrbanistMediumText style={styles.infoTxt}>Цвет | Размер = M | Qty = 1</UrbanistMediumText>
+        </View>
+
+        <UrbanistSemiboldText style={[
+          styles.processTxt,
+          { backgroundColor: textColors.green1, color: textColors.green2 }
+        ]}>Доставлено</UrbanistSemiboldText>
+
+        <View style={styles.priceRow}>
+          <UrbanistBoldText style={styles.priceTxt}>445 000 сум</UrbanistBoldText>
+          
+          <Pressable >
+            <LinearGradient
+              colors={['#7210FF', '#9D59FF']}
+              style={styles.priceBtn}
+            >
+            <ReviewSvg height={verticalScale(20)} width={verticalScale(20)}/>
+            </LinearGradient>
+          </Pressable>
+          
         </View>
       </View>
     </Pressable>
@@ -62,46 +78,77 @@ export const ProductCardFullScreen = () => {
 const styles = StyleSheet.create({
   box: {
     flex: 1,
-    width: width,
-    height: height,
+    width: '100%',
+    height: verticalScale(152),
+    marginVertical: verticalScale(8),
     backgroundColor: textColors.pureWhite,
+    borderRadius: moderateScale(32),
+    alignSelf: 'center',
+    padding: verticalScale(16),
+    flexDirection: 'row',
   },
   image: {
-    height: height * 0.6, // Adjust based on desired ratio
+    width: horizontalScale(120),
+    height: horizontalScale(120),
+    backgroundColor: textColors.grey2,
+    borderRadius: moderateScale(20),
   },
-  imageBox: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  cardFooter: {
-    padding: 15,
-    backgroundColor: textColors.pureWhite,
+  detail: {
+    // Remove or adjust flex: 1 here if needed for layout
+    width: horizontalScale(230),
+    marginLeft: horizontalScale(16),
   },
   productTitle: {
-    fontSize: 18,
-    color: textColors.navyBlack,
-    marginBottom: 4,
+    fontWeight: '700',
+    fontSize: moderateScale(18),
+    marginBottom: verticalScale(8),
   },
-  productPrice: {
-    color: textColors.redVelvet,
-    fontSize: 16,
+  info: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: verticalScale(8),
+  },
+  colorCircle: {
+    backgroundColor: textColors.redVelvet,
+    width: verticalScale(16),
+    height: verticalScale(16),
+    borderRadius: moderateScale(16),
+    marginRight: horizontalScale(8),
+  },
+  infoTxt: {
+    fontWeight: '500',
+    fontSize: moderateScale(12),
+    color: textColors.darkGrey,
+  },
+  processTxt: {
     fontWeight: '600',
-    marginBottom: 10,
+    fontSize: moderateScale(10),
+    lineHeight: verticalScale(12),
+    paddingHorizontal: horizontalScale(10),
+    paddingVertical: verticalScale(6),
+    backgroundColor: textColors.grey3,
+    borderRadius: moderateScale(6),
+    overflow: 'hidden',
+    marginBottom: verticalScale(8),
+    alignSelf: 'flex-start',
   },
-  details: {
+  priceRow: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    height: verticalScale(32),
   },
-  starAndRate: {
-    flexDirection: 'row',
+  priceTxt: {
+    fontWeight: '700',
+    fontSize: moderateScale(18),
+  },
+  priceBtn: {
+    width: horizontalScale(52),
+    height: '100%',
+    borderRadius: moderateScale(100),
+    justifyContent: 'center',
     alignItems: 'center',
   },
-  rateTxt: {
-    fontSize: 12,
-    marginLeft: 5,
-  },
-  commentTxt: {
-    fontSize: 12,
-  },
 });
+

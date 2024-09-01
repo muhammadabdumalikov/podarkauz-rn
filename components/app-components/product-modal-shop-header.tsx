@@ -19,7 +19,7 @@ export const ProductModalShopHeader = () => {
         </View>
       </View>
 
-      <AntDesign name="right" size={20} color={textColors.darkGrey} />
+      <AntDesign name="right" size={20} color={textColors.grey3} />
     </View>
   );
 };
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   shopImage: {
     height: 50,
     width: 50,
-    backgroundColor: textColors.softGrey,
+    backgroundColor: textColors.grey1y,
     borderRadius: 100,
     marginRight: 20
   },

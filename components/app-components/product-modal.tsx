@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
   imageBox: {
     flex: 1,
     height: 325,
-    backgroundColor: textColors.softGrey,
+    backgroundColor: textColors.grey1y,
     borderRadius: 10,
     marginBottom: 30
   },
@@ -244,20 +244,20 @@ const styles = StyleSheet.create({
   },
   countTxtBox: {
     borderRadius: 20,
-    backgroundColor: textColors.offGreen,
+    backgroundColor: textColors.green2,
   },
   countTxt: {
     paddingVertical: 4,
     paddingHorizontal: 10,
     fontSize: 12,
     fontWeight: '500',
-    color: textColors.earthGreen
+    color: textColors.green2
   },
   divider: {
     width: '100%',
     height: 1,
     marginVertical: 30,
-    backgroundColor: textColors.softGrey
+    backgroundColor: textColors.grey1
   },
   productDescriptionBox: {
     width: '100%',
@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   counterBox: {
-    backgroundColor: textColors.softGrey,
+    backgroundColor: textColors.grey1y,
     padding: 3,
     borderRadius: 30,
     width: 90,
@@ -306,7 +306,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingHorizontal: 25,
     position: 'absolute',
-    backgroundColor: textColors.softGrey,
+    backgroundColor: textColors.grey1y,
     zIndex: 1
   },
   modalFooterPriceTxt: {

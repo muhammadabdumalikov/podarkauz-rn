@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   box: {
     flex: 1,
     flexDirection: "row",
-    backgroundColor: textColors.offGrey,
+    backgroundColor: textColors.grey2,
     justifyContent: 'center',
     alignItems: 'center',
     height: 50,
@@ -67,10 +67,10 @@ const styles = StyleSheet.create({
   },
   inputFocused: {
     borderWidth: 1,
-    borderColor: textColors.halfGrey
+    borderColor: textColors.grey2rey
   },
   filterFocused: {
-    borderColor: textColors.halfGrey,
+    borderColor: textColors.grey2rey,
     color: textColors.pureWhite
   },
   searchIcon: {

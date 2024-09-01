@@ -17,6 +17,7 @@ import { fetchCategories } from '@/service/api/categort-list';
 import { useQuery } from '@tanstack/react-query';
 import AdsBoxCarousel from '@/components/app-components/ads-box-carousel';
 import { FlashList } from '@shopify/flash-list';
+import { horizontalScale } from '@/utils/metrics';
 
 export interface MyRefType {
   open: () => void;
@@ -89,14 +90,15 @@ export default function HomeScreen() {
 
     return (
       <View style={{ flex: 1 }}>
-       <FlashList
-        data={DATA[0].data[0].data}
-        numColumns={2}
-        renderItem={({ item }) => <ProductCard key={item} />}
-        keyExtractor={item => item}
-        estimatedItemSize={10}
-        showsVerticalScrollIndicator={false}
-      />
+        <FlashList
+          data={DATA[0].data[0].data}
+          numColumns={2}
+          contentContainerStyle={{paddingHorizontal: horizontalScale(8)}}
+          renderItem={({ item }) => <ProductCard key={item} />}
+          keyExtractor={item => item}
+          estimatedItemSize={10}
+          showsVerticalScrollIndicator={false}
+        />
       </View>
     );
   };
@@ -142,7 +144,7 @@ export default function HomeScreen() {
           <SeeAllHeader
             headerName='Featured products'
             btnName='See all' link='/profile'
-            style={{ backgroundColor: textColors.offGrey }}
+            style={{ backgroundColor: textColors.grey2 }}
             onPress={handleCategoryOnPress} />
         )}
       />

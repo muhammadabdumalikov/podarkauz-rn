@@ -1,14 +1,33 @@
-import { StyleSheet } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 
 import { Text, View } from '@/components/Themed';
+import EmptySvg from '@/assets/images/empty';
+import { horizontalScale, moderateScale, verticalScale } from '@/utils/metrics';
+import { UrbanistBoldText, UrbanistMediumText } from '@/components/StyledText';
+import { textColors } from '@/constants/Colors';
+import { ProductCardFullScreenForCompleted } from '@/components/app-components/product-card-full-screen';
+
+const data = ['1', '2', '3', '4', '5', '6'];
 
 export default function TabTwoScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+  return data.length > 0 ?
+    <View style={{ flex: 1 }}>
+       <FlatList
+        data={data}
+        style={{backgroundColor: textColors.grey1}}
+        contentContainerStyle={styles.contentContainer}
+        renderItem={({ item }) => <ProductCardFullScreenForCompleted key={item} />}
+        keyExtractor={item => item}
+        // estimatedItemSize={10}
+        showsVerticalScrollIndicator={false}
+      />
     </View>
-  );
+    :
+     <View style={styles.container}>
+      <EmptySvg width={horizontalScale(250)} height={verticalScale(244)} />
+      <UrbanistBoldText style={styles.emptyTxt}>У вас еще нет заказа</UrbanistBoldText>
+      <UrbanistMediumText style={styles.emptySmallTxt}>В данный момент у вас нет текущих заказов</UrbanistMediumText>
+    </View>;
 }
 
 const styles = StyleSheet.create({
@@ -17,13 +36,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  contentContainer: {
+    paddingHorizontal: horizontalScale(16),
+    paddingVertical: verticalScale(16),
+    backgroundColor: textColors.grey1,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  emptyTxt: {
+    marginTop: verticalScale(40),
+    marginBottom: verticalScale(12),
+    fontSize: moderateScale(24),
+    fontWeight: '700'
   },
+  emptySmallTxt: {
+    fontSize: moderateScale(18),
+    fontWeight: '400',
+    color: textColors.grey3
+  }
 });

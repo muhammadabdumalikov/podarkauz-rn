@@ -3730,6 +3730,11 @@ chownr@^2.0.0:
   resolved "https://registry.npmjs.org/chownr/-/chownr-2.0.0.tgz"
   integrity sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==
 
+chroma-js@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/chroma-js/-/chroma-js-3.0.0.tgz"
+  integrity sha512-ZFn4qxtZTvRJ7XatOLgaHGJYN10LoS6T0EMsu7IVayFG5+b6Yw8wCGQL5qLgo4B+wrRZ9niCrozOQ4a584bvaA==
+
 chrome-launcher@^0.15.2:
   version "0.15.2"
   resolved "https://registry.npmjs.org/chrome-launcher/-/chrome-launcher-0.15.2.tgz"
@@ -6798,10 +6803,10 @@ lighthouse-logger@^1.0.0:
     debug "^2.6.9"
     marky "^1.2.2"
 
-lightningcss-darwin-arm64@1.19.0:
+lightningcss-darwin-x64@1.19.0:
   version "1.19.0"
-  resolved "https://registry.npmjs.org/lightningcss-darwin-arm64/-/lightningcss-darwin-arm64-1.19.0.tgz"
-  integrity sha512-wIJmFtYX0rXHsXHSr4+sC5clwblEMji7HHQ4Ub1/CznVRxtCFha6JIt5JZaNf8vQrfdZnBxLLC6R8pC818jXqg==
+  resolved "https://registry.npmjs.org/lightningcss-darwin-x64/-/lightningcss-darwin-x64-1.19.0.tgz"
+  integrity sha512-Lif1wD6P4poaw9c/4Uh2z+gmrWhw/HtXFoeZ3bEsv6Ia4tt8rOJBdkfVaUJ6VXmpKHALve+iTyP2+50xY1wKPw==
 
 lightningcss@~1.19.0:
   version "1.19.0"

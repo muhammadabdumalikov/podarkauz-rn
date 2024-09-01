@@ -59,7 +59,7 @@ export default function SearchScreen() {
             {lastSearches.map((item, index) => (
               <View style={styles.lastSearchElement} key={index}>
                 <View style={styles.circleTxt}>
-                  <AntDesign name="clockcircleo" size={20} color={textColors.halfGrey} />
+                  <AntDesign name="clockcircleo" size={20} color={textColors.grey2rey} />
                   <Text style={styles.lastSearchTxt} numberOfLines={1}>{item}</Text>
                 </View>
                 <Pressable onPress={() => handleDeleteLastSearch(index)}>
@@ -76,7 +76,7 @@ export default function SearchScreen() {
       {/* <View style={{ flex: 1 }}> */}
       <FlashList
         data={DATA[0].data[0].data}
-        contentContainerStyle={{ backgroundColor: textColors.offGrey }}
+        contentContainerStyle={{ backgroundColor: textColors.grey2 }}
         numColumns={2}
         renderItem={({ item }) => <ProductCard key={item} onSelectHandle={onProductCardSelectHandler} />}
         keyExtractor={item => item}
