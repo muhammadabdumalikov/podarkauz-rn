@@ -4,7 +4,7 @@ import { ScrollView, Text, View } from '@/components/Themed';
 import { textColors } from '@/constants/Colors';
 import ProductDetailCarousel from '@/components/app-components/product-detail-carousel';
 import { horizontalScale, moderateScale, verticalScale } from '@/utils/metrics';
-import FavoriteHeartSvg from '@/assets/icons/favorite-heart';
+import { FavoriteHeartSvg } from '@/assets/icons/favorite-heart';
 import { UrbanistBoldText, UrbanistMediumText, UrbanistSemiboldText } from '@/components/StyledText';
 import { SemiFilledStar } from '@/components/app-components/star-percentage';
 import { AntDesign } from '@expo/vector-icons';

@@ -5,7 +5,7 @@ import {
   Dimensions,
   StatusBar,
 } from 'react-native';
-import { images as data } from './product-card';
+import { images as data } from '../../constants/data';
 import Animated, {
   Extrapolation,
   interpolate,

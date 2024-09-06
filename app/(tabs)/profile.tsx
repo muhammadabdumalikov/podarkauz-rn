@@ -21,7 +21,7 @@ const DeliveryProcess = () => {
       description: 'Ваш заказ был получен',
       time: '15:20',
       completed: true,
-      icon: () => <ClosedBox/>
+      icon: () => <ClosedBox width={moderateScale(36)} height={moderateScale(36)}/>
     },
     {
       id: 2,
@@ -29,15 +29,15 @@ const DeliveryProcess = () => {
       description: 'Ваш заказ подготовлен',
       time: '14:40',
       completed: true,
-      icon: () => <DeliveryTruck />
+      icon: () => <DeliveryTruck width={moderateScale(36)} height={moderateScale(36)}/>
     },
     {
       id: 3,
       title: 'Доставка в процессе - 15 декабря',
       description: 'Ваш подарок в пути',
       time: '11:30',
-      completed: true,
-      icon: () => <DeliveryReceive />
+      completed: false,
+      icon: () => <DeliveryReceive width={moderateScale(36)} height={moderateScale(36)}/>
     },
     {
       id: 4,
@@ -45,7 +45,7 @@ const DeliveryProcess = () => {
       description: 'Желаю вам интересных впечатлений',
       time: '10:04',
       completed: false,
-      icon: () => <OpenedBox />
+      icon: () => <OpenedBox width={moderateScale(36)} height={moderateScale(36)}/>
     },
   ];
 
@@ -61,7 +61,7 @@ const DeliveryProcess = () => {
             <React.Fragment key={status.id}>
               <StepImage IconComponent={status.icon} completed={status.completed} />
               {index < statuses.length - 1 && (
-                <Connector completed={statuses[index + 1].completed} />
+                <Connector completed={status.completed} />
               )}
             </React.Fragment>
           ))}
@@ -101,16 +101,16 @@ const DeliveryProcess = () => {
   );
 };
 
-const StepImage = ({ IconComponent, completed }: { IconComponent: () => React.JSX.Element, completed?: boolean }) => (
-  <View style={styles.stepContainer}>
+const StepImage = ({ IconComponent, completed }: { IconComponent: () => React.JSX.Element, completed?: boolean }) => {  
+ return  <View style={styles.stepContainer}>
     <View style={[styles.icon, !completed && styles.iconIncomplete]} >
-      <IconComponent/>
+      <IconComponent />
     </View>
     <View style={[styles.dot, completed && styles.completedDot]} >
-      <FontAwesome6 name="check" size={moderateScale(12)} color={textColors.pureWhite} />
+      <FontAwesome6 name="check" size={moderateScale(10)} color={textColors.pureWhite} />
     </View>
   </View>
-);
+};
 
 const Connector = ({ completed }: { completed?: boolean }) => (
   <View style={styles.connectorRow}>
@@ -143,11 +143,13 @@ const styles = StyleSheet.create({
     marginBottom: verticalScale(24)
   },
   stepContainer: {
+    height: verticalScale(64),
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   dot: {
-    width: verticalScale(20),
-    height: verticalScale(20),
+    width: verticalScale(18),
+    height: verticalScale(18),
     borderRadius: verticalScale(10),
     backgroundColor: textColors.grey4,
     alignItems: 'center',
@@ -157,16 +159,18 @@ const styles = StyleSheet.create({
     backgroundColor: textColors.purple,
   },
   icon: {
-    width: verticalScale(50),
-    height: verticalScale(50),
+    alignItems: 'center',
+    width: verticalScale(36),
+    height: verticalScale(36),
     marginBottom: verticalScale(8)
   },
   iconIncomplete: {
-    opacity: 0.9,
+    opacity: 0.6,
   },
   connectorRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginHorizontal: horizontalScale(8),
     height: verticalScale(20),
   },
   connector: {
@@ -217,7 +221,7 @@ const styles = StyleSheet.create({
     height: verticalScale(36),
     borderRadius: verticalScale(40),
     borderColor: textColors.purple,
-    borderWidth: 2,
+    borderWidth: verticalScale(3),
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -226,25 +230,25 @@ const styles = StyleSheet.create({
     height: verticalScale(36),
     borderRadius: verticalScale(40),
     borderColor: textColors.grey4,
-    borderWidth: 2,
+    borderWidth: verticalScale(3),
     alignItems: 'center',
     justifyContent: 'center'
   },
   completedCircle: {
-    width: verticalScale(14),
-    height: verticalScale(14),
+    width: verticalScale(15),
+    height: verticalScale(15),
     borderRadius: verticalScale(8),
     backgroundColor: textColors.purple,
     borderColor: textColors.purple,
-    borderWidth: verticalScale(2),
+    borderWidth: verticalScale(3),
   },
   incompleteCircle: {
-    width: verticalScale(12),
-    height: verticalScale(12),
+    width: verticalScale(15),
+    height: verticalScale(15),
     borderRadius: verticalScale(8),
     backgroundColor: textColors.grey4,
     borderColor: textColors.grey4,
-    borderWidth: verticalScale(2),
+    borderWidth: verticalScale(3),
   },
   connector2: {
     flex: 1,

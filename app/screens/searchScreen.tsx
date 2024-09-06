@@ -6,10 +6,9 @@ import { textColors } from '@/constants/Colors';
 import { AntDesign } from '@expo/vector-icons';
 import { SeeAllHeader } from '@/components/app-components/see-all-header';
 import { useRef, useState } from 'react';
-import { DATA } from '@/constants/data';
+import { DATA, PRODUCT_DATA } from '@/constants/data';
 import { FlashList } from '@shopify/flash-list';
 import { ProductCard } from '@/components/app-components/product-card';
-import { MyRefType } from '../(tabs)';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { ProductModalView } from '@/components/app-components/product-modal';
 import { goBack } from '@/shared/functions';
@@ -18,16 +17,8 @@ export default function SearchScreen() {
   const [selectedProduct, setSelectedProduct] = useState<{productId: string}>();
   const [lastSearches, setLastSearches] = useState(['sports', 'phones', 'apple',]);
 
-  const refRBSheet = useRef<MyRefType>(null);
-
    const onProductCardSelectHandler = (productId: string) => {
     setSelectedProduct({ productId });
-    refRBSheet.current?.open();
-  }
-
-  const handleModalClose = () => {
-    closeProductModal();
-    refRBSheet.current?.close();
   }
 
   const handleSearch = (input: string) => {
@@ -59,7 +50,7 @@ export default function SearchScreen() {
             {lastSearches.map((item, index) => (
               <View style={styles.lastSearchElement} key={index}>
                 <View style={styles.circleTxt}>
-                  <AntDesign name="clockcircleo" size={20} color={textColors.grey2rey} />
+                  <AntDesign name="clockcircleo" size={20} color={textColors.grey2} />
                   <Text style={styles.lastSearchTxt} numberOfLines={1}>{item}</Text>
                 </View>
                 <Pressable onPress={() => handleDeleteLastSearch(index)}>
@@ -75,41 +66,14 @@ export default function SearchScreen() {
 
       {/* <View style={{ flex: 1 }}> */}
       <FlashList
-        data={DATA[0].data[0].data}
+        data={PRODUCT_DATA}
         contentContainerStyle={{ backgroundColor: textColors.grey2 }}
         numColumns={2}
-        renderItem={({ item }) => <ProductCard key={item} onSelectHandle={onProductCardSelectHandler} />}
-        keyExtractor={item => item}
+        renderItem={({ item }) => <ProductCard key={item.id} product={item} />}
+        keyExtractor={item => item.id}
         estimatedItemSize={10}
         showsVerticalScrollIndicator={false}
       />
-      {/* </View> */}
-
-      <RBSheet
-        ref={refRBSheet}
-        // useNativeDriver={true}
-        customStyles={{
-          wrapper: {
-            backgroundColor: '#00000080',
-          },
-          draggableIcon: {
-            backgroundColor: '#000',
-          },
-          container: {
-            backgroundColor: textColors.pureWhite,
-            borderRadius: 20
-          }
-        }}
-        height={Dimensions.get('screen').height * 0.9}
-        customModalProps={{
-          animationType: 'fade',
-          statusBarTranslucent: true,
-        }}
-        customAvoidingViewProps={{
-          enabled: false,
-        }}>
-        <ProductModalView ref={refRBSheet} onModalClose={handleModalClose} />
-      </RBSheet>
     </SafeAreaView>
   );
 }

@@ -1,79 +1,40 @@
 import { textColors } from '@/constants/Colors';
-import { AntDesign, Feather } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
-import { useRef, useState } from 'react';
-import { StyleSheet, View, Text, Pressable, Animated, ImageBackground, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, Pressable, ImageBackground } from 'react-native';
 import { UrbanistBoldText, UrbanistMediumText, UrbanistSemiboldText } from '../StyledText';
 import { SemiFilledStar } from './star-percentage';
-import FavoriteHeartSvg from '@/assets/icons/favorite-heart';
-import {getRandomElement} from '@/utils/random';
 import { horizontalScale, verticalScale } from '@/utils/metrics';
 import { Link } from 'expo-router';
+import { FavoriteHeartBtn } from './favorte-btn';
+import { IProduct } from '@/constants/data';
+import React, { useMemo } from 'react';
 
-const { width, height } = Dimensions.get('screen');
-
-export const images = [require('../../assets/images/lego.png'), require('../../assets/images/toy.png'), require('../../assets/images/sumka.png')]
-
-export const ProductCard = () => {
-  const [favourite, setFavorite] = useState(false);
-  const fadeAnimation = useRef(new Animated.Value(1)).current;
-
-  const onHeartPressHandler = () => {
-    setFavorite(!favourite);
-    // Trigger fade animation
-    Animated.sequence([
-      Animated.timing(fadeAnimation, {
-        toValue: 0.5,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-      Animated.timing(fadeAnimation, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  }
-
-  return <Link href={{ pathname: "/screens/product-detail" }} asChild>
-    <Pressable style={styles.box}>
-      <View style={[styles.image]}>
-        <ImageBackground style={styles.imageBox} source={getRandomElement(images)}/>
-      </View>
-      <View style={styles.cardFooter}>
-        <UrbanistBoldText numberOfLines={2} style={styles.productTitle}>TMA-2 HD Wireleswwwws ssasdasdsa</UrbanistBoldText>
-
-        <View style={styles.details}>
-          <View style={styles.starAndRate}>
-            <SemiFilledStar rating={3}/>
-            <UrbanistMediumText style={styles.rateTxt}>4.6</UrbanistMediumText>
-          </View>
-
-          <View style={styles.divider} />
-
-          <UrbanistSemiboldText style={styles.ordersTxt}>8633 заказов</UrbanistSemiboldText>
+export const ProductCard = React.memo(function({ product }: { product: IProduct }) {
+  return (
+    <Link href={{ pathname: "/screens/product-detail" }} asChild>
+      <Pressable style={styles.box}>
+        <View style={[styles.image]}>
+          <ImageBackground style={styles.imageBox} source={product.image} />
         </View>
-      
-        <UrbanistBoldText style={styles.productPrice}>445 000 сум</UrbanistBoldText>
-      </View>
+        <View style={styles.cardFooter}>
+          <UrbanistBoldText numberOfLines={2} style={styles.productTitle}>
+            {product.name}
+          </UrbanistBoldText>
 
-      <Pressable onPress={onHeartPressHandler} style={styles.favoriteHeartBox}>
-        <LinearGradient
-          colors={['#7210FF', '#9D59FF']}
-          style={{flex: 1, justifyContent: 'center', alignItems:'center', borderRadius: 30}}
-        >
-          <Animated.View style={{ opacity: fadeAnimation }}>
-            <FavoriteHeartSvg
-              width={18}
-              height={18}
-              color={favourite ? textColors.redVelvet : textColors.pureWhite}
-            />
-          </Animated.View>
-        </LinearGradient>
+          <View style={styles.details}>
+            <View style={styles.starAndRate}>
+              <SemiFilledStar rating={3} />
+              <UrbanistMediumText style={styles.rateTxt}>4.6</UrbanistMediumText>
+            </View>
+            <View style={styles.divider} />
+            <UrbanistSemiboldText style={styles.ordersTxt}>8633 заказов</UrbanistSemiboldText>
+          </View>
+          <UrbanistBoldText style={styles.productPrice}>{product.price} сум</UrbanistBoldText>
+        </View>
+        <FavoriteHeartBtn product={product} key={product.id} />
       </Pressable>
-    </Pressable>
-  </Link>
-};
+    </Link>
+  );
+});
 
 const styles = StyleSheet.create({
   box: {
@@ -92,7 +53,6 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    // height: width*0.44-10,
     height: verticalScale(182),
     borderRadius: 24,
     overflow: 'hidden',
@@ -103,9 +63,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   cardFooter: {
-    // height: width * 0.195,
     height: verticalScale(106),
-    gap: 8
+    gap: 8,
   },
   productTitle: {
     fontWeight: '700',
@@ -130,7 +89,7 @@ const styles = StyleSheet.create({
   rateTxt: {
     fontSize: 14,
     fontWeight: '500',
-    marginLeft: 8
+    marginLeft: 8,
   },
   ordersTxt: {
     marginRight: horizontalScale(10),
@@ -140,16 +99,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: horizontalScale(8),
     borderRadius: 6,
     backgroundColor: textColors.transparentSilver,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
-  favoriteHeartBox: {
-    position: 'absolute',
-    top: 14,
-    right: 12,
-    height: 28,
-    width: 28,
-  },
-   divider: {
+  divider: {
     width: 1,
     height: '60%',
     backgroundColor: '#333',

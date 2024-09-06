@@ -1,30 +1,29 @@
-import Svg, { Circle, Path } from "react-native-svg"
-const ProfileMenuIcon = (props: any) => (
- <Svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={17}
-    height={21}
-    fill="none"
-    {...props}
-  >
-    <Circle
-      cx={8.579}
-      cy={6.278}
-      r={4.778}
-      stroke={props.stroke}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-    />
-    <Path
-      stroke={props.stroke}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M1 16.702a2.215 2.215 0 0 1 .22-.97c.457-.916 1.748-1.401 2.819-1.62a16.778 16.778 0 0 1 2.343-.33 25.059 25.059 0 0 1 4.385 0c.787.055 1.57.165 2.343.33 1.07.219 2.361.658 2.82 1.62a2.27 2.27 0 0 1 0 1.949c-.459.961-1.75 1.4-2.82 1.61a15.71 15.71 0 0 1-2.343.34c-1.188.1-2.38.119-3.57.055-.275 0-.54 0-.815-.055a15.417 15.417 0 0 1-2.334-.34c-1.08-.21-2.361-.649-2.828-1.61a2.28 2.28 0 0 1-.22-.98Z"
-      clipRule="evenodd"
-    />
-  </Svg>
-);
+import React from "react";
+import { SvgXml } from "react-native-svg";
 
-export default ProfileMenuIcon;
+export function ProfileMenuIcon({ width, height, color }: { width?: any, height?: any, color?: string }) {
+  const Xml = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M17.294 7.29105C17.294 10.2281 14.9391 12.5831 12 12.5831C9.0619 12.5831 6.70601 10.2281 6.70601 7.29105C6.70601 4.35402 9.0619 2 12 2C14.9391 2 17.294 4.35402 17.294 7.29105ZM12 22C7.66237 22 4 21.295 4 18.575C4 15.8539 7.68538 15.1739 12 15.1739C16.3386 15.1739 20 15.8789 20 18.599C20 21.32 16.3146 22 12 22Z" fill="#212121"/>
+</svg>
+`;
+
+  const Svg = () => (
+    <SvgXml xml={Xml} width={width} height={height} color={color} />
+  );
+
+  return <Svg />;
+}
+
+export function ProfileMenuIconInactive({ width, height, color }: { width?: any, height?: any, color?: string }) {
+  const Xml = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M11.9847 15.3462C8.11713 15.3462 4.81427 15.931 4.81427 18.2729C4.81427 20.6148 8.09617 21.2205 11.9847 21.2205C15.8524 21.2205 19.1543 20.6348 19.1543 18.2938C19.1543 15.9529 15.8733 15.3462 11.9847 15.3462Z" stroke="#9E9E9E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M11.9848 12.0059C14.5229 12.0059 16.58 9.94779 16.58 7.40969C16.58 4.8716 14.5229 2.81445 11.9848 2.81445C9.44667 2.81445 7.38858 4.8716 7.38858 7.40969C7.38001 9.93922 9.42382 11.9973 11.9524 12.0059H11.9848Z" stroke="#9E9E9E" stroke-width="1.42857" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+  const Svg = () => (
+    <SvgXml xml={Xml} width={width} height={height} color={color} />
+  );
+
+  return <Svg />;
+}

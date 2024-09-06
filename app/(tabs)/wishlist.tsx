@@ -1,13 +1,38 @@
 import { StyleSheet } from 'react-native';
 
-import { Text, View } from '@/components/Themed';
+import { View } from '@/components/Themed';
+import { ProductCard } from '@/components/app-components/product-card';
+import { FlashList } from '@shopify/flash-list';
+import { horizontalScale, moderateScale, verticalScale } from '@/utils/metrics';
+// import { getFavoriteProducts } from '@/utils/favorites.storage';
+import { useFavorites } from '@/hooks/queries/storage.hooks';
+import EmptySvg from '@/assets/images/empty';
+import { UrbanistBoldText, UrbanistMediumText } from '@/components/StyledText';
+import { textColors } from '@/constants/Colors';
 
-export default function TabTwoScreen() {
+export default function WishlistScreen() {
+  const { getFavoriteProducts } = useFavorites();
+  const data = getFavoriteProducts();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-    </View>
+    data.length > 0
+      ?
+      <View style={styles.flatlistStyleView}>
+        <FlashList
+          data={data}
+          numColumns={2}
+          contentContainerStyle={{ paddingHorizontal: horizontalScale(8) }}
+          renderItem={({ item }) => <ProductCard key={item.id} product={item} />}
+          keyExtractor={item => item.id}
+          estimatedItemSize={10}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
+      :
+      <View style={styles.container}>
+        <EmptySvg width={horizontalScale(250)} height={verticalScale(244)} />
+        <UrbanistBoldText style={styles.emptyTxt}>У вас еще нет заказа</UrbanistBoldText>
+      </View>
   );
 }
 
@@ -15,15 +40,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  flatlistStyleView: {
+    flex: 1
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  emptyTxt: {
+    marginTop: verticalScale(40),
+    marginBottom: verticalScale(12),
+    fontSize: moderateScale(24),
+    fontWeight: '700'
   },
 });

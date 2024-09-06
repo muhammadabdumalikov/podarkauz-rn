@@ -1,26 +1,29 @@
-import Svg, { Path } from "react-native-svg"
-const HeartMenuIcon = (props: any) => (
-   <Svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={24}
-    height={24}
-    fill="none"
-    {...props}
-  >
-    <Path
-      stroke={props.stroke}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M11.761 20.854a34.845 34.845 0 0 1-6.022-4.689 11.99 11.99 0 0 1-2.866-4.57c-1.076-3.345.18-7.174 3.698-8.307a5.978 5.978 0 0 1 5.425.913 5.987 5.987 0 0 1 5.425-.913c3.517 1.133 4.783 4.962 3.707 8.307a11.99 11.99 0 0 1-2.866 4.57 34.844 34.844 0 0 1-6.022 4.689l-.235.146-.244-.146Z"
-      clipRule="evenodd"
-    />
-    <Path
-      stroke={props.stroke}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M15.74 7.053a2.782 2.782 0 0 1 1.916 2.422"
-    />
-  </Svg>
-)
-export default HeartMenuIcon;
+import React from "react";
+import { SvgXml } from "react-native-svg";
+
+export function WishlistMenuIcon({ width, height, color }: { width?: any, height?: any, color?: string }) {
+  const Xml = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M2.87187 11.5983C1.79887 8.24832 3.05287 4.41932 6.56987 3.28632C8.41987 2.68932 10.4619 3.04132 11.9999 4.19832C13.4549 3.07332 15.5719 2.69332 17.4199 3.28632C20.9369 4.41932 22.1989 8.24832 21.1269 11.5983C19.4569 16.9083 11.9999 20.9983 11.9999 20.9983C11.9999 20.9983 4.59787 16.9703 2.87187 11.5983Z" stroke="#9E9E9E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M16 6.70001C17.07 7.04601 17.826 8.00101 17.917 9.12201" stroke="#9E9E9E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+  const Svg = () => (
+    <SvgXml xml={Xml} width={width} height={height} color={color} />
+  );
+
+  return <Svg />;
+}
+
+export function WishlistMenuIconInactive({ width, height, color }: { width?: any, height?: any, color?: string }) {
+  const Xml = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M15.8498 2.50065C16.4808 2.50065 17.1108 2.58965 17.7098 2.79065C21.4008 3.99065 22.7308 8.04065 21.6198 11.5806C20.9898 13.3896 19.9598 15.0406 18.6108 16.3896C16.6798 18.2596 14.5608 19.9196 12.2798 21.3496L12.0298 21.5006L11.7698 21.3396C9.48077 19.9196 7.34977 18.2596 5.40077 16.3796C4.06077 15.0306 3.02977 13.3896 2.38977 11.5806C1.25977 8.04065 2.58977 3.99065 6.32077 2.76965C6.61077 2.66965 6.90977 2.59965 7.20977 2.56065H7.32977C7.61077 2.51965 7.88977 2.50065 8.16977 2.50065H8.27977C8.90977 2.51965 9.51977 2.62965 10.1108 2.83065H10.1698C10.2098 2.84965 10.2398 2.87065 10.2598 2.88965C10.4808 2.96065 10.6898 3.04065 10.8898 3.15065L11.2698 3.32065C11.3616 3.36962 11.4647 3.44445 11.5537 3.50912C11.6102 3.55009 11.661 3.58699 11.6998 3.61065C11.7161 3.62028 11.7327 3.62996 11.7494 3.63972C11.8351 3.68977 11.9245 3.74191 11.9998 3.79965C13.1108 2.95065 14.4598 2.49065 15.8498 2.50065ZM18.5098 9.70065C18.9198 9.68965 19.2698 9.36065 19.2998 8.93965V8.82065C19.3298 7.41965 18.4808 6.15065 17.1898 5.66065C16.7798 5.51965 16.3298 5.74065 16.1798 6.16065C16.0398 6.58065 16.2598 7.04065 16.6798 7.18965C17.3208 7.42965 17.7498 8.06065 17.7498 8.75965V8.79065C17.7308 9.01965 17.7998 9.24065 17.9398 9.41065C18.0798 9.58065 18.2898 9.67965 18.5098 9.70065Z" fill="#212121"/>
+</svg>
+`;
+
+  const Svg = () => (
+    <SvgXml xml={Xml} width={width} height={height} color={color} />
+  );
+
+  return <Svg />;
+}
