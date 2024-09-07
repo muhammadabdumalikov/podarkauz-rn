@@ -41,6 +41,10 @@ target 'stroymarket' do
   use_frameworks! :linkage => podfile_properties['ios.useFrameworks'].to_sym if podfile_properties['ios.useFrameworks']
   use_frameworks! :linkage => ENV['USE_FRAMEWORKS'].to_sym if ENV['USE_FRAMEWORKS']
 
+  # pod 'Permission-Camera', :path => '../node_modules/react-native-permissions/ios'
+  pod 'Permission-LocationWhenInUse', :path => '../node_modules/react-native-permissions/ios/LocationWhenInUse'
+  pod 'Permission-LocationAlways', :path => '../node_modules/react-native-permissions/ios/LocationAlways'
+
   use_react_native!(
     :path => config[:reactNativePath],
     :hermes_enabled => podfile_properties['expo.jsEngine'] == nil || podfile_properties['expo.jsEngine'] == 'hermes',
@@ -57,6 +61,11 @@ target 'stroymarket' do
       :ccache_enabled => podfile_properties['apple.ccacheEnabled'] == 'true',
     )
 
+    installer.pods_project.targets.each do |target|
+      if target.name == 'react-native-permissions'
+        setup_permissions(target)
+      end
+    end
     # This is necessary for Xcode 14, because it signs resource bundles by default
     # when building for devices.
     installer.target_installation_results.pod_target_installation_results

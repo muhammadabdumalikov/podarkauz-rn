@@ -34,7 +34,7 @@ export default function TabLayout() {
         tabBarStyle: {
           position: 'absolute',
           height: verticalScale(90),
-          backgroundColor: 'rgba(255, 255, 255, 0.8)',
+          backgroundColor: textColors.bottomBarBlur,
         }
       }}>
       <Tabs.Screen
@@ -71,32 +71,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="catalog"
         options={{
-          headerShown: false,
           title: 'Catalog',
           tabBarIcon: ({ color, focused }) => <CatalogSvg stroke={ focused ? color : textColors.bottomBarInactiveIconColor } fill={focused ? textColors.navyBlack : 'none'} />,
-          headerRight: ({ tintColor }) => (
-            <View style={styles.headerTwoBtns}>
-              <Link href="/modal" asChild>
-                <Pressable style={{ height: 24, width: 24 }}>
-                  {({ pressed }) => (
-                    <BellIcon color={tintColor} />
-                  )}
-                </Pressable>
-              </Link>
-
-              <Link href="/modal" asChild>
-                <Pressable style={{ height: 24, width: 24 }}>
-                  {({ pressed }) => (
-                    <BoxSvg color={tintColor} />
-                  )}
-                </Pressable>
-              </Link>
-            </View>
-          ),
-          headerStyle: { height: 100 },
-          headerTitleStyle: {
-            color: textColors.blueOcean
-          }
         }}
       />
       <Tabs.Screen

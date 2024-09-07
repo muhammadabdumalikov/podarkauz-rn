@@ -2,6 +2,7 @@
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTLinkingManager.h>
+#import <YandexMapsMobile/YMKMapKitFactory.h>
 
 @implementation AppDelegate
 
@@ -12,6 +13,10 @@
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
+
+  [YMKMapKit setApiKey:@"b7e92bd0-0f80-42c3-82ec-15a7b5171739"];
+  [YMKMapKit setLocale:@"ru_RU"];
+  [[YMKMapKit mapKit] onStart];
 
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }

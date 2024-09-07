@@ -7,11 +7,15 @@ import { useEffect } from 'react';
 import { store } from '../store/store';
 import { Provider } from 'react-redux'
 
+import YaMap from 'react-native-yamap';
+
 import { useColorScheme } from '@/components/useColorScheme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 // import queryClient from '@/service/api/react-query';
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
+
+YaMap.init('b7e92bd0-0f80-42c3-82ec-15a7b5171739');
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -76,6 +80,7 @@ function RootLayoutNav() {
           <Stack.Screen name="screens/inSubcategoryScreen" options={{ headerShown: false }} />
           <Stack.Screen name="screens/product-detail" options={{ headerShown: false }} />
           <Stack.Screen name="screens/notification-screen" options={{ headerShown: false }} />
+          {/* <Stack.Screen name="screens/yandex-map-screen" options={{ headerShown: false }} /> */}
         </Stack>
       </ThemeProvider>
       </Provider>
