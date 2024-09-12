@@ -7,7 +7,7 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>$(DEVELOPMENT_LANGUAGE)</string>
     <key>CFBundleDisplayName</key>
-    <string>stroy-market</string>
+    <string>podarkauz-rn</string>
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>
@@ -27,8 +27,8 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>myapp</string>
-          <string>com.anonymous.stroymarket</string>
+          <string>podarkiuz</string>
+          <string>com.muhammad443.podarkauzrn</string>
         </array>
       </dict>
     </array>
@@ -45,6 +45,8 @@
     </dict>
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
     <string>We need your location to show it on the map</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>We need your location for better experience.</string>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>We need your location to show it on the map</string>
     <key>NSUserActivityTypes</key>
@@ -72,6 +74,8 @@
     <array>
       <string>UIInterfaceOrientationPortrait</string>
       <string>UIInterfaceOrientationPortraitUpsideDown</string>
+      <string>UIInterfaceOrientationLandscapeLeft</string>
+      <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
     <key>UISupportedInterfaceOrientations~ipad</key>
     <array>

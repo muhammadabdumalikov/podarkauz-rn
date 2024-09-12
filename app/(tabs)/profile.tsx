@@ -10,36 +10,55 @@ export default function ProfileScreen() {
   const [darkMode, setDarkMode] = React.useState(false);
 
   const profileData = [
-    { icon: <Ionicons name="person-outline" size={24} color="black" />, label: 'Редактировать профиль' },
-    { icon: <SimpleLineIcons name="location-pin" size={24} color="black" />, label: 'Адрес доставки' },
-    { icon: <Ionicons name="notifications-outline" size={24} color="black" />, label: 'Уведомление' },
-    { icon: <Ionicons name="card-outline" size={24} color="black" />, label: 'Способы оплаты' },
-    { icon: <Ionicons name="shield-outline" size={24} color="black" />, label: 'Безопасность' },
-    { icon: <Ionicons name="language-outline" size={24} color="black" />, label: 'Язык', value: 'Русский (RU)' },
+    { icon: <Ionicons name="person-outline" size={24} color="black" />, label: 'Редактировать профиль', screen: 'screens/edit-profile-screen'},
+    { icon: <SimpleLineIcons name="location-pin" size={24} color="black" />, label: 'Адрес доставки', screen: 'screens/adresses-screen'},
+    { icon: <Ionicons name="notifications-outline" size={24} color="black" />, label: 'Уведомление', screen: 'screens/adresses-screen'},
+    { icon: <Ionicons name="card-outline" size={24} color="black" />, label: 'Способы оплаты', screen: 'screens/payment-methods-screen'},
+    { icon: <Ionicons name="shield-outline" size={24} color="black" />, label: 'Безопасность', screen: 'screens/adresses-screen'},
+    { icon: <Ionicons name="language-outline" size={24} color="black" />, label: 'Язык', value: 'Русский (RU)', screen: 'screens/adresses-screen'},
     { icon: <Ionicons name="moon-outline" size={24} color="black" />, label: 'Темный режим', switch: true },
-    { icon: <Ionicons name="lock-closed-outline" size={24} color="black" />, label: 'политика конфиденциальности' },
-    { icon: <Ionicons name="help-circle-outline" size={24} color="black" />, label: 'Справочный центр' },
-    { icon: <Ionicons name="people-outline" size={24} color="black" />, label: 'Приглашайте друзей' },
+    { icon: <Ionicons name="lock-closed-outline" size={24} color="black" />, label: 'политика конфиденциальности', screen: 'screens/adresses-screen'},
+    { icon: <Ionicons name="help-circle-outline" size={24} color="black" />, label: 'Справочный центр', screen: 'screens/adresses-screen'},
+    { icon: <Ionicons name="people-outline" size={24} color="black" />, label: 'Приглашайте друзей', screen: 'screens/adresses-screen'},
   ];
 
   const handleSwitchChange = () => setDarkMode((prev) => !prev);
 
-  const renderItem = ({ item }: { item: any }) => (
-    <View style={styles.optionRow}>
-      {item.icon}
-      <UrbanistMediumText style={styles.optionText}>{item.label}</UrbanistMediumText>
-      {item.value && <UrbanistSemiboldText style={styles.optionValue}>{item.value}</UrbanistSemiboldText>}
-      {item.switch && (
-        <Switch
-          trackColor={{ false: "#767577", true: "#81b0ff" }}
-          thumbColor={darkMode ? "#f5dd4b" : "#f4f3f4"}
-          onValueChange={handleSwitchChange}
-          value={darkMode}
-        />
-      )}
-      {!item.switch && <FontAwesome name="angle-right" size={moderateScale(28)} color="black" />}
-    </View>
-  );
+  const renderItem = ({ item }: { item: any }) => {    
+    return item?.switch
+      ?
+      <View style={styles.optionRow}>
+        {item.icon}
+        <UrbanistMediumText style={styles.optionText}>{item.label}</UrbanistMediumText>
+        {item.value && <UrbanistSemiboldText style={styles.optionValue}>{item.value}</UrbanistSemiboldText>}
+        {item.switch && (
+          <Switch
+            trackColor={{ false: "#767577", true: "#81b0ff" }}
+            thumbColor={darkMode ? "#f5dd4b" : "#f4f3f4"}
+            onValueChange={handleSwitchChange}
+            value={darkMode}
+          />
+        )}
+        {!item.switch && <FontAwesome name="angle-right" size={moderateScale(28)} color="black" />}
+      </View>
+      :
+      <Link href={item.screen} asChild>
+        <Pressable style={styles.optionRow}>
+          {item.icon}
+          <UrbanistMediumText style={styles.optionText}>{item.label}</UrbanistMediumText>
+          {item.value && <UrbanistSemiboldText style={styles.optionValue}>{item.value}</UrbanistSemiboldText>}
+          {item.switch && (
+            <Switch
+              trackColor={{ false: "#767577", true: "#81b0ff" }}
+              thumbColor={darkMode ? "#f5dd4b" : "#f4f3f4"}
+              onValueChange={handleSwitchChange}
+              value={darkMode}
+            />
+          )}
+          {!item.switch && <FontAwesome name="angle-right" size={moderateScale(28)} color="black" />}
+        </Pressable>
+      </Link>
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -61,13 +80,11 @@ export default function ProfileScreen() {
             source={{ uri: 'https://via.placeholder.com/150' }}
             style={styles.profileImage}
           />
-          <Link href="/screens/yandex-map-screen" asChild>
           <Pressable style={styles.editIconBox}>
             <View style={styles.editIcon}>
               <FontAwesome name="pencil" size={moderateScale(18)} color="white" />
             </View>
-            </Pressable>
-            </Link>
+          </Pressable>
         </View>
         <UrbanistBoldText style={styles.profileName}>Аббос Хазратов</UrbanistBoldText>
         <UrbanistSemiboldText style={styles.profilePhone}>+998 94 678 97 58</UrbanistSemiboldText>

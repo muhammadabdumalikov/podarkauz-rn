@@ -6,10 +6,15 @@ interface LinearWrapperProps extends ViewProps {
   children?: React.ReactNode;
 }
 
-export function LinearWrapper(props: LinearWrapperProps) {
+export function LinearWrapper(props: LinearWrapperProps & {
+  from?: string, to?: string
+}) {
+  const fromColor = props.from || '#7210FF';
+  const toColor = props.from || '#9D59FF';
+
   return (
     <LinearGradient
-      colors={['#7210FF', '#9D59FF']}
+      colors={[fromColor, toColor]}
       {...props}
       style={props.style}
     >

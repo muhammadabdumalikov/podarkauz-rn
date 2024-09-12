@@ -28,7 +28,6 @@ export const SeeAllHeader = (
 
 const styles = StyleSheet.create({
   box: {
-    flex: 1,
     flexDirection: "row",
     justifyContent: 'space-between',
     alignItems: 'center',

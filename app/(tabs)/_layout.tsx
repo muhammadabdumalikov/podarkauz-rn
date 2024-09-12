@@ -25,8 +25,7 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
+        tabBarHideOnKeyboard: true,
         headerShown: useClientOnlyValue(false, true),
         tabBarBackground: () => (
           <BlurView intensity={50} tint="light" style={{ flex: 1 }} />

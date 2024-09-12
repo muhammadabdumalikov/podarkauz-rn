@@ -37,5 +37,15 @@
   ],
   "experiments": {
     "typedRoutes": true
+  },
+  "expo": {
+    "userInterfaceStyle": "automatic",
+    "scheme": "podarkiuz",
+    "android": {
+      "package": "com.muhammad443.podarkauzrn"
+    },
+    "ios": {
+      "bundleIdentifier": "com.muhammad443.podarkauzrn"
+    }
   }
 }

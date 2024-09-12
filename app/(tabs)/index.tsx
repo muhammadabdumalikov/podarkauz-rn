@@ -1,11 +1,17 @@
 import React, { useRef, useState, useMemo, useCallback } from 'react';
-import { FlatList, StyleSheet, Text, SafeAreaView, Dimensions, Pressable, ActivityIndicator, ImageBackground } from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  SafeAreaView,
+  Dimensions,
+  Pressable,
+  ActivityIndicator,
+  ImageBackground,
+} from 'react-native';
 import { View, SectionList } from '@/components/Themed';
 import { SeeAllHeader } from '@/components/app-components/see-all-header';
 import { ProductCard } from '@/components/app-components/product-card';
-import RBSheet from 'react-native-raw-bottom-sheet';
-import { closeProductModal } from '@/store/reducer';
-import { ProductModalView } from '@/components/app-components/product-modal';
 import { Link } from 'expo-router';
 import { fetchCategories } from '@/service/api/categort-list';
 import { useQuery } from '@tanstack/react-query';
@@ -14,108 +20,90 @@ import { FlashList } from '@shopify/flash-list';
 import { horizontalScale, moderateScale, verticalScale } from '@/utils/metrics';
 import { textColors } from '@/constants/Colors';
 import { DATA, IProduct, PRODUCT_DATA } from '@/constants/data';
-import { InputBoxBtn } from '@/components/app-components/input-box';
 import BellSvg from '@/assets/icons/bell';
 import LocationColorfulSvg from '@/assets/icons/location-colorful';
 import { LinearWrapper } from '@/components/app-components/linear-wrapper';
 import { UrbanistMediumText } from '@/components/StyledText';
 import CategoryScrollView from '@/components/app-components/selected-categories-scroll';
 import { CategoryFlatlist } from '@/components/app-components/category-flatlist-index';
-
-export interface MyRefType {
-  open: () => void;
-  close: () => void;
-}
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import { WishlistHeartSvg } from '@/assets/icons/favorite-heart';
 
 export default function HomeScreen() {
-  const refRBSheet = useRef<MyRefType>(null);
-  const { data: categoryData, isLoading: isCategoryLoading } = useQuery({
-    queryKey: ['categories'],
-    queryFn: fetchCategories,
-  });
+  // const { data: categoryData, isLoading: isCategoryLoading } = useQuery({
+  //   queryKey: ['categories'],
+  //   queryFn: fetchCategories,
+  // });
 
   const subCategories = ['Все', 'Женщинам', 'Мужчинам', 'Детям', 'Женщинамm'];
 
-  // Memoize the CategoryItem to prevent unnecessary re-renders
-  const CategoryItem = useMemo(() => ({
-    params: { name_uz, name_ru, image_small, image_original, key }
-  }: {
-    params: {
-      name_uz: string,
-      name_ru: string,
-      image_small: string;
-      image_original: string;
-      key: any;
-    }
-  }) => {
-    return (
-      <Link href={{ pathname: "/screens/inCategoryScreen", params: { categoryName: name_uz } }} asChild key={key}>
-        <Pressable style={styles.categoryItem}>
-          <View style={styles.categoryItemImgBox}>
-            <ImageBackground 
-              style={styles.categoryItemImg}
-              source={{ uri: image_original }}
-              resizeMode='center'
-            />
-          </View>
-          <Text style={styles.categoryItemTxt}>{name_uz}</Text>
-        </Pressable>
-      </Link>
-    );
-  }, []);
+  const handleCategoryOnPress = () => {};
 
-  // Centralized handler to open modal
-  const handleModalClose = useCallback(() => {
-    closeProductModal();
-    refRBSheet.current?.close();
-  }, []);
+  const renderSection = useCallback(
+    ({
+      section,
+    }: {
+      section: {
+        title?: string;
+        data: IProduct[] | any;
+      };
+    }) => {
+      return (
+        <View style={{ flex: 1 }}>
+          <FlashList
+            data={PRODUCT_DATA}
+            numColumns={2}
+            contentContainerStyle={{
+              paddingHorizontal: horizontalScale(8),
+              paddingBottom: verticalScale(80),
+            }}
+            renderItem={({ item }) => (
+              <ProductCard product={item} key={item.id} />
+            )}
+            keyExtractor={item => item.id}
+            estimatedItemSize={10}
+            showsVerticalScrollIndicator={false}
+          />
+        </View>
+      );
+    },
+    []
+  );
 
-  const handleCategoryOnPress = () => {
-  }
-
-  const renderSection = useCallback(({ section }: { 
-    section: { 
-      title?: string; 
-      data: IProduct[] | any; 
-    } 
-  }) => {
-    return (
-      <View style={{ flex: 1 }}>
-        <FlashList
-          data={PRODUCT_DATA}
-          numColumns={2}
-          contentContainerStyle={{ paddingHorizontal: horizontalScale(8), paddingBottom: verticalScale(80) }}
-          renderItem={({ item }) => <ProductCard product={item} key={item.id}/>}
-          keyExtractor={(item) => item.id}
-          estimatedItemSize={10}
-          showsVerticalScrollIndicator={false}
-        />
-      </View>
-    );
-  }, []);
-
-
-  if (isCategoryLoading) {
-    return <ActivityIndicator size="large" />;
-  }
+  // if (isCategoryLoading) {
+  //   return <ActivityIndicator size="large" />;
+  // }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: textColors.pureWhite }} >
+    <SafeAreaView style={{ flex: 1, backgroundColor: textColors.pureWhite }}>
       <View style={styles.searchHeader}>
-        {/* <Link href="/screens/searchScreen" asChild>
-          <Pressable style={styles.searchBoxElement}>
-            <AntDesign name="search1" size={28} color={textColors.navyBlack} />
-          </Pressable>
-        </Link> */}
         <Pressable>
           <LinearWrapper style={styles.locationBox}>
-            <LocationColorfulSvg width={verticalScale(24)} height={verticalScale(24)} />
-            <UrbanistMediumText numberOfLines={1} style={styles.locationTxt}>Ташкент, Мирзо Улугбек район, Карасув-3, улица Мингбулок, 38.</UrbanistMediumText>
+            <LocationColorfulSvg
+              width={verticalScale(24)}
+              height={verticalScale(24)}
+            />
+            <UrbanistMediumText numberOfLines={1} style={styles.locationTxt}>
+              Ташкент, Мирзо Улугбек район, Карасув-3, улица Мингбулок, 38.
+            </UrbanistMediumText>
           </LinearWrapper>
         </Pressable>
-        <Link href="/screens/notification-screen" asChild>
+        <Link href='/screens/notification-screen' asChild>
           <Pressable style={styles.searchBoxElement}>
-            <BellSvg width={verticalScale(30)} height={verticalScale(30)} color={textColors.navyBlack} />
+            <BellSvg
+              width={verticalScale(30)}
+              height={verticalScale(30)}
+              color={textColors.navyBlack}
+            />
+          </Pressable>
+        </Link>
+        <Link href='/screens/wishlist-screen' asChild>
+          <Pressable style={styles.searchBoxElement}>
+            <WishlistHeartSvg
+              width={verticalScale(30)}
+              height={verticalScale(30)}
+              color={textColors.navyBlack}
+            />
           </Pressable>
         </Link>
       </View>
@@ -123,11 +111,38 @@ export default function HomeScreen() {
       <SectionList
         ListHeaderComponent={
           <>
-            <InputBoxBtn />
+            <Link href='/screens/search-screen' asChild>
+              <Pressable>
+                <View style={[styles.inputBox]}>
+                  <Feather
+                    name='search'
+                    size={moderateScale(24)}
+                    color={textColors.navyBlack}
+                  />
+
+                  <MaterialCommunityIcons
+                    name='tune-variant'
+                    size={moderateScale(24)}
+                    color={textColors.navyBlack}
+                  />
+                </View>
+              </Pressable>
+            </Link>
+
             <AdsBoxCarousel />
-            <SeeAllHeader headerName='Categories' btnName='See all' link='/screens/categoryListScreen' onPress={handleCategoryOnPress} />
+            <SeeAllHeader
+              headerName='Categories'
+              btnName='See all'
+              link='/screens/search-screen'
+              onPress={handleCategoryOnPress}
+            />
             <CategoryFlatlist />
-            <SeeAllHeader headerName='Популярные' btnName='Посмотреть все' link='/profile' onPress={handleCategoryOnPress} />
+            <SeeAllHeader
+              headerName='Популярные'
+              btnName='Посмотреть все'
+              link='/profile'
+              onPress={handleCategoryOnPress}
+            />
             {/* <FlatList
               style={styles.categoryList}
               contentContainerStyle={styles.categoryListContent}
@@ -143,22 +158,11 @@ export default function HomeScreen() {
         renderItem={renderSection}
         showsVerticalScrollIndicator={false}
         renderSectionHeader={({ section: { title } }) => (
-          <View style={{backgroundColor: textColors.pureWhite}}>
-            <CategoryScrollView subCategories={subCategories}/>
+          <View style={{ backgroundColor: textColors.backgroundBlur }}>
+            <CategoryScrollView subCategories={subCategories} />
           </View>
         )}
       />
-
-      <RBSheet
-        ref={refRBSheet}
-        customStyles={{
-          wrapper: { backgroundColor: '#00000080' },
-          draggableIcon: { backgroundColor: '#000' },
-          container: { backgroundColor: textColors.pureWhite, borderRadius: 20 }
-        }}
-        height={Dimensions.get('screen').height * 0.9}>
-        <ProductModalView ref={refRBSheet} onModalClose={handleModalClose} />
-      </RBSheet>
     </SafeAreaView>
   );
 }
@@ -175,7 +179,7 @@ const styles = StyleSheet.create({
     marginVertical: verticalScale(12),
   },
   locationBox: {
-    width: horizontalScale(358),
+    width: horizontalScale(310),
     height: verticalScale(44),
     borderRadius: moderateScale(12),
     flexDirection: 'row',
@@ -184,11 +188,23 @@ const styles = StyleSheet.create({
   },
   locationTxt: {
     marginLeft: horizontalScale(10),
-    width: horizontalScale(292),
+    width: horizontalScale(252),
     fontWeight: '400',
     fontSize: moderateScale(15),
     letterSpacing: 0.2,
     color: textColors.pureWhite,
+  },
+  inputBox: {
+    flexDirection: 'row',
+    backgroundColor: textColors.grey2,
+    justifyContent: 'space-between',
+    width: horizontalScale(395),
+    alignItems: 'center',
+    height: verticalScale(56),
+    borderRadius: 15  ,
+    marginHorizontal: horizontalScale(16),
+    paddingHorizontal: 15,
+    marginBottom: verticalScale(24),
   },
   searchBoxElement: {
     marginHorizontal: 3,

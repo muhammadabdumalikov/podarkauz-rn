@@ -15,7 +15,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 
-YaMap.init('b7e92bd0-0f80-42c3-82ec-15a7b5171739');
+YaMap.init('8e3ed980-d7b6-4dcc-ad54-7d06df299397');
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -69,20 +69,30 @@ function RootLayoutNav() {
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-          <Stack.Screen name="screens/searchScreen" options={{ headerShown: false }} />
-          <Stack.Screen name="screens/inCategoryScreen" options={{ headerShown: false }} />
-          <Stack.Screen name="screens/categoryListScreen" options={{ headerShown: false }} />
-          <Stack.Screen name="screens/subcategoriesListScreen" options={{ headerShown: false }} />
-          <Stack.Screen name="screens/inSubcategoryScreen" options={{ headerShown: false }} />
-          <Stack.Screen name="screens/product-detail" options={{ headerShown: false }} />
-          <Stack.Screen name="screens/notification-screen" options={{ headerShown: false }} />
-          {/* <Stack.Screen name="screens/yandex-map-screen" options={{ headerShown: false }} /> */}
-        </Stack>
-      </ThemeProvider>
+        <ThemeProvider
+          value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+        >
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+            <Stack.Screen name='modal' options={{ presentation: 'modal' }} />
+            <Stack.Screen
+              name='screens/search-screen'
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name='screens/product-detail'
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name='screens/notification-screen'
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen name='screens/adresses-screen' />
+            <Stack.Screen
+              name='screens/add-new-card-screen'
+            />
+          </Stack>
+        </ThemeProvider>
       </Provider>
     </QueryClientProvider>
   );

@@ -1,72 +1,99 @@
-import { textColors } from "@/constants/Colors";
-import { horizontalScale, moderateScale, verticalScale } from "@/utils/metrics";
-import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
-import { useState } from "react";
-import { Pressable, StyleSheet, TextInput, View } from "react-native";
+import { textColors } from '@/constants/Colors';
+import { horizontalScale, moderateScale, verticalScale } from '@/utils/metrics';
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import { useState } from 'react';
+import {
+  Pressable,
+  StyleSheet,
+  TextInput,
+  TextInputProps,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
-export function InputBox({ handleSearch, customStyles }: { handleSearch: (input: string) => void, customStyles?: object }) {
+export function InputBox(
+  props: TextInputProps & {
+    handleSearch: (input: string) => void;
+    hasPreIcon?: boolean;
+    resultValue?: string;
+  }
+) {
   const [input, setInput] = useState('');
-  const [isFilterFocused, setFilterFocused] = useState(false);
 
-  const handleFilterFocus = () => {
-    setFilterFocused(!isFilterFocused);
-  };
+  return (
+    <View style={[styles.box, props?.style]}>
+      {props.hasPreIcon ? (
+        <Pressable
+          onPress={() => props.handleSearch(input)}
+          style={[styles.searchIcon]}
+        >
+          <Feather
+            name='search'
+            size={moderateScale(24)}
+            color={textColors.navyBlack}
+          />
+        </Pressable>
+      ) : null}
 
-  return <View style={[styles.box, customStyles]}>
-    <Pressable
-      onPress={() => handleSearch(input)}
-      style={[styles.searchIcon]}
-    >
-      <Feather name="search" size={moderateScale(24)} color={textColors.navyBlack} />
-    </Pressable>
-
-    <TextInput
-      style={styles.input}
-      placeholder="Qidiruv ..."
-      value={input}
-      onChangeText={setInput}
-    />
-
-    <Pressable
-      onPress={handleFilterFocus}
-      style={[styles.searchIcon, isFilterFocused && styles.searchIconFocused]}
-    >
-      <MaterialCommunityIcons name="tune-variant" size={moderateScale(24)} color={isFilterFocused ? textColors.pureWhite : textColors.navyBlack} />
-    </Pressable>
-  </View>;
+      <TextInput
+        style={styles.input}
+        placeholder='Qidiruv ...'
+        value={input}
+        onChangeText={setInput}
+      />
+    </View>
+  );
 }
 
-export function InputBoxBtn({ customStyles }: { customStyles?: object }) {
+export function SearchInputBox(
+  props: TextInputProps & {
+    handleSearch: (input: string) => void;
+    openBottomSheet?: () => void;
+  }
+) {
+  const [input, setInput] = useState('');
 
-  const handleFilterFocus = () => {
+  const handleFilterFocus = () => {    
+    if (props?.openBottomSheet) {
+      props.openBottomSheet();
+    }
   };
 
-  return <View style={[styles.box, customStyles]}>
-    <Pressable
-      onPress={() => handleFilterFocus()}
-      style={[styles.searchIcon]}
-    >
-      <Feather name="search" size={moderateScale(24)} color={textColors.navyBlack} />
-    </Pressable>
+  return (
+    <View style={[styles.box, props?.style]}>
+      <Pressable
+        onPress={() => props.handleSearch(input)}
+        style={[styles.searchIcon]}
+      >
+        <Feather
+          name='search'
+          size={moderateScale(24)}
+          color={textColors.navyBlack}
+        />
+      </Pressable>
 
-    <View
-      style={styles.input}
-      // placeholder="Qidiruv ..."
-    />
+      <TextInput
+        style={styles.input}
+        placeholder={props?.placeholder ?? 'Qidiruv ...'}
+        value={input}
+        onChangeText={setInput}
+      />
 
-    <Pressable
-      onPress={handleFilterFocus}
-      style={[styles.searchIcon]}
-    >
-      <MaterialCommunityIcons name="tune-variant" size={moderateScale(24)} color={textColors.navyBlack} />
-    </Pressable>
-  </View>;
+      <TouchableOpacity onPress={handleFilterFocus} style={[styles.searchIcon]}>
+        <MaterialCommunityIcons
+          name='tune-variant'
+          size={moderateScale(24)}
+          color={textColors.navyBlack}
+        />
+      </TouchableOpacity>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   box: {
-    flex: 1,
-    flexDirection: "row",
+    // flex: 1,
+    flexDirection: 'row',
     backgroundColor: textColors.grey2,
     justifyContent: 'center',
     alignItems: 'center',
@@ -75,25 +102,26 @@ const styles = StyleSheet.create({
     marginHorizontal: horizontalScale(16),
     paddingHorizontal: 15,
     overflow: 'hidden',
-    marginBottom: verticalScale(24)
+    marginBottom: verticalScale(24),
   },
+
   input: {
     flex: 1,
     fontFamily: 'UrbanistSemiBold',
     fontSize: moderateScale(16),
-    fontWeight: '500'
+    fontWeight: '500',
   },
   filterFocused: {
     borderColor: textColors.grey2,
-    color: textColors.pureWhite
+    color: textColors.pureWhite,
   },
   searchIcon: {
     padding: 5,
-    marginRight: 5
+    marginRight: 5,
   },
   searchIconFocused: {
     padding: 5,
     backgroundColor: textColors.purple,
-    borderRadius: 10
-  }
-})
+    borderRadius: 10,
+  },
+});

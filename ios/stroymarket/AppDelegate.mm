@@ -14,9 +14,9 @@
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
 
-  [YMKMapKit setApiKey:@"b7e92bd0-0f80-42c3-82ec-15a7b5171739"];
+  [YMKMapKit setApiKey:@"8e3ed980-d7b6-4dcc-ad54-7d06df299397"];
   [YMKMapKit setLocale:@"ru_RU"];
-  [[YMKMapKit mapKit] onStart];
+  [YMKMapKit mapKit];
 
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
