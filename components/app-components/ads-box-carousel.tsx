@@ -3,7 +3,6 @@ import {
   View,
   StyleSheet,
   Dimensions,
-  StatusBar,
 } from 'react-native';
 import Animated, {
   Extrapolation,
@@ -12,11 +11,10 @@ import Animated, {
   useAnimatedStyle,
   useAnimatedScrollHandler,
 } from 'react-native-reanimated';
-import { textColors } from '@/constants/Colors';
 import { verticalScale } from '@/utils/metrics';
 const AnimatedFlatList = Animated.FlatList;
 
-const { width, height } = Dimensions.get('screen');
+const { width } = Dimensions.get('screen');
 
 export const images = [
   require('../../assets/images/Theme=Light, Component=Special Offers (1) copy.png'),

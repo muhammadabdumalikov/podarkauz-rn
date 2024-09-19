@@ -1,290 +1,287 @@
-import React from 'react';
-import { StyleSheet, View, Dimensions } from 'react-native';
-import { horizontalScale, verticalScale, moderateScale } from '@/utils/metrics';
+import BellSvg from '@/assets/icons/bell';
+import { WishlistHeartSvg } from '@/assets/icons/favorite-heart';
+import {
+  UrbanistBoldText,
+  UrbanistMediumText,
+  UrbanistSemiboldText,
+} from '@/components/StyledText';
 import { textColors } from '@/constants/Colors';
+import { horizontalScale, moderateScale, verticalScale } from '@/utils/metrics';
+import { FlashList } from '@shopify/flash-list';
+import { Link } from 'expo-router';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  Pressable,
+  SafeAreaView,
+} from 'react-native';
 
-import { FontAwesome6 } from '@expo/vector-icons';
-import { UrbanistBoldText, UrbanistMediumText, UrbanistSemiboldText } from '@/components/StyledText';
-import OpenedBox from '@/assets/images/opened-box';
-import DeliveryTruck from '@/assets/images/delivery-truck';
-import DeliveryReceive from '@/assets/images/delivery-receive';
-import ClosedBox from '@/assets/images/closed-box';
-import { ProductCardFullScreenForCompleted } from '@/components/app-components/product-card-full-screen';
+const categories = [
+  'Дом',
+  'Бизнес',
+  'Романтика',
+  'Семья и дети',
+  'Еда и напитки',
+  'Практичные вещи',
+  'Юмор и сувениры',
+  'Игры и игрушки',
+  'Коллекционирование',
+  'Красота и уход',
+  'Украшения',
+  'Мода и стиль',
+  'Дача',
+  'Другие разделы',
+];
 
-const { width } = Dimensions.get('screen');
+const itemsByCategory = {
+  Бизнес: [
+    { name: 'Подарки шефу' },
+    { name: 'Бизнес-аксессуары' },
+    { name: 'Корпоративные сувениры' },
+    { name: 'Настольные наборы' },
+    { name: 'Письменные наборы' },
+    { name: 'Подарочные ручки' },
+  ],
+  Дом: [
+    { name: 'Ежедневники' },
+    { name: 'Книги-сейфы' },
+    { name: 'Карманные визитницы' },
+    { name: 'Настольные визитницы' },
+    { name: 'Настольные часы' },
+  ],
+  // Add more categories and items here...
+};
 
-const DeliveryProcess = () => {
-  const statuses = [
-    {
-      id: 1,
-      title: 'Заказ принят - 17 декабря',
-      description: 'Ваш заказ был получен',
-      time: '15:20',
-      completed: true,
-      icon: () => <ClosedBox width={moderateScale(36)} height={moderateScale(36)}/>
-    },
-    {
-      id: 2,
-      title: 'Заказ подготовлен - 16 декабря',
-      description: 'Ваш заказ подготовлен',
-      time: '14:40',
-      completed: true,
-      icon: () => <DeliveryTruck width={moderateScale(36)} height={moderateScale(36)}/>
-    },
-    {
-      id: 3,
-      title: 'Доставка в процессе - 15 декабря',
-      description: 'Ваш подарок в пути',
-      time: '11:30',
-      completed: false,
-      icon: () => <DeliveryReceive width={moderateScale(36)} height={moderateScale(36)}/>
-    },
-    {
-      id: 4,
-      title: 'Доставлен',
-      description: 'Желаю вам интересных впечатлений',
-      time: '10:04',
-      completed: false,
-      icon: () => <OpenedBox width={moderateScale(36)} height={moderateScale(36)}/>
-    },
-  ];
+const CatalogScreen = () => {
+  const [selectedCategory, setSelectedCategory] = useState('Бизнес'); // Default to 'Бизнес'
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.productCard}>
-        <ProductCardFullScreenForCompleted />
-      </View>
-      
-      <View style={styles.deliveryBox}>
-        <View style={styles.imageRow}>
-          {statuses.map((status, index) => (
-            <React.Fragment key={status.id}>
-              <StepImage IconComponent={status.icon} completed={status.completed} />
-              {index < statuses.length - 1 && (
-                <Connector completed={status.completed} />
-              )}
-            </React.Fragment>
-          ))}
-        </View>
-        <UrbanistBoldText style={styles.statusText}>Посылка в процессе Доставки</UrbanistBoldText>
-      </View>
-
-      <View style={styles.divider}></View>
-
-      <View style={styles.deliveryBox2}>
-        <UrbanistBoldText style={styles.heading}>Информация о статусе заказа</UrbanistBoldText>
-        <View style={styles.timeline}>
-          {statuses.map((status, index) => (
-            <View key={index} style={styles.statusRow}>
-              <View style={status.completed ? styles.iconContainer : styles.incompletedIconContainer}>
-                <View
-                  style={status.completed ? styles.completedCircle : styles.incompleteCircle}
-                />
-                {/* {index !== statuses.length - 1 && (
-                  <View style={styles.connector}>
-                    <View style={styles.dottedLine} />
-                  </View>
-                )} */}
-              </View>
-              <View style={styles.textContainer}>
-                <View style={styles.statusTimeRow}>
-                  <UrbanistBoldText style={styles.statusTitle}>{status.title}</UrbanistBoldText>
-                  <UrbanistSemiboldText style={styles.timeText}>{status.time}</UrbanistSemiboldText>
-                </View>
-                <UrbanistMediumText style={styles.statusDescription}>{status.description}</UrbanistMediumText>
-              </View>
-            </View>
-          ))}
-        </View>
-      </View>
+  const renderItem = ({ item }: {item: any}) => (
+    <View style={styles.item}>
+      <Image
+        source={require('@/assets/images/lego.png')}
+        style={styles.itemImage}
+      />
+      <UrbanistMediumText style={styles.itemText}>
+        {item.name}
+      </UrbanistMediumText>
     </View>
   );
-};
 
-const StepImage = ({ IconComponent, completed }: { IconComponent: () => React.JSX.Element, completed?: boolean }) => {  
- return  <View style={styles.stepContainer}>
-    <View style={[styles.icon, !completed && styles.iconIncomplete]} >
-      <IconComponent />
-    </View>
-    <View style={[styles.dot, completed && styles.completedDot]} >
-      <FontAwesome6 name="check" size={moderateScale(10)} color={textColors.pureWhite} />
-    </View>
-  </View>
-};
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <UrbanistBoldText style={styles.headerText}>Каталог</UrbanistBoldText>
+        <View style={{flexDirection: 'row'}}>
+          <Link href='/screens/notification-screen' asChild>
+            <Pressable style={styles.searchBoxElement}>
+              <BellSvg
+                width={verticalScale(30)}
+                height={verticalScale(30)}
+                color={textColors.navyBlack}
+              />
+            </Pressable>
+          </Link>
+          <Link href='/screens/wishlist-screen' asChild>
+            <Pressable style={styles.searchBoxElement}>
+              <WishlistHeartSvg
+                width={verticalScale(30)}
+                height={verticalScale(30)}
+                color={textColors.navyBlack}
+              />
+            </Pressable>
+          </Link>
+        </View>
+      </View>
 
-const Connector = ({ completed }: { completed?: boolean }) => (
-  <View style={styles.connectorRow}>
-    <View style={[styles.connector, completed && styles.completedConnector, { width: verticalScale(4) }]} />
-    <View style={[styles.connector, completed && styles.completedConnector]} />
-    <View style={[styles.connector, completed && styles.completedConnector]} />
-    <View style={[styles.connector, completed && styles.completedConnector]} />
-    <View style={[styles.connector, completed && styles.completedConnector, { width: verticalScale(4) }]} />
-  </View>
-);
+      <View style={styles.content}>
+        {/* Sidebar */}
+        <ScrollView style={styles.sidebar}>
+          {categories.map((category, index) => (
+            <Pressable
+              key={index}
+              style={[
+                styles.categoryItem,
+                selectedCategory === category && styles.selectedCategoryItem,
+              ]}
+              onPress={() => setSelectedCategory(category)}
+            >
+              <View
+                style={[
+                  styles.categoryTextBox,
+                  selectedCategory === category &&
+                    styles.selectedCategoryTextBox,
+                ]}
+              >
+                {selectedCategory === category ? (
+                  <UrbanistSemiboldText
+                    numberOfLines={2}
+                    style={[styles.categoryText, styles.selectedCategoryText]}
+                  >
+                    {category}
+                  </UrbanistSemiboldText>
+                ) : (
+                  <UrbanistMediumText
+                    numberOfLines={2}
+                    style={styles.categoryText}
+                  >
+                    {category}
+                  </UrbanistMediumText>
+                )}
+              </View>
+            </Pressable>
+          ))}
+        </ScrollView>
+
+        {/* Dynamic Content based on selected category */}
+        <FlashList
+          data={itemsByCategory[selectedCategory]} // Load items based on the selected category
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+          numColumns={3}
+          estimatedItemSize={10}
+          contentContainerStyle={styles.gridContent}
+        />
+      </View>
+
+      <View style={styles.footer}>
+        <TouchableOpacity style={styles.footerItem}>
+          <Text style={styles.footerText}>Главная</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.footerItem}>
+          <Text style={styles.footerText}>Идеи</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.footerItem, styles.selectedFooter]}>
+          <Text style={[styles.footerText, styles.selectedFooterText]}>
+            Каталог
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.footerItem}>
+          <Text style={styles.footerText}>Корзина</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.footerItem}>
+          <Text style={styles.footerText}>Кабинет</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    paddingVertical: verticalScale(16),
-    backgroundColor: textColors.grey1
+    backgroundColor: '#fff',
   },
-  productCard: {
-    marginHorizontal: horizontalScale(16),
-    height: verticalScale(168),
-  },
-  deliveryBox: {
-    marginTop: verticalScale(24),
-    alignItems: 'center'
-  },
-  imageRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    marginBottom: verticalScale(24)
-  },
-  stepContainer: {
-    height: verticalScale(64),
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  dot: {
-    width: verticalScale(18),
-    height: verticalScale(18),
-    borderRadius: verticalScale(10),
-    backgroundColor: textColors.grey4,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  completedDot: {
-    backgroundColor: textColors.purple,
-  },
-  icon: {
-    alignItems: 'center',
-    width: verticalScale(36),
-    height: verticalScale(36),
-    marginBottom: verticalScale(8)
-  },
-  iconIncomplete: {
-    opacity: 0.6,
-  },
-  connectorRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginHorizontal: horizontalScale(8),
-    height: verticalScale(20),
-  },
-  connector: {
-    width: horizontalScale(8),
-    height: verticalScale(1),
-    borderRadius: moderateScale(2),
-    backgroundColor: textColors.grey4,
-    borderStyle: 'solid',
-    marginHorizontal: horizontalScale(2),
-  },
-  completedConnector: {
-    backgroundColor: textColors.purple,
-    borderStyle: 'solid',
-  },
-  statusText: {
-    fontSize: moderateScale(18),
-    fontWeight: '700',
-  },
-  divider: {
-    width: width - horizontalScale(32),
-    height: verticalScale(2),
-    marginVertical: verticalScale(24),
-    backgroundColor: textColors.grey3
-  },
-  deliveryBox2: {
-    width: '100%',
-    paddingHorizontal: horizontalScale(16),
-    alignItems: 'center',
-  },
-  heading: {
-    fontSize: moderateScale(20),
-    fontWeight: '700',
-    marginBottom: verticalScale(24),
-  },
-  timeline: {
-    width: '100%',
-    height: verticalScale(274),
-
-  },
-  statusRow: {
-    height: verticalScale(48),
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: verticalScale(26),
-  },
-  iconContainer: {
-    width: verticalScale(36),
-    height: verticalScale(36),
-    borderRadius: verticalScale(40),
-    borderColor: textColors.purple,
-    borderWidth: verticalScale(3),
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  incompletedIconContainer: {
-    width: verticalScale(36),
-    height: verticalScale(36),
-    borderRadius: verticalScale(40),
-    borderColor: textColors.grey4,
-    borderWidth: verticalScale(3),
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  completedCircle: {
-    width: verticalScale(15),
-    height: verticalScale(15),
-    borderRadius: verticalScale(8),
-    backgroundColor: textColors.purple,
-    borderColor: textColors.purple,
-    borderWidth: verticalScale(3),
-  },
-  incompleteCircle: {
-    width: verticalScale(15),
-    height: verticalScale(15),
-    borderRadius: verticalScale(8),
-    backgroundColor: textColors.grey4,
-    borderColor: textColors.grey4,
-    borderWidth: verticalScale(3),
-  },
-  connector2: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  dottedLine: {
-    width: verticalScale(2),
-    height: '100%',
-    backgroundColor: textColors.grey3,
-    borderStyle: 'dashed',
-  },
-  textContainer: {
-    flex: 1,
-    marginLeft: horizontalScale(16)
-  },
-  statusTimeRow: {
-    flexDirection: 'row',
+  header: {
     alignItems: 'center',
     justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignSelf: 'flex-end',
+    height: verticalScale(50),
+    width: '100%',
+    paddingHorizontal: 5,
+    marginVertical: verticalScale(12),
   },
-  statusTitle: {
-    fontSize: moderateScale(18),
+  headerText: {
+    marginLeft: horizontalScale(16),
+    fontSize: moderateScale(24),
     fontWeight: '700',
   },
-  statusDescription: {
-    fontSize: moderateScale(14),
-    color: textColors.darkGrey,
-    fontWeight: '500',
-    marginTop: verticalScale(4),
+  searchBoxElement: {
+    marginHorizontal: 3,
+    padding: 5,
   },
-  timeText: {
+  content: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  sidebar: {
+    maxWidth: horizontalScale(110),
+    width: horizontalScale(110),
+    backgroundColor: textColors.softPurple,
+    paddingTop: verticalScale(8),
+    paddingLeft: verticalScale(8),
+  },
+  categoryItem: {
+    height: verticalScale(34),
+    maxHeight: verticalScale(45),
+    width: horizontalScale(102),
+    marginBottom: verticalScale(8),
+    paddingLeft: verticalScale(8),
+    borderTopLeftRadius: moderateScale(4),
+    borderBottomLeftRadius: moderateScale(4),
+  },
+  categoryTextBox: {
+    height: verticalScale(34),
+    maxHeight: verticalScale(45),
+    width: horizontalScale(86),
+    paddingVertical: verticalScale(2),
+    justifyContent: 'center',
+  },
+  selectedCategoryTextBox: {},
+  categoryText: {
     fontSize: moderateScale(12),
     fontWeight: '500',
-    color: textColors.darkGrey,
+    color: textColors.navyBlack,
+  },
+  selectedCategoryItem: {
+    backgroundColor: textColors.pureWhite,
+  },
+  selectedCategoryText: {
+    fontWeight: '700',
+    color: textColors.purple,
+  },
+  gridContent: {
+    paddingHorizontal: horizontalScale(8),
+    paddingBottom: verticalScale(80),
+  },
+  item: {
+    width: horizontalScale(86),
+    height: verticalScale(100),
+    alignItems: 'center',
+    marginVertical: verticalScale(12),
+  },
+  itemImage: {
+    width: verticalScale(60),
+    height: verticalScale(60),
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: textColors.softPurple,
+    borderRadius: moderateScale(15),
+    overflow: 'hidden',
+  },
+  itemText: {
+    marginTop: verticalScale(10),
+    fontSize: moderateScale(12),
+    fontWeight: '400',
+    textAlign: 'center',
+    letterSpacing: 0.3,
+  },
+  footer: {
+    flexDirection: 'row',
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
+    paddingVertical: 10,
+  },
+  footerItem: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  footerText: {
+    fontSize: 12,
+    color: '#888',
+  },
+  selectedFooter: {
+    backgroundColor: '#6200EE',
+  },
+  selectedFooterText: {
+    color: '#fff',
   },
 });
 
-export default DeliveryProcess;
+export default CatalogScreen;

@@ -149,7 +149,7 @@ export default function SearchScreen() {
                   style={{
                     height: `${(verticalScale(height) / (verticalScale(80) + verticalScale(20))) * 100}%`,
                     width: horizontalScale(4),
-                    backgroundColor: textColors.grey4,
+                    backgroundColor: textColors.grey5,
                     marginHorizontal: horizontalScale(1),
                     borderTopRightRadius: horizontalScale(4),
                     borderTopLeftRadius: horizontalScale(4),
@@ -340,7 +340,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   sheetContent: {
-    // flex: 1
+    paddingBottom: verticalScale(80),
   },
   sectionTitle: {
     fontSize: moderateScale(18),

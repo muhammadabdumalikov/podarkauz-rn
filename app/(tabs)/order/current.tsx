@@ -9,7 +9,7 @@ import { ProductCardFullScreenForCurrent } from '@/components/app-components/pro
 
 const data = ['1', '2', '3', '4', '5', '6'];
 
-export default function TabTwoScreen() {
+export default function CurrentOrders() {
   return data.length > 0 ?
     <View style={{ flex: 1 }}>
        <FlatList

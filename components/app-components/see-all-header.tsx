@@ -34,15 +34,15 @@ const styles = StyleSheet.create({
     height: verticalScale(30),
     backgroundColor: textColors.pureWhite,
     paddingHorizontal: horizontalScale(25),
-    marginVertical: verticalScale(15)
+    marginVertical: verticalScale(15),
   },
   headerName: {
-    fontSize: moderateScale(20),
+    fontSize: moderateScale(18),
     fontWeight: '700',
     color: textColors.navyBlack,
   },
   seeAll: {
-    fontSize: moderateScale(16),
+    fontSize: moderateScale(14),
     fontWeight: '700',
     color: textColors.navyBlack,
   }

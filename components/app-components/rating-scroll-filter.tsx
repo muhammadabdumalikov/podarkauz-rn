@@ -15,11 +15,14 @@ export default function RatingScrollFilter(props: ScrollViewProps & { ratings: (
       horizontal
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={{
-        flexDirection: 'row',
         paddingHorizontal: horizontalScale(10),
         paddingVertical: verticalScale(5),
+        height: verticalScale(48),
       }}
-      style={{ marginBottom: verticalScale(15) }}
+      style={{
+        marginBottom: verticalScale(10),
+        height: verticalScale(58),
+      }}
     >
       {props.ratings?.map(item =>
         selectedCategory === item ? (

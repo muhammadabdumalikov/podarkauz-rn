@@ -3,72 +3,114 @@ import { StyleSheet, Pressable, ImageBackground } from 'react-native';
 import { textColors } from '@/constants/Colors';
 import { horizontalScale, moderateScale, verticalScale } from '@/utils/metrics';
 import { View } from '../Themed';
-import { UrbanistBoldText, UrbanistMediumText, UrbanistSemiboldText } from '../StyledText';
+import {
+  UrbanistBoldText,
+  UrbanistMediumText,
+  UrbanistSemiboldText,
+} from '../StyledText';
 import { LinearGradient } from 'expo-linear-gradient';
 import { AntDesign } from '@expo/vector-icons';
 import ReviewSvg from '@/assets/icons/review';
+import { Link } from 'expo-router';
 
 export const ProductCardFullScreenForCurrent = () => {
   return (
     <Pressable style={styles.box}>
-      <ImageBackground source={require('../../assets/images/lego.png')} style={styles.image} />
+      <ImageBackground
+        source={require('../../assets/images/lego.png')}
+        style={styles.image}
+      />
       <View style={styles.detail}>
-        <UrbanistBoldText style={styles.productTitle}>Сумка из кожи</UrbanistBoldText>
+        <UrbanistBoldText style={styles.productTitle}>
+          Сумка из кожи
+        </UrbanistBoldText>
 
         <View style={styles.info}>
           <View style={styles.colorCircle} />
-          <UrbanistMediumText style={styles.infoTxt}>Цвет | Размер = M | Qty = 1</UrbanistMediumText>
+          <UrbanistMediumText style={styles.infoTxt}>
+            Цвет | Размер = M | Qty = 1
+          </UrbanistMediumText>
         </View>
 
-        <UrbanistSemiboldText style={styles.processTxt}>В доставке</UrbanistSemiboldText>
+        <UrbanistSemiboldText style={styles.processTxt}>
+          В доставке
+        </UrbanistSemiboldText>
 
         <View style={styles.priceRow}>
-          <UrbanistBoldText style={styles.priceTxt}>445 000 сум</UrbanistBoldText>
-          
-          <Pressable >
-            <LinearGradient
-              colors={['#7210FF', '#9D59FF']}
-              style={styles.priceBtn}
-            >
-              <AntDesign name="arrowright" size={20} color={textColors.pureWhite} />
-            </LinearGradient>
-          </Pressable>
-          
+          <UrbanistBoldText style={styles.priceTxt}>
+            445 000 сум
+          </UrbanistBoldText>
+
+          <Link href='screens/delivery-process' asChild>
+            <Pressable>
+              <LinearGradient
+                colors={['#7210FF', '#9D59FF']}
+                style={styles.priceBtn}
+              >
+                <AntDesign
+                  name='arrowright'
+                  size={20}
+                  color={textColors.pureWhite}
+                />
+              </LinearGradient>
+            </Pressable>
+          </Link>
         </View>
       </View>
     </Pressable>
   );
 };
 
-export const ProductCardFullScreenForCompleted = () => {
+export const ProductCardFullScreenForCompleted = ({
+  openBottomSheet,
+}: {
+  openBottomSheet?: any;
+}) => {
   return (
     <Pressable style={styles.box}>
-      <ImageBackground source={require('../../assets/images/lego.png')} style={styles.image} />
+      <ImageBackground
+        source={require('../../assets/images/lego.png')}
+        style={styles.image}
+      />
       <View style={styles.detail}>
-        <UrbanistBoldText style={styles.productTitle}>Сумка из кожи</UrbanistBoldText>
+        <UrbanistBoldText style={styles.productTitle}>
+          Сумка из кожи
+        </UrbanistBoldText>
 
         <View style={styles.info}>
           <View style={styles.colorCircle} />
-          <UrbanistMediumText style={styles.infoTxt}>Цвет | Размер = M | Qty = 1</UrbanistMediumText>
+          <UrbanistMediumText style={styles.infoTxt}>
+            Цвет | Размер = M | Qty = 1
+          </UrbanistMediumText>
         </View>
 
-        <UrbanistSemiboldText style={[
-          styles.processTxt,
-          { backgroundColor: textColors.green1, color: textColors.green2 }
-        ]}>Доставлено</UrbanistSemiboldText>
+        <UrbanistSemiboldText
+          style={[
+            styles.processTxt,
+            { backgroundColor: textColors.green1, color: textColors.green2 },
+          ]}
+        >
+          Доставлено
+        </UrbanistSemiboldText>
 
         <View style={styles.priceRow}>
-          <UrbanistBoldText style={styles.priceTxt}>445 000 сум</UrbanistBoldText>
-          
-          <Pressable >
-            <LinearGradient
-              colors={['#7210FF', '#9D59FF']}
-              style={styles.priceBtn}
-            >
-            <ReviewSvg height={verticalScale(20)} width={verticalScale(20)}/>
-            </LinearGradient>
-          </Pressable>
-          
+          <UrbanistBoldText style={styles.priceTxt}>
+            445 000 сум
+          </UrbanistBoldText>
+
+          {openBottomSheet && (
+            <Pressable onPress={openBottomSheet}>
+              <LinearGradient
+                colors={['#7210FF', '#9D59FF']}
+                style={styles.priceBtn}
+              >
+                <ReviewSvg
+                  height={verticalScale(20)}
+                  width={verticalScale(20)}
+                />
+              </LinearGradient>
+            </Pressable>
+          )}
         </View>
       </View>
     </Pressable>
@@ -77,7 +119,6 @@ export const ProductCardFullScreenForCompleted = () => {
 
 const styles = StyleSheet.create({
   box: {
-    flex: 1,
     width: '100%',
     height: verticalScale(152),
     marginVertical: verticalScale(8),
@@ -151,4 +192,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-

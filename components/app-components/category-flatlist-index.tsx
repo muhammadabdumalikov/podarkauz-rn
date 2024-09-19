@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    marginHorizontal: horizontalScale(11)
+    marginHorizontal: horizontalScale(11),
+    marginTop: verticalScale(10),
   },
   itemContainer: {
     height: verticalScale(100),

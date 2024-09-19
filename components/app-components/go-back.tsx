@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons'; // Or any icon library you're usi
 import { horizontalScale, moderateScale, verticalScale } from '@/utils/metrics';
 import Constants from 'expo-constants';
 import { textColors } from '@/constants/Colors';
+import { ViewProps } from '../Themed';
 
 export const GoBackButton = ({ absolute = false }: {absolute?: boolean}) => {
   const navigation = useNavigation();
@@ -25,11 +26,11 @@ export const GoBackButton = ({ absolute = false }: {absolute?: boolean}) => {
   );
 };
 
-export const CustomHeader = ({ title }: {title: string}) => {
+export const CustomHeader = (props: ViewProps & {title: string}) => {
   return (
-    <View style={styles.headerContainer}>
+    <View style={[styles.headerContainer, props?.style]}>
       <GoBackButton/>
-      <Text style={styles.headerTitle}>{title}</Text>
+      <Text style={styles.headerTitle}>{props.title}</Text>
     </View>
   );
 };
@@ -40,15 +41,15 @@ const styles = StyleSheet.create({
     marginTop: Constants.statusBarHeight,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 18,
+    paddingHorizontal: horizontalScale(16),
+    paddingVertical: verticalScale(18),
     backgroundColor: textColors.pureWhite,
-    borderBottomWidth: 1,
-    borderBottomColor: '#EDEDED',
+    // borderBottomWidth: 1,
+    // borderBottomColor: '#EDEDED',
   },
   headerTitle: {
     marginLeft: horizontalScale(16),
-    fontSize: 20,
+    fontSize: moderateScale(20),
     fontWeight: 'bold',
     color: '#000',
   },

@@ -1,17 +1,31 @@
-import { FavoriteHeartSvg, FavoriteHeartWhiteSvg } from "@/assets/icons/favorite-heart";
-import { textColors } from "@/constants/Colors";
-import { IProduct } from "@/constants/data";
-import { useFavorites } from "@/hooks/queries/storage.hooks";
+import {
+  FavoriteHeartSvg,
+  FavoriteHeartWhiteSvg,
+} from '@/assets/icons/favorite-heart';
+import { textColors } from '@/constants/Colors';
+import { IProduct } from '@/constants/data';
+import { useFavorites } from '@/hooks/queries/storage.hooks';
 // import { addFavoriteProduct, getFavoriteProducts, isFavoriteProduct, removeFavoriteProduct } from "@/utils/favorites.storage";
-import { LinearGradient } from "expo-linear-gradient";
-import { useRef } from "react";
-import { Pressable, Animated, StyleSheet, Text } from "react-native";
+import { LinearGradient } from 'expo-linear-gradient';
+import { useRef } from 'react';
+import {
+  Pressable,
+  Animated,
+  StyleSheet,
+  Text,
+  PressableProps,
+} from 'react-native';
 
 export const FavoriteHeartBtn = ({ product }: { product: IProduct }) => {
-  const { addFavoriteProduct, removeFavoriteProduct, isFavoriteProduct, getFavoriteProducts } = useFavorites();
-  
+  const {
+    addFavoriteProduct,
+    removeFavoriteProduct,
+    isFavoriteProduct,
+    getFavoriteProducts,
+  } = useFavorites();
+
   const isFavorite = isFavoriteProduct(product.id);
-  const fadeAnimation = useRef(new Animated.Value(1)).current; 
+  const fadeAnimation = useRef(new Animated.Value(1)).current;
 
   const onHeartPressHandler = () => {
     Animated.sequence([
@@ -38,18 +52,23 @@ export const FavoriteHeartBtn = ({ product }: { product: IProduct }) => {
     <Pressable onPress={onHeartPressHandler} style={styles.favoriteHeartBox}>
       <LinearGradient
         colors={['#7210FF', '#9D59FF']}
-        style={{ flex: 1, justifyContent: 'center', alignItems: 'center', borderRadius: 30 }}
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: 30,
+        }}
       >
         <Animated.View style={{ opacity: fadeAnimation }}>
-          
           {isFavorite ? (
             <FavoriteHeartWhiteSvg width={18} height={18} />
           ) : (
-            <FavoriteHeartSvg width={18} height={18} color={textColors.pureWhite} />
-            )}
-
-        
-            
+            <FavoriteHeartSvg
+              width={18}
+              height={18}
+              color={textColors.pureWhite}
+            />
+          )}
         </Animated.View>
       </LinearGradient>
     </Pressable>

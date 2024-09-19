@@ -1,3 +1,4 @@
+import { TextInput, TextInputProps } from 'react-native';
 import { Text, TextProps } from './Themed';
 
 export function MonoText(props: TextProps) {
@@ -14,4 +15,13 @@ export function UrbanistSemiboldText(props: TextProps) {
 
 export function UrbanistBoldText(props: TextProps) {
   return <Text {...props} style={[props.style, { fontFamily: 'UrbanistBold' }]} />;
+}
+
+export function UrbanistSemiboldTextInput(props: TextInputProps) {
+  return (
+    <TextInput
+      {...props}
+      style={[props.style, { fontFamily: 'UrbanistSemibold' }]}
+    />
+  );
 }

@@ -1,40 +1,30 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { store } from '../store/store';
-import { Provider } from 'react-redux'
-
+import { Provider } from 'react-redux';
 import YaMap from 'react-native-yamap';
-
 import { useColorScheme } from '@/components/useColorScheme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-// import queryClient from '@/service/api/react-query';
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
-import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
+import CustomSplashScreen from '@/components/app-components/splash-screen';
+import OnboardingCarousel, { ONBOARDING_KEY } from './screens/onboarding-screens';
+import { MMKV } from 'react-native-mmkv';
 
 YaMap.init('8e3ed980-d7b6-4dcc-ad54-7d06df299397');
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from 'expo-router';
-
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
-};
-
-const queryClient = new QueryClient()
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-const persister = createSyncStoragePersister({
-  storage: window.localStorage,
-});
+const queryClient = new QueryClient();
+const storage = new MMKV();
+const isOnboardingCompleted = storage.getBoolean(ONBOARDING_KEY);
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -45,7 +35,6 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
   }, [error]);
@@ -57,7 +46,11 @@ export default function RootLayout() {
   }, [loaded]);
 
   if (!loaded) {
-    return null;
+    return <CustomSplashScreen />;
+  }
+  
+  if (!isOnboardingCompleted) {
+    return <OnboardingCarousel />;
   }
 
   return <RootLayoutNav />;
@@ -88,9 +81,7 @@ function RootLayoutNav() {
               options={{ headerShown: false }}
             />
             <Stack.Screen name='screens/adresses-screen' />
-            <Stack.Screen
-              name='screens/add-new-card-screen'
-            />
+            <Stack.Screen name='screens/add-new-card-screen' />
           </Stack>
         </ThemeProvider>
       </Provider>

@@ -129,13 +129,15 @@ export default function HomeScreen() {
               </Pressable>
             </Link>
 
-            <AdsBoxCarousel />
             <SeeAllHeader
-              headerName='Categories'
-              btnName='See all'
+              headerName='Специальные предложения'
+              btnName='Все'
               link='/screens/search-screen'
               onPress={handleCategoryOnPress}
             />
+
+            <AdsBoxCarousel />
+  
             <CategoryFlatlist />
             <SeeAllHeader
               headerName='Популярные'
@@ -173,14 +175,14 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     flexDirection: 'row',
     alignSelf: 'flex-end',
-    height: 50,
+    height: verticalScale(50),
     width: '100%',
     paddingHorizontal: 5,
     marginVertical: verticalScale(12),
   },
   locationBox: {
     width: horizontalScale(310),
-    height: verticalScale(44),
+    height: verticalScale(45),
     borderRadius: moderateScale(12),
     flexDirection: 'row',
     alignItems: 'center',
@@ -204,44 +206,10 @@ const styles = StyleSheet.create({
     borderRadius: 15  ,
     marginHorizontal: horizontalScale(16),
     paddingHorizontal: 15,
-    marginBottom: verticalScale(24),
+    marginBottom: verticalScale(5),
   },
   searchBoxElement: {
     marginHorizontal: 3,
     padding: 5,
-  },
-  categoryList: {
-    maxHeight: 85,
-    marginVertical: 15,
-    marginHorizontal: -25,
-    paddingLeft: 25,
-  },
-  categoryListContent: {
-    paddingRight: 50,
-  },
-  categoryItem: {
-    flex: 1,
-    alignItems: 'center',
-    height: 85,
-    width: 70,
-    marginHorizontal: 2,
-  },
-  categoryItemImgBox: {
-    height: 52,
-    width: 52,
-    borderRadius: 10,
-    padding: 5,
-    marginBottom: 5,
-    overflow: 'hidden',
-    backgroundColor: '#3498db',
-  },
-  categoryItemImg: {
-    flex: 1,
-  },
-  categoryItemTxt: {
-    fontSize: 12,
-    fontWeight: '500',
-    color: textColors.navyBlack,
-    textAlign: 'center',
   },
 });
